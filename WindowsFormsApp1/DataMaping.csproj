@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dsBuildingHeatInsulation.Designer.cs">
+    <Compile Include="data\dsBuildingHeatInsulation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
@@ -72,15 +72,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="dsBuildingHeatInsulation.xsc">
+    <None Include="data\dsBuildingHeatInsulation.xsc">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
-    <None Include="dsBuildingHeatInsulation.xsd">
+    <None Include="data\dsBuildingHeatInsulation.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dsBuildingHeatInsulation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="dsBuildingHeatInsulation.xss">
+    <None Include="data\dsBuildingHeatInsulation.xss">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
@@ -97,7 +97,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="testReport.xml" />
+    <Content Include="data\testReport.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
