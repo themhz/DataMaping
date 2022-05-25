@@ -184,6 +184,9 @@ namespace WindowsFormsApp1
             return filePath;
         }
 
-     
+        private void btnClearDataGridViewRelations_Click(object sender, EventArgs e)
+        {
+            dataGridViewRelations.Rows.Clear();
+        }
     }
 }

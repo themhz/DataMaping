@@ -29,6 +29,7 @@ namespace WindowsFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtXsd = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@ namespace WindowsFormsApp1
             this.btnReadxml = new System.Windows.Forms.Button();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
             this.openXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnClearDataGridViewRelations = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRelations)).BeginInit();
@@ -60,7 +62,7 @@ namespace WindowsFormsApp1
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(430, 2);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(905, 340);
+            this.dataGridView.Size = new System.Drawing.Size(905, 301);
             this.dataGridView.TabIndex = 5;
             // 
             // panel1
@@ -122,7 +124,7 @@ namespace WindowsFormsApp1
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 528);
+            this.label4.Location = new System.Drawing.Point(10, 550);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 13);
             this.label4.TabIndex = 20;
@@ -131,15 +133,15 @@ namespace WindowsFormsApp1
             // fieldRelationList
             // 
             this.fieldRelationList.FormattingEnabled = true;
-            this.fieldRelationList.Location = new System.Drawing.Point(13, 544);
+            this.fieldRelationList.Location = new System.Drawing.Point(13, 570);
             this.fieldRelationList.Name = "fieldRelationList";
-            this.fieldRelationList.Size = new System.Drawing.Size(395, 121);
+            this.fieldRelationList.Size = new System.Drawing.Size(395, 95);
             this.fieldRelationList.TabIndex = 19;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 357);
+            this.label3.Location = new System.Drawing.Point(7, 407);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 13);
             this.label3.TabIndex = 18;
@@ -148,7 +150,7 @@ namespace WindowsFormsApp1
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(216, 164);
+            this.label2.Location = new System.Drawing.Point(216, 216);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 13);
             this.label2.TabIndex = 17;
@@ -157,7 +159,7 @@ namespace WindowsFormsApp1
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 164);
+            this.label1.Location = new System.Drawing.Point(7, 216);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 16;
@@ -166,15 +168,15 @@ namespace WindowsFormsApp1
             // relationsList
             // 
             this.relationsList.FormattingEnabled = true;
-            this.relationsList.Location = new System.Drawing.Point(10, 373);
+            this.relationsList.Location = new System.Drawing.Point(10, 428);
             this.relationsList.Name = "relationsList";
-            this.relationsList.Size = new System.Drawing.Size(398, 147);
+            this.relationsList.Size = new System.Drawing.Size(398, 108);
             this.relationsList.TabIndex = 15;
             // 
             // fieldList
             // 
             this.fieldList.FormattingEnabled = true;
-            this.fieldList.Location = new System.Drawing.Point(219, 180);
+            this.fieldList.Location = new System.Drawing.Point(219, 232);
             this.fieldList.Name = "fieldList";
             this.fieldList.Size = new System.Drawing.Size(189, 160);
             this.fieldList.TabIndex = 14;
@@ -200,7 +202,7 @@ namespace WindowsFormsApp1
             // tableList
             // 
             this.tableList.FormattingEnabled = true;
-            this.tableList.Location = new System.Drawing.Point(10, 180);
+            this.tableList.Location = new System.Drawing.Point(10, 232);
             this.tableList.Name = "tableList";
             this.tableList.Size = new System.Drawing.Size(203, 160);
             this.tableList.TabIndex = 11;
@@ -221,23 +223,35 @@ namespace WindowsFormsApp1
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewRelations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRelations.Location = new System.Drawing.Point(430, 375);
+            this.dataGridViewRelations.Location = new System.Drawing.Point(430, 409);
             this.dataGridViewRelations.Name = "dataGridViewRelations";
-            this.dataGridViewRelations.Size = new System.Drawing.Size(905, 302);
+            this.dataGridViewRelations.Size = new System.Drawing.Size(905, 268);
             this.dataGridViewRelations.TabIndex = 13;
             // 
             // openXmlFileDialog
             // 
             this.openXmlFileDialog.FileName = "openXmlFileDialog";
             // 
+            // btnClearDataGridViewRelations
+            // 
+            this.btnClearDataGridViewRelations.Location = new System.Drawing.Point(430, 380);
+            this.btnClearDataGridViewRelations.Name = "btnClearDataGridViewRelations";
+            this.btnClearDataGridViewRelations.Size = new System.Drawing.Size(75, 23);
+            this.btnClearDataGridViewRelations.TabIndex = 14;
+            this.btnClearDataGridViewRelations.Text = "Clear";
+            this.btnClearDataGridViewRelations.UseVisualStyleBackColor = true;
+            this.btnClearDataGridViewRelations.Click += new System.EventHandler(this.btnClearDataGridViewRelations_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1336, 679);
+            this.Controls.Add(this.btnClearDataGridViewRelations);
             this.Controls.Add(this.dataGridViewRelations);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "DataBase Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
@@ -268,6 +282,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button btnSelectXsd;
         private System.Windows.Forms.TextBox txtXsd;
         private System.Windows.Forms.TextBox txtXml;
+        private System.Windows.Forms.Button btnClearDataGridViewRelations;
     }
 }
 
