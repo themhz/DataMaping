@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastMember;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,8 +25,11 @@ namespace WindowsFormsApp1
             InitializeComponent();
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
-            
-            
+
+            txtXml.Text = dataSetPath = @"C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\documents\datasets\dataEnergyBuilding.xml";
+            txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\documents\datasets\dsBuildingHeatInsulation.xsd";
+            readXml();
+
         }
 
         public void tableList_SelectedValueChanged(object sender, EventArgs e)
@@ -128,22 +132,22 @@ namespace WindowsFormsApp1
        
         private void btnReadxml_Click(object sender, EventArgs e)
         {
-            if(dataSetPath == "" || dataSetPathSchema=="")
-            {
+            readXml();
+            
+        }
+
+        public void readXml() {
+            if (dataSetPath == "" || dataSetPathSchema == "") {
                 MessageBox.Show("Please select an xml and an xsd file");
                 numOfTables.Text = "0";
-            }
-            else
-            {
+            } else {
                 xml = new Xml(dataSetPath, dataSetPathSchema);
                 tableList.Items.Clear();
-                foreach (var table in xml.getDataSet().Tables)
-                {
+                foreach (var table in xml.getDataSet().Tables) {
                     tableList.Items.Add(table.ToString());
                 }
                 numOfTables.Text = xml.getDataSet().Tables.Count.ToString();
             }
-            
         }
 
         private void btnSelectXml_Click(object sender, EventArgs e)
@@ -177,7 +181,6 @@ namespace WindowsFormsApp1
                 {
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
-
                 }
             }
 
@@ -187,6 +190,89 @@ namespace WindowsFormsApp1
         private void btnClearDataGridViewRelations_Click(object sender, EventArgs e)
         {
             dataGridViewRelations.Rows.Clear();
+        }
+
+        private void btnExecuteQuery_Click(object sender, EventArgs e)
+        {
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
+
+            var result = from pageA in PageA.AsEnumerable()
+                          join pageADetails in PageADetails.AsEnumerable()
+                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID") into ALLCOLUMNS
+                          select ALLCOLUMNS.CopyToDataTable();
+
+
+
+
+
+            //DataRow[] results = tblPageA.Select("PageADetailID = '5458936f-902e-47b5-8c63-7e4e1b3bdbf5' and ID = 'de44c9e3-5f42-42d3-80b1-6b06c5bd260a'");
+            //dataGridViewRelations.Rows.Clear();
+
+            //DataTable table = tblPageA.Copy();
+            //table.Rows.Clear();
+            ////table.Columns.AddRange(tblPageA.Columns);
+            //foreach (DataRow row in results)
+            //{
+            //    table.Rows.Add(row.ItemArray);
+            //}
+
+
+            //foreach(var column in table.Columns.Cast<DataColumn>()
+            //                     .Select(x => x.ColumnName)
+            //                     .ToArray())
+            //{                
+            //    dataGridViewRelations.Columns.Add(column, column);
+            //}
+
+            ////dataGridViewRelations.Columns.AddRange()
+            ////populateRelationDataGridView(table);
+            ////GetValueByLinq(xml.DataSet);
+            ////populateRelationDataGridView(GetValueByLinq(xml.DataSet));
+
+
+        }
+
+        public DataTable GetValueByLinq(DataSet dataSet)
+        {
+            //https://www.c-sharpcorner.com/blogs/inner-join-and-outer-join-in-datatable-using-linq
+            //Inner join
+            DataTable PageA = dataSet.Tables["PageA"];
+            DataTable PageADetails = dataSet.Tables["PageADetails"];
+
+
+            var JoinResult = (from pageA in PageA.AsEnumerable()
+                              join pageADetails in PageADetails.AsEnumerable()
+                              on pageA.Field<object>("ID") equals pageADetails.Field<object>("PageADetailID")
+                              select new
+                              {
+                                  id = pageA.Field<object>("ID"),
+                                  pageAName = pageA.Field<object>("Name"),
+                                  pageATypeName = pageA.Field<object>("TypeName"),
+                                  pageADetailsName = pageADetails.Field<object>("Name")
+                              }).ToList();
+
+            
+            
+
+
+            //var JoinResults = from results in JoinResult.AsEnumerable()
+            //                  where results.Field<object>("d") == "0.02"
+            //                  ;
+
+            //var JoinResult = (from pageA in PageA.AsEnumerable()
+            //                  join pageADetails in PageADetails.AsEnumerable()
+            //                  on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
+            //                  select new
+            //                  {
+            //                      id = pageA.Field<object>("ID"),
+            //                      pageAName = pageA.Field<object>("Name"),
+            //                      pageATypeName = pageA.Field<object>("TypeName"),
+            //                      pageADetailsName = pageADetails.Field<object>("Name")
+            //                  }).ToList();
+
+
+            return xml.convertListToDataTable(JoinResult);
         }
     }
 }

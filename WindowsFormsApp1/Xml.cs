@@ -29,5 +29,25 @@ namespace WindowsFormsApp1
         {
             return DataSet;
         }
+
+        public DataTable convertListToDataTable<T>(List<T> list)
+        {
+           if (list is null)
+           {
+               throw new ArgumentNullException(nameof(list));
+           }
+
+           DataTable dt = new DataTable();
+           
+            //foreach(var title in list.)
+            //dt.Columns.Add(list.)
+
+           foreach(var item in list)
+           {
+                
+           }
+
+           return dt;
+        }
     }
 }

@@ -1,0 +1,7 @@
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\bin\Release\reportFieldExplorer.exe.config
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\bin\Release\reportFieldExplorer.exe
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\bin\Release\reportFieldExplorer.pdb
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\obj\Release\reportFieldExplorer.csproj.AssemblyReference.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\obj\Release\reportFieldExplorer.csproj.CoreCompileInputs.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\obj\Release\reportFieldExplorer.exe
+C:\Users\themis\source\repos\WindowsFormsApp1\reportFieldExplorer\obj\Release\reportFieldExplorer.pdb
