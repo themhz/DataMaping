@@ -10,3 +10,15 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.AssemblyReference.cache
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\FastMember.dll
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.CopyComplete
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\bin\Debug\FastMember.dll
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.csproj.AssemblyReference.cache
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.csproj.GenerateResource.cache
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.csproj.CoreCompileInputs.cache
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.csproj.CopyComplete
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
