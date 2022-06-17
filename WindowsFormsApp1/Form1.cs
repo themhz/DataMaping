@@ -11,6 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
+using System.Data.Entity;
+using System.Collections;
+
+using System.Linq.Dynamic;
+
+
 
 namespace WindowsFormsApp1
 {
@@ -26,8 +34,8 @@ namespace WindowsFormsApp1
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
 
-            txtXml.Text = dataSetPath = @"C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\data\testReport.xml";
-            txtXsd.Text = dataSetPathSchema = @"C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\data\dsBuildingHeatInsulation.xsd";
+            txtXml.Text = dataSetPath = @"../../data/testReport.xml";
+            txtXsd.Text = dataSetPathSchema = @"../../data/dsBuildingHeatInsulation.xsd";
             readXml();
         
 
@@ -196,20 +204,55 @@ namespace WindowsFormsApp1
         private void btnExecuteQuery_Click(object sender, EventArgs e)
         {
 
-            select_V3();
+            select_V4();
            
         }
+
+        public void select_V4() {
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            //DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
+
+
+            //string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
+
+            var resultDynamic = PageA.AsEnumerable().AsQueryable().Where("new(it[\"ID\"] as TagAlias)").ToList();
+
+
+        }
+
         public void select_V3() {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
-            
-            var result = from pageA in PageA.AsEnumerable()
-                         join pageADetails in PageADetails.AsEnumerable()
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID") into ALLCOLUMNS
-                         select ALLCOLUMNS.CopyToDataTable();
+            DataTable test = new DataTable();
 
-            //DataRow[] dr = result.Select("Thickness =0.35 and RefID1 = '1c79b36c-bc75-4f9f-a02f-d0917c9dfa20'");
+            var joins = from pageA in PageA.AsEnumerable()
+                                        join pageADetails in PageADetails.AsEnumerable()
+                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
+                         select new { pageA, pageADetails };
+
+            foreach(var row in joins) {
+                var t1 = row.pageA;
+                var t2 = row.pageADetails;
+            }
+            //var result = from pageA in PageA.AsEnumerable()
+            //             join pageADetails in PageADetails.AsEnumerable()
+            //             on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
+            //             select new { pageA, pageADetails };
+
+
+
+            //foreach(DataTable dt in result) {
+            //    DataRow[] dr = dt.Select("Thickness = 0.35 and RefID1 = '6416d311-feb1-4f93-b8d8-06faf36a98c7'");
+            //}
+
+            //IEnumerable<DataRow> dtTest = from a in result.AsEnumerable()
+            //           select a;
+
+            //ListtoDataTableConverter ldtc = new ListtoDataTableConverter();
+            //DataTable dt = ldtc.ToDataTable(result);
+            //DataTable test = 
+            //DataRow[] dr = dt.Select("Thickness = 0.35 and RefID1 = '6416d311-feb1-4f93-b8d8-06faf36a98c7'");
 
         }
         public void select_V2() {
@@ -217,7 +260,6 @@ namespace WindowsFormsApp1
 
             DataRow[] dr = PageA.Select("Thickness =0.35 and RefID1 = '1c79b36c-bc75-4f9f-a02f-d0917c9dfa20'");
         }
-
         public void select_V1() {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
@@ -268,6 +310,35 @@ namespace WindowsFormsApp1
 
 
             return xml.convertListToDataTable(JoinResult);
+        }
+
+        public static IQueryable Join(this IQueryable outer, IEnumerable inner, string outerSelector, string innerSelector, string resultsSelector, params object[] values) {
+            if (inner == null) throw new ArgumentNullException("inner");
+            if (outerSelector == null) throw new ArgumentNullException("outerSelector");
+            if (innerSelector == null) throw new ArgumentNullException("innerSelector");
+            if (resultsSelector == null) throw new ArgumentNullException("resultsSelctor");
+
+            LambdaExpression outerSelectorLambda = DynamicExpression.ParseLambda(outer.ElementType,
+                                                                                 null,
+                                                                                 outerSelector,
+                                                                                 values);
+            LambdaExpression innerSelectorLambda = DynamicExpression.ParseLambda(inner.AsQueryable().ElementType, null, innerSelector, values);
+
+            ParameterExpression[] parameters = new ParameterExpression[] {
+            Expression.Parameter(outer.ElementType, "outer"), Expression.Parameter(inner.AsQueryable().ElementType, "inner") };
+            LambdaExpression resultsSelectorLambda = DynamicExpression.ParseLambda(parameters, null, resultsSelector, values);
+
+            return outer.Provider.CreateQuery(
+                Expression.Call(
+                    typeof(Queryable), "Join",
+                    new Type[] { outer.ElementType, inner.AsQueryable().ElementType, outerSelectorLambda.Body.Type, resultsSelectorLambda.Body.Type },
+                    outer.Expression, inner.AsQueryable().Expression, Expression.Quote(outerSelectorLambda), Expression.Quote(innerSelectorLambda), Expression.Quote(resultsSelectorLambda)));
+        }
+
+
+        //The generic overload.
+        public static IQueryable<T> Join<T>(this IQueryable<T> outer, IEnumerable<T> inner, string outerSelector, string innerSelector, string resultsSelector, params object[] values) {
+            return (IQueryable<T>)Join((IQueryable)outer, (IEnumerable)inner, outerSelector, innerSelector, resultsSelector, values);
         }
     }
 }

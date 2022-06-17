@@ -22,3 +22,10 @@ C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.cs
 C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.csproj.CopyComplete
 C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\System.Linq.Dynamic.Core.dll
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\System.Linq.Dynamic.Core.pdb
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\System.Linq.Dynamic.Core.xml
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.dll
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.xml
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.xml
