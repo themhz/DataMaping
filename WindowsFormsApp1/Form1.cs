@@ -34,7 +34,7 @@ namespace WindowsFormsApp1
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
 
-            txtXml.Text = dataSetPath = @"../../data/testReport.xml";
+            txtXml.Text = dataSetPath = @"../../data/dataEnergyBuilding.xml";
             txtXsd.Text = dataSetPathSchema = @"../../data/dsBuildingHeatInsulation.xsd";
             readXml();
         
@@ -204,22 +204,47 @@ namespace WindowsFormsApp1
         private void btnExecuteQuery_Click(object sender, EventArgs e)
         {
 
-            select_V4();
+            select_V5();
            
+        }
+
+        public void select_V5() {
+            string[] query = "PageA.PageADetails".Split('.');
+            //string[] query = "Projects.PageCBuildings.ThermalBridgeCategories".Split('.');
+            //DataTable table = xml.DataSet.Tables[query[0]];
+
+            DataTable table = xml.DataSet.Tables[query[0]].Clone();
+                                xml.DataSet.Tables[query[0]].AsEnumerable()
+                               .Where(s => s.Field<Guid>("ID") == Guid.Parse("5458936f-902e-47b5-8c63-7e4e1b3bdbf5"))
+                               .CopyToDataTable(table, LoadOption.Upsert);
+            
+            //DataRelation dr = xml.DataSet.Relations.Add(table.TableName+"_copy", xml.DataSet.Relations, table.ChildRelations, false);
+
+            //table.ChildRelations.Add(dr);
+            
+            string name = "";
+            for (int i=1;i<query.Length;i++) {
+                name = query[i-1] + "_" + query[i];
+                table = table.ChildRelations[name].ChildTable;
+            }
+            dataGridViewRelations.DataSource = table;
+        }
+
+        public DataTable select(DataTable dt) {
+
+            //DataTable PageA = xml.DataSet.Tables[query];
+            //return PageA;
+            //DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
+            //dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
+
+            return dt;
         }
 
         public void select_V4() {
             DataTable PageA = xml.DataSet.Tables["PageA"];
-            //DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-
-            //string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
-
-            var resultDynamic = PageA.AsEnumerable().AsQueryable().Where("new(it[\"ID\"] as TagAlias)").ToList();
-
-
+            DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
+            dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
         }
-
         public void select_V3() {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
@@ -312,33 +337,8 @@ namespace WindowsFormsApp1
             return xml.convertListToDataTable(JoinResult);
         }
 
-        public static IQueryable Join(this IQueryable outer, IEnumerable inner, string outerSelector, string innerSelector, string resultsSelector, params object[] values) {
-            if (inner == null) throw new ArgumentNullException("inner");
-            if (outerSelector == null) throw new ArgumentNullException("outerSelector");
-            if (innerSelector == null) throw new ArgumentNullException("innerSelector");
-            if (resultsSelector == null) throw new ArgumentNullException("resultsSelctor");
-
-            LambdaExpression outerSelectorLambda = DynamicExpression.ParseLambda(outer.ElementType,
-                                                                                 null,
-                                                                                 outerSelector,
-                                                                                 values);
-            LambdaExpression innerSelectorLambda = DynamicExpression.ParseLambda(inner.AsQueryable().ElementType, null, innerSelector, values);
-
-            ParameterExpression[] parameters = new ParameterExpression[] {
-            Expression.Parameter(outer.ElementType, "outer"), Expression.Parameter(inner.AsQueryable().ElementType, "inner") };
-            LambdaExpression resultsSelectorLambda = DynamicExpression.ParseLambda(parameters, null, resultsSelector, values);
-
-            return outer.Provider.CreateQuery(
-                Expression.Call(
-                    typeof(Queryable), "Join",
-                    new Type[] { outer.ElementType, inner.AsQueryable().ElementType, outerSelectorLambda.Body.Type, resultsSelectorLambda.Body.Type },
-                    outer.Expression, inner.AsQueryable().Expression, Expression.Quote(outerSelectorLambda), Expression.Quote(innerSelectorLambda), Expression.Quote(resultsSelectorLambda)));
-        }
+        
 
 
-        //The generic overload.
-        public static IQueryable<T> Join<T>(this IQueryable<T> outer, IEnumerable<T> inner, string outerSelector, string innerSelector, string resultsSelector, params object[] values) {
-            return (IQueryable<T>)Join((IQueryable)outer, (IEnumerable)inner, outerSelector, innerSelector, resultsSelector, values);
-        }
     }
 }
