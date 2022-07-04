@@ -101,6 +101,10 @@
     <None Include="data\dsBuildingHeatInsulation.xss">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
+    <None Include="data\requirements.docx" />
+    <None Include="data\ΠΑΡΑΔΕΙΓΜΑ ΘΕΜΗ.ctebuilding131" />
+    <None Include="data\ΠΑΡΑΔΕΙΓΜΑ ΘΕΜΗ.ctebuilding131X" />
+    <None Include="data\Τεύχος θερμομονωτικής επαρκειας δομικών στοιχείων και κτηρίου.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -116,6 +120,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\dataEnergyBuilding.xml" />
+    <Content Include="data\dataHeatInsulation.xml" />
     <Content Include="data\testReport.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
