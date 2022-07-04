@@ -34,8 +34,8 @@ namespace WindowsFormsApp1
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
 
-            txtXml.Text = dataSetPath = @"../../data/dataEnergyBuilding.xml";
-            txtXsd.Text = dataSetPathSchema = @"../../data/dsBuildingHeatInsulation.xsd";
+            txtXml.Text = dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
+            txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
             readXml();
         
 
@@ -178,7 +178,7 @@ namespace WindowsFormsApp1
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = @"../../../data";
+                openFileDialog.InitialDirectory = @"C:\Users\themis\Desktop\test";
                 if (ext != "")
                 {
                     openFileDialog.Filter = ext + " files (*." + ext + ")|*." + ext + "|All files (*.*)|*.*";
@@ -204,8 +204,23 @@ namespace WindowsFormsApp1
         private void btnExecuteQuery_Click(object sender, EventArgs e)
         {
 
-            select_V5();
-           
+            Queries queries = new Queries();
+
+            var tables = queries.Anex1(xml);
+            int counter = 0;
+            foreach (var table in tables) {
+                dataGridViewRelations.DataSource = table;
+                counter++;
+                if (counter == 1) {
+                    break; 
+                }
+            }
+            
+            
+
+
+            //select_V4();
+
         }
 
         public void select_V5() {
