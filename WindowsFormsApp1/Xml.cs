@@ -12,10 +12,17 @@ namespace WindowsFormsApp1
         public string XmlPath;
         public string XsdPath;
         public DataSet DataSet;
+        
         public Xml(string xmlPath, string xsdPath)
         {
             XmlPath = xmlPath;
             XsdPath = xsdPath;
+            convertXmlToDataset();
+        }
+
+        public Xml() {
+            XmlPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
+            XsdPath = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
             convertXmlToDataset();
         }
 

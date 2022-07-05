@@ -22,13 +22,13 @@ using System.Linq.Dynamic;
 
 namespace WindowsFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class DataMaper : Form
     {
 
         Xml xml;
         string dataSetPath= "";
         string dataSetPathSchema ="";
-        public Form1()
+        public DataMaper()
         {
             InitializeComponent();
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);

@@ -19,5 +19,13 @@ namespace WindowsFormsApp1 {
 
             return result;
         }
+
+        public DataTable CombineJoin() {
+            DataTable dt = new DataTable();
+
+
+            return null;
+        }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.forms.Childs;
 
 namespace WindowsFormsApp1 {
     public partial class MDIParent1 : Form {
@@ -16,13 +17,6 @@ namespace WindowsFormsApp1 {
             InitializeComponent();
         }
 
-        private void ShowNewForm(object sender, EventArgs e) {
-
-            Form form = new Form1();
-            form.MdiParent = this;
-            form.Text = "DataMaper " + childFormNumber++;
-            form.Show();
-        }
 
         private void OpenFile(object sender, EventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -83,6 +77,32 @@ namespace WindowsFormsApp1 {
             foreach (Form childForm in MdiChildren) {
                 childForm.Close();
             }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e) {
+            Form form = new TableTreeView();
+            form.MdiParent = this;
+            form.Text = "TableTreeView " + childFormNumber++;
+            form.Show();
+        }
+
+
+        private void ShowNewForm(object sender, EventArgs e) {
+            Form form = new DataMaper();
+            form.MdiParent = this;
+            form.Text = "DataMaper " + childFormNumber++;
+            form.Show();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e) {
+            Form form = new Annex1();
+            form.MdiParent = this;
+            form.Text = "Annex1 " + childFormNumber++;
+            form.Show();
         }
     }
 }
