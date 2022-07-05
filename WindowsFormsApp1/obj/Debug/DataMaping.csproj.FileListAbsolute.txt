@@ -29,3 +29,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityF
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.xml
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.MDIParent1.resources
