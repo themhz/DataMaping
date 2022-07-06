@@ -205,21 +205,9 @@ namespace WindowsFormsApp1
         {
 
             Queries queries = new Queries();
-
-            var tables = queries.Anex1(xml);
-            int counter = 0;
-            foreach (var table in tables) {
-                dataGridViewRelations.DataSource = table;
-                counter++;
-                if (counter == 1) {
-                    break; 
-                }
-            }
+            var result = queries.Anex1(xml);
+            dataGridViewRelations.DataSource = result;           
             
-            
-
-
-            //select_V4();
 
         }
 

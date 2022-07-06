@@ -8,24 +8,30 @@ using System.Threading.Tasks;
 namespace WindowsFormsApp1 {
     class Queries {
         
-        public IEnumerable<DataTable> Anex1(Xml xml) {
+        public DataTable Anex1(Xml xml) {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
+          
 
             var result = from pageA in PageA.AsEnumerable()
                          join pageADetails in PageADetails.AsEnumerable()
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID") into ALLCOLUMNS
-                         select ALLCOLUMNS.CopyToDataTable();
+                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
+                         where pageA.Field<String>("Name") == "Διπλή δρομική-ορθοδρομική οπτοπλινθοδομή (6cm - Β ζώνη) (Νέο κτήριο)"
 
-            return result;
+                         select new {
+                             ID = pageA.Field<Guid>("ID"),
+                             BuildingID = pageA.Field<Guid>("BuildingID"),
+                             TypeID = pageA.Field<Guid>("TypeID"),
+                             RecNumber = pageA.Field<String>("RecNumber"),
+                             PageA_Name = pageA.Field<String>("Name"),
+                             pageADetails_Name = pageADetails.Field<String>("Name")
+                         };
+
+
+            return result.CopyToDataTable();
         }
 
-        public DataTable CombineJoin() {
-            DataTable dt = new DataTable();
 
-
-            return null;
-        }
 
     }
 }
