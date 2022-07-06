@@ -34,9 +34,9 @@ namespace WindowsFormsApp1.forms.Childs {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResult.Location = new System.Drawing.Point(12, 103);
+            this.dgvResult.Location = new System.Drawing.Point(12, 98);
             this.dgvResult.Name = "dgvResult";
-            this.dgvResult.Size = new System.Drawing.Size(867, 376);
+            this.dgvResult.Size = new System.Drawing.Size(867, 381);
             this.dgvResult.TabIndex = 0;
             // 
             // Annex1
