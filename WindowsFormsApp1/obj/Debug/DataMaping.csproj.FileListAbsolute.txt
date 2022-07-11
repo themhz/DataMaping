@@ -32,3 +32,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.DataMaper.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.TableTreeView.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.Annex1.resources
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.TestImage.resources

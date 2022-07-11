@@ -19,7 +19,6 @@ namespace WindowsFormsApp1 {
             var result = from pageA in PageA.AsEnumerable()
                          join pageADetails in PageADetails.AsEnumerable()
                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-                         where pageA.Field<String>("Name") == "Διπλή δρομική-ορθοδρομική οπτοπλινθοδομή (6cm - Β ζώνη) (Νέο κτήριο)"
                          select new {
                              ID = pageA.Field<Guid>("ID"),
                              BuildingID = pageA.Field<Guid>("BuildingID"),

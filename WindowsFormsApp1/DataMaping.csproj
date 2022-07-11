@@ -86,6 +86,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </Compile>
+    <Compile Include="forms\Childs\Annex2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Childs\Annex2.Designer.cs">
+      <DependentUpon>Annex2.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Childs\DataMaper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,12 @@
     </Compile>
     <Compile Include="forms\Childs\TableTreeView.Designer.cs">
       <DependentUpon>TableTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Childs\TestImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Childs\TestImage.Designer.cs">
+      <DependentUpon>TestImage.cs</DependentUpon>
     </Compile>
     <Compile Include="ListtoDataTableConverter.cs" />
     <Compile Include="forms\DataExplorer.cs">
@@ -124,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Childs\TableTreeView.resx">
       <DependentUpon>TableTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Childs\TestImage.resx">
+      <DependentUpon>TestImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\DataExplorer.resx">
       <DependentUpon>DataExplorer.cs</DependentUpon>
