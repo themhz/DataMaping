@@ -26,6 +26,8 @@ namespace WindowsFormsApp1.forms.Childs {
         private void InitializeComponent() {
             this.DatabaseTreeView = new System.Windows.Forms.TreeView();
             this.dgvTableRows = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblPath = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTableRows)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,17 +52,37 @@ namespace WindowsFormsApp1.forms.Childs {
             this.dgvTableRows.Size = new System.Drawing.Size(749, 480);
             this.dgvTableRows.TabIndex = 1;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(251, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Βάθος:";
+            // 
+            // lblPath
+            // 
+            this.lblPath.AutoSize = true;
+            this.lblPath.Location = new System.Drawing.Point(298, 75);
+            this.lblPath.Name = "lblPath";
+            this.lblPath.Size = new System.Drawing.Size(0, 13);
+            this.lblPath.TabIndex = 3;
+            // 
             // TableTreeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1001, 601);
+            this.Controls.Add(this.lblPath);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvTableRows);
             this.Controls.Add(this.DatabaseTreeView);
             this.Name = "TableTreeView";
             this.Text = "TableTreeView";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTableRows)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -68,5 +90,7 @@ namespace WindowsFormsApp1.forms.Childs {
 
         private System.Windows.Forms.TreeView DatabaseTreeView;
         private System.Windows.Forms.DataGridView dgvTableRows;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPath;
     }
 }

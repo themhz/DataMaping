@@ -50,8 +50,6 @@ namespace WindowsFormsApp1
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
             this.openXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btnClearDataGridViewRelations = new System.Windows.Forms.Button();
-            this.txtQuery = new System.Windows.Forms.TextBox();
-            this.btnExecuteQuery = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRelations)).BeginInit();
@@ -64,7 +62,7 @@ namespace WindowsFormsApp1
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(430, 2);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(905, 229);
+            this.dataGridView.Size = new System.Drawing.Size(905, 354);
             this.dataGridView.TabIndex = 5;
             // 
             // panel1
@@ -244,31 +242,11 @@ namespace WindowsFormsApp1
             this.btnClearDataGridViewRelations.UseVisualStyleBackColor = true;
             this.btnClearDataGridViewRelations.Click += new System.EventHandler(this.btnClearDataGridViewRelations_Click);
             // 
-            // txtQuery
-            // 
-            this.txtQuery.Location = new System.Drawing.Point(430, 303);
-            this.txtQuery.Multiline = true;
-            this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(414, 71);
-            this.txtQuery.TabIndex = 15;
-            // 
-            // btnExecuteQuery
-            // 
-            this.btnExecuteQuery.Location = new System.Drawing.Point(850, 351);
-            this.btnExecuteQuery.Name = "btnExecuteQuery";
-            this.btnExecuteQuery.Size = new System.Drawing.Size(75, 23);
-            this.btnExecuteQuery.TabIndex = 16;
-            this.btnExecuteQuery.Text = "execute";
-            this.btnExecuteQuery.UseVisualStyleBackColor = true;
-            this.btnExecuteQuery.Click += new System.EventHandler(this.btnExecuteQuery_Click);
-            // 
             // DataMaper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1336, 679);
-            this.Controls.Add(this.btnExecuteQuery);
-            this.Controls.Add(this.txtQuery);
             this.Controls.Add(this.btnClearDataGridViewRelations);
             this.Controls.Add(this.dataGridViewRelations);
             this.Controls.Add(this.panel1);
@@ -281,7 +259,6 @@ namespace WindowsFormsApp1
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRelations)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -306,8 +283,6 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.TextBox txtXsd;
         private System.Windows.Forms.TextBox txtXml;
         private System.Windows.Forms.Button btnClearDataGridViewRelations;
-        private System.Windows.Forms.TextBox txtQuery;
-        private System.Windows.Forms.Button btnExecuteQuery;
     }
 }
 

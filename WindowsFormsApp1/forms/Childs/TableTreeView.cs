@@ -34,11 +34,30 @@ namespace WindowsFormsApp1.forms.Childs {
             DatabaseTreeView.SelectedNode.Nodes.Clear();
             addRowsToDgvTableRows(DatabaseTreeView.SelectedNode.Text);
             List<string> tableRelations = getTableRelations(DatabaseTreeView.SelectedNode.Text);
-            foreach(var table in tableRelations) {
+            lblPath.Text = getParentPath(DatabaseTreeView.SelectedNode);
+            foreach (var table in tableRelations) {
                 DatabaseTreeView.SelectedNode.Nodes.Add(new TreeNode().Text=table);
             }
         }
 
+        private string getParentPath(TreeNode treeNode)
+        {
+            string path = "";
+            TreeNode treenode = treeNode;
+            Stack<TreeNode> treeNodeStack = new Stack<TreeNode>();
+            
+            while (treenode != null && !treeNodeStack.Contains(treenode))
+            {
+                treeNodeStack.Push(treenode);
+                treenode = treenode.Parent;
+            }
+            
+            while(treeNodeStack.Count()>0)
+            {
+                path += treeNodeStack.Pop().Text + (treeNodeStack.Count() > 0 ? " - " : "") ;
+            }
+            return path;
+        }
         private List<string> getTableRelations(string tableName) {                        
             DataSet dataset = xml.getDataSet();
             List<string> tables = new List<string>();

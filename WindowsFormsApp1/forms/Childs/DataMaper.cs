@@ -204,9 +204,9 @@ namespace WindowsFormsApp1
         private void btnExecuteQuery_Click(object sender, EventArgs e)
         {
 
-            Queries queries = new Queries();
-            var result = queries.Anex1(xml);
-            dataGridViewRelations.DataSource = result;           
+            //Queries queries = new Queries();
+            //var result = queries.Anex1(xml);
+            //dataGridViewRelations.DataSource = result;           
             
 
         }

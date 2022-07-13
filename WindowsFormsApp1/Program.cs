@@ -19,8 +19,8 @@ namespace WindowsFormsApp1
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             //Application.Run(new Annex1());
-            //Application.Run(new MDIParent1());
-            Application.Run(new TestImage());
+            Application.Run(new MDIParent1());
+            //Application.Run(new TestImage());
         }
     }
 }
