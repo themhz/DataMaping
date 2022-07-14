@@ -27,7 +27,7 @@ namespace WindowsFormsApp1.forms.Childs {
             this.DatabaseTreeView = new System.Windows.Forms.TreeView();
             this.dgvTableRows = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblPath = new System.Windows.Forms.Label();
+            this.lblPath = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTableRows)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@ namespace WindowsFormsApp1.forms.Childs {
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(251, 75);
+            this.label1.Location = new System.Drawing.Point(248, 89);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 2;
@@ -63,10 +63,12 @@ namespace WindowsFormsApp1.forms.Childs {
             // 
             // lblPath
             // 
-            this.lblPath.AutoSize = true;
-            this.lblPath.Location = new System.Drawing.Point(298, 75);
+            this.lblPath.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblPath.Location = new System.Drawing.Point(295, 89);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(0, 13);
+            this.lblPath.ReadOnly = true;
+            this.lblPath.Size = new System.Drawing.Size(694, 13);
             this.lblPath.TabIndex = 3;
             // 
             // TableTreeView
@@ -91,6 +93,6 @@ namespace WindowsFormsApp1.forms.Childs {
         private System.Windows.Forms.TreeView DatabaseTreeView;
         private System.Windows.Forms.DataGridView dgvTableRows;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblPath;
+        private System.Windows.Forms.TextBox lblPath;
     }
 }
