@@ -44,7 +44,7 @@ namespace WindowsFormsApp1 {
             // Create a new table if the input table is null.
             table = table ?? new DataTable(typeof(T).Name);
 
-            // Initialize the ordinal map and extend the table schema based on type T.
+            // Initialize the ordinal map and extend the table schema based on type T.   --1
             table = ExtendTable(table, typeof(T));
 
             // Enumerate the source sequence and load the object values into rows.
@@ -99,7 +99,7 @@ namespace WindowsFormsApp1 {
 
             if (instance.GetType() != typeof(T)) {
                 // If the instance is derived from T, extend the table schema
-                // and get the properties and fields.
+                // and get the properties and fields.   --2
                 ExtendTable(table, instance.GetType());
                 fi = instance.GetType().GetFields();
                 pi = instance.GetType().GetProperties();
@@ -112,10 +112,16 @@ namespace WindowsFormsApp1 {
             }
 
             foreach (PropertyInfo p in pi) {
-                values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+                try
+                {
+                    values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+                }
+                catch{}
+                
             }
 
             // Return the property and field values of the instance.
+            //return values.Take(values.Count() - 1).ToArray();
             return values;
         }
 

@@ -33,7 +33,30 @@ namespace WindowsFormsApp1 {
             return result.CopyToDataTable();
         }
 
-      
+
+        public DataTable Anex2(Xml xml)
+        {
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
+                
+
+            var result = (from pageA in PageA.AsEnumerable()
+                          join pageADetails in PageADetails.AsEnumerable()
+                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")                          
+                          select new { pageA, pageADetails }).AsQueryable();
+
+
+            //string selectStatement = " new ( ID = pageA.Field<Guid>(\"ID\"),  PageA_Name = pageA.Field<String>(\"Name\"))";
+            string selectStatement = "new (pageA.ID, pageADetails.Name, pageA.RecNumber)";
+            IQueryable iq = result.Select(selectStatement);
+
+
+
+            return iq.ToDynamicArray().CopyToDataTable();
+
+
+        }
+
 
 
 
