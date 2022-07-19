@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Linq.Expressions;
-using System.Linq.Dynamic.Core;
+//using System.Linq.Dynamic;
 using System.Data.Entity;
 using System.Collections;
 

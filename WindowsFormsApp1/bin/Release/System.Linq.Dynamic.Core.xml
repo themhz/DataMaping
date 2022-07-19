@@ -216,6 +216,14 @@
             Initializes the <see cref="T:System.Linq.Dynamic.Core.DynamicClassFactory"/> class.
             </summary>
         </member>
+        <member name="M:System.Linq.Dynamic.Core.DynamicClassFactory.CreateGenericComparerType(System.Type,System.Type)">
+            <summary>
+            Create a GenericComparerType based on the GenericType and an instance of a <see cref="T:System.Collections.IComparer"/>.
+            </summary>
+            <param name="comparerGenericType">The GenericType</param>
+            <param name="comparerType">The <see cref="T:System.Collections.IComparer"/> instance</param>
+            <returns>Type</returns>
+        </member>
         <member name="M:System.Linq.Dynamic.Core.DynamicClassFactory.CreateType(System.Collections.Generic.IList{System.Linq.Dynamic.Core.DynamicProperty},System.Boolean)">
             <summary>
             The CreateType method creates a new data class with a given set of public properties and returns the System.Type object for the newly created class. If a data class with an identical sequence of properties has already been created, the System.Type object for this class is returned.        

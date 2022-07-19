@@ -12,7 +12,7 @@ namespace WindowsFormsApp1
         public string XmlPath;
         public string XsdPath;
         public DataSet DataSet;
-        
+
         public Xml(string xmlPath, string xsdPath)
         {
             XmlPath = xmlPath;
@@ -20,7 +20,8 @@ namespace WindowsFormsApp1
             convertXmlToDataset();
         }
 
-        public Xml() {
+        public Xml()
+        {
             XmlPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
             XsdPath = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
             convertXmlToDataset();
@@ -39,22 +40,22 @@ namespace WindowsFormsApp1
 
         public DataTable convertListToDataTable<T>(List<T> list)
         {
-           if (list is null)
-           {
-               throw new ArgumentNullException(nameof(list));
-           }
+            if (list is null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
 
-           DataTable dt = new DataTable();
-           
+            DataTable dt = new DataTable();
+
             //foreach(var title in list.)
             //dt.Columns.Add(list.)
 
-           foreach(var item in list)
-           {
-                
-           }
+            foreach (var item in list)
+            {
 
-           return dt;
+            }
+
+            return dt;
         }
     }
 }

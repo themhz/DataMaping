@@ -12,7 +12,23 @@ namespace WindowsFormsApp1 {
     class Queries {
         public delegate int delAdd(int Num1, int Num2);
 
-        public DataTable Anex1(Xml xml) {
+        public DataTable Start(Xml xml)
+        {
+            return Anex3(xml);
+        }
+
+        public DataTable Test(Xml xml)
+        {
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+
+
+            var result = PageA.AsEnumerable().AsQueryable()                        
+             .ToArray();
+
+            return result.CopyToDataTable();
+        }
+
+            public DataTable Anex1(Xml xml) {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
@@ -38,11 +54,49 @@ namespace WindowsFormsApp1 {
         {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-                
+
+
+            IQueryable result = (from pageA in PageA.AsEnumerable()                         
+                          select new { pageA }).AsQueryable();
+            
+            string selectStatement = "new (pageA.ID, pageA.RecNumber)";
+            string selectStatement2 = "new (pageADetails.ID, pageADetails.Name)";
+            string selectStatement3 = "new (pageA.ID, pageA.RecNumber, pageADetails.ID)";
+
+            var Query1 = from pageA in (PageA.AsEnumerable().AsQueryable()
+                        .Where(x => x.Field<Guid>("ID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08")))
+                        select new { pageA }
+            ;
+            var Query2 = from pageADetails in (PageADetails.AsEnumerable().AsQueryable()
+                        .Where(x => x.Field<Guid>("PageADetailID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08")))
+                         select new { pageADetails }
+            ;
+
+            var Query3 = from pageA in PageA.AsEnumerable().AsQueryable()
+                         join pageADetails in PageADetails.AsEnumerable().AsQueryable()
+                         .Where(x => x.Field<Guid>("PageADetailID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08"))
+                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")                         
+                         select new { pageA, pageADetails};
+
+
+
+            //return Query3.ToDynamicArray().CopyToDataTable();
+            return Query3.Select(selectStatement3).ToDynamicArray().CopyToDataTable();
+            
+
+        }
+
+
+
+        public DataTable Anex3(Xml xml)
+        {
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
+
 
             var result = (from pageA in PageA.AsEnumerable()
                           join pageADetails in PageADetails.AsEnumerable()
-                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")                          
+                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
                           select new { pageA, pageADetails }).AsQueryable();
 
 
@@ -54,11 +108,7 @@ namespace WindowsFormsApp1 {
 
             return iq.ToDynamicArray().CopyToDataTable();
 
-
         }
-
-
-
 
     }
 }

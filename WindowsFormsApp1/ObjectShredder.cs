@@ -111,14 +111,14 @@ namespace WindowsFormsApp1 {
                 values[_ordinalMap[f.Name]] = f.GetValue(instance);
             }
 
-            foreach (PropertyInfo p in pi) {
-                try
-                {
-                    values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
-                }
-                catch{}
+            //foreach (PropertyInfo p in pi) {
+            //    try
+            //    {
+            //        values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+            //    }
+            //    catch{}
                 
-            }
+            //}
 
             // Return the property and field values of the instance.
             //return values.Take(values.Count() - 1).ToArray();
@@ -132,7 +132,9 @@ namespace WindowsFormsApp1 {
                 if (!_ordinalMap.ContainsKey(f.Name)) {
                     // Add the field as a column in the table if it doesn't exist
                     // already.
-                    DataColumn dc = table.Columns.Contains(f.Name) ? table.Columns[f.Name] : table.Columns.Add(f.Name, f.FieldType);
+                    //DataColumn dc = table.Columns.Contains(f.Name) ? table.Columns[f.Name] : table.Columns.Add(f.Name, f.FieldType);
+                    DataColumn dc = table.Columns.Contains(f.Name) ? table.Columns[f.Name] : table.Columns.Add(f.Name, Nullable.GetUnderlyingType(f.FieldType) ?? f.FieldType);
+
                     // Add the field to the ordinal map.
                     _ordinalMap.Add(f.Name, dc.Ordinal);
                 }
@@ -141,8 +143,8 @@ namespace WindowsFormsApp1 {
                 if (!_ordinalMap.ContainsKey(p.Name)) {
                     // Add the property as a column in the table if it doesn't exist
                     // already.
-                    DataColumn dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
-                        : table.Columns.Add(p.Name, p.PropertyType);
+                    //DataColumn dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]: table.Columns.Add(p.Name, p.PropertyType);
+                    DataColumn dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name] : table.Columns.Add(p.Name, Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType);
 
                     // Add the property to the ordinal map.
                     _ordinalMap.Add(p.Name, dc.Ordinal);
