@@ -27,7 +27,8 @@ namespace WindowsFormsApp1
         public JToken From { get; set; }
         public JToken Filter { get; set; }
         public JToken Join { get; set; }
-
+        public Xml Xml { get; set; }
+        
         public DynamicQuery(Xml xml, string jsonQuery)
         {
             JObject JsonToken = getJson(jsonQuery);
@@ -36,6 +37,7 @@ namespace WindowsFormsApp1
             From = (JToken)Query["from"];
             Filter = (JToken)Query["filter"];
             Join = (JToken)Query["join"];
+            Xml = xml;
         }
         public DataTable innerJoinTwoTables(Xml xml, string jsonQuery)
         {
