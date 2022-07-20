@@ -12,19 +12,36 @@ namespace WindowsFormsApp1.forms.Childs {
     public partial class Annex1 : Form {
         public Annex1() {
             InitializeComponent();
-            Run();
+            
         }
 
         private void Run() {
             Xml xml = new Xml();
 
             Queries q = new Queries();
-            var result = q.Start(xml);          
+            var result = q.Start(xml, txtJsonQuery.Text);          
 
             dgvResult.DataSource = result;
 
             //This is added because I cant remove the last column from the Datasource in the result set.
-            //dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
+            if(dgvResult.Columns.Count - 1>=0)
+                dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Run();
+                lblMessage.Text = "query executed successfully";
+                lblMessage.ForeColor = Color.Green;
+            }
+            catch(Exception ex)
+            {
+                lblMessage.Text = ex.Message;
+                lblMessage.ForeColor = Color.Red;
+            }
+            
         }
     }
 }

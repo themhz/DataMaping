@@ -98,3 +98,5 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMap
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.AssemblyReference.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml

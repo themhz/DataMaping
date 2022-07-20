@@ -7,108 +7,27 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Linq.Dynamic.Core;
 using System.Linq.Dynamic;
+using System.Reflection;
 
 namespace WindowsFormsApp1 {
-    class Queries {
+    class Queries
+    {
         public delegate int delAdd(int Num1, int Num2);
 
-        public DataTable Start(Xml xml)
+        public DataTable Start(Xml xml, string jsonQuery)
         {
-            return Anex3(xml);
-        }
+            //return Test(xml);
+            DynamicQuery dq = new DynamicQuery();
 
-        public DataTable Test(Xml xml)
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-
-
-            var result = PageA.AsEnumerable().AsQueryable()                        
-             .ToArray();
-
-            return result.CopyToDataTable();
-        }
-
-            public DataTable Anex1(Xml xml) {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-            var result = from pageA in PageA.AsEnumerable()
-                         join pageADetails in PageADetails.AsEnumerable()
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-                         select new {
-                             ID = pageA.Field<Guid>("ID"),
-                             BuildingID = pageA.Field<Guid>("BuildingID"),
-                             TypeID = pageA.Field<Guid>("TypeID"),
-                             RecNumber = pageA.Field<String>("RecNumber"),
-                             PageA_Name = pageA.Field<String>("Name"),
-                             pageADetails_Name = pageADetails.Field<String>("Name")
-                         };
-
-
-
-            return result.CopyToDataTable();
+            //return dq.innerJoinTwoTables(xml);
+            //dq.getJson();
+            return dq.innerJoinTwoTables(xml, jsonQuery);
         }
 
 
-        public DataTable Anex2(Xml xml)
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-
-            IQueryable result = (from pageA in PageA.AsEnumerable()                         
-                          select new { pageA }).AsQueryable();
-            
-            string selectStatement = "new (pageA.ID, pageA.RecNumber)";
-            string selectStatement2 = "new (pageADetails.ID, pageADetails.Name)";
-            string selectStatement3 = "new (pageA.ID, pageA.RecNumber, pageADetails.ID)";
-
-            var Query1 = from pageA in (PageA.AsEnumerable().AsQueryable()
-                        .Where(x => x.Field<Guid>("ID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08")))
-                        select new { pageA }
-            ;
-            var Query2 = from pageADetails in (PageADetails.AsEnumerable().AsQueryable()
-                        .Where(x => x.Field<Guid>("PageADetailID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08")))
-                         select new { pageADetails }
-            ;
-
-            var Query3 = from pageA in PageA.AsEnumerable().AsQueryable()
-                         join pageADetails in PageADetails.AsEnumerable().AsQueryable()
-                         .Where(x => x.Field<Guid>("PageADetailID") == Guid.Parse("fc12703b-41b8-4c3c-94c1-d9a0c5e83f08"))
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")                         
-                         select new { pageA, pageADetails};
-
-
-
-            //return Query3.ToDynamicArray().CopyToDataTable();
-            return Query3.Select(selectStatement3).ToDynamicArray().CopyToDataTable();
-            
-
-        }
-
-
-
-        public DataTable Anex3(Xml xml)
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-
-            var result = (from pageA in PageA.AsEnumerable()
-                          join pageADetails in PageADetails.AsEnumerable()
-                          on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-                          select new { pageA, pageADetails }).AsQueryable();
-
-
-            //string selectStatement = " new ( ID = pageA.Field<Guid>(\"ID\"),  PageA_Name = pageA.Field<String>(\"Name\"))";
-            string selectStatement = "new (pageA.ID, pageADetails.Name, pageA.RecNumber)";
-            IQueryable iq = result.Select(selectStatement);
-
-
-
-            return iq.ToDynamicArray().CopyToDataTable();
-
-        }
-
+       
+       
+       
+        
     }
 }
