@@ -84,6 +84,7 @@
       <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Linq.Dynamic.Core, Version=1.2.18.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -119,13 +120,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomLINQtoDataSetMethods.cs" />
+    <Compile Include="classes\CustomLINQtoDataSetMethods.cs" />
     <Compile Include="data\dsBuildingHeatInsulation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DynamicLibrary.cs" />
+    <Compile Include="classes\DynamicLibrary.cs" />
     <Compile Include="DynamicQuery.cs" />
     <Compile Include="forms\Childs\Annex2.cs">
       <SubType>Form</SubType>
@@ -157,19 +158,19 @@
     <Compile Include="forms\Childs\TestImage.Designer.cs">
       <DependentUpon>TestImage.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListtoDataTableConverter.cs" />
+    <Compile Include="classes\ListtoDataTableConverter.cs" />
     <Compile Include="forms\DataExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\DataExplorer.Designer.cs">
       <DependentUpon>DataExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="ObjectShredder.cs" />
+    <Compile Include="classes\ObjectShredder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries.cs" />
-    <Compile Include="Statics.cs" />
-    <Compile Include="Tests.cs" />
+    <Compile Include="classes\Statics.cs" />
+    <Compile Include="classes\Tests.cs" />
     <Compile Include="Xml.cs" />
     <EmbeddedResource Include="forms\Childs\DataMaper.resx">
       <DependentUpon>DataMaper.cs</DependentUpon>

@@ -50,7 +50,7 @@ namespace WindowsFormsApp1
 
 
 
-            return result.CopyToDataTable2();
+            return result.CopyToDataTable();
         }
 
 
@@ -63,8 +63,8 @@ namespace WindowsFormsApp1
             IQueryable result = (from pageA in PageA.AsEnumerable()
                                  select new { pageA }).AsQueryable();
 
-            string selectStatement = "new (pageA.ID, pageA.RecNumber)";
-            string selectStatement2 = "new (pageADetails.ID, pageADetails.Name)";
+            //string selectStatement = "new (pageA.ID, pageA.RecNumber)";
+            //string selectStatement2 = "new (pageADetails.ID, pageADetails.Name)";
             string selectStatement3 = "new (pageA.ID, pageA.RecNumber, pageADetails.ID)";
 
             var Query1 = from pageA in (PageA.AsEnumerable().AsQueryable()
@@ -85,7 +85,7 @@ namespace WindowsFormsApp1
 
 
             //return Query3.ToDynamicArray().CopyToDataTable();
-            return Query3.Select(selectStatement3).ToDynamicArray().CopyToDataTable2();
+            return Query3.Select(selectStatement3).ToDynamicArray().CopyToDataTable();
 
 
         }
@@ -106,7 +106,7 @@ namespace WindowsFormsApp1
                         select new { filerecord = filerow, db = dbrow };
 
 
-            return joins.CopyToDataTable2();
+            return joins.CopyToDataTable();
         }
 
         public DataTable Annex3(Xml xml)

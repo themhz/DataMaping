@@ -15,19 +15,49 @@ namespace WindowsFormsApp1 {
         public delegate int delAdd(int Num1, int Num2);
 
         public DataTable Start(Xml xml, string jsonQuery)
-        {
-            //return Test(xml);
-            DynamicQuery dq = new DynamicQuery();
+        {         
+            DynamicQuery dq = new DynamicQuery(xml, jsonQuery);
+            var joins = dq.Join;
+            if (joins != null)
+            {
+                switch (joins.Count())
+                {
+                    case 0:
+                        return dq.SimpleSelect();
+                    case 1:
+                        return dq.InnerJoinTwoTables();
+                    case 2:
 
-            //return dq.innerJoinTwoTables(xml);
-            //dq.getJson();
-            return dq.innerJoinTwoTables(xml, jsonQuery);
+                    case 3:
+
+                    case 4:
+
+                    case 5:
+
+                    case 6:
+
+                    case 7:
+
+                    case 8:
+                        break;
+                }
+            }
+            else
+            {
+                return dq.SimpleSelect();
+            }
+            
+
+
+            return new DataTable();
         }
 
 
-       
-       
-       
         
+
+
+
+
+
     }
 }

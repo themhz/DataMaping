@@ -11,15 +11,17 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1.forms.Childs {
     public partial class Annex1 : Form {
         public Annex1() {
-            InitializeComponent();
-            
+            InitializeComponent();            
+            txtJsonQuery.Text = "{\"query\":{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"],\"from\":[\"PageA\", \"PageADetails\"],\"join\":[[\"ID\", \"PageADetailID\"]],\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}}";
         }
 
         private void Run() {
             Xml xml = new Xml();
 
             Queries q = new Queries();
-            var result = q.Start(xml, txtJsonQuery.Text);          
+            var result = q.Start(xml, txtJsonQuery.Text);
+
+
 
             dgvResult.DataSource = result;
 
@@ -28,6 +30,7 @@ namespace WindowsFormsApp1.forms.Childs {
                 dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
         }
 
+       
         private void button1_Click(object sender, EventArgs e)
         {
             try

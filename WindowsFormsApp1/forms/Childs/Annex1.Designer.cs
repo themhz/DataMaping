@@ -60,6 +60,7 @@ namespace WindowsFormsApp1.forms.Childs {
             this.txtJsonQuery.Location = new System.Drawing.Point(12, 29);
             this.txtJsonQuery.Multiline = true;
             this.txtJsonQuery.Name = "txtJsonQuery";
+            this.txtJsonQuery.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJsonQuery.Size = new System.Drawing.Size(960, 149);
             this.txtJsonQuery.TabIndex = 2;
             // 

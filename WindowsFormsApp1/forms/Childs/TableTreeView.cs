@@ -10,19 +10,19 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1.forms.Childs {
     public partial class TableTreeView : Form {
-        Xml xml;
+        Xml Xml;
         String dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
         String dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
 
         public TableTreeView() {
             InitializeComponent();
-            xml = new Xml(dataSetPath, dataSetPathSchema);
+            Xml = new Xml(dataSetPath, dataSetPathSchema);
             loadTreeView();            
         }
 
         public void loadTreeView() {
             
-            DataSet dataset = xml.getDataSet();
+            DataSet dataset = Xml.GetDataSet();
             foreach(var table in dataset.Tables) {
                 TreeNode node = new TreeNode();
                 node.Text = table.ToString();
@@ -59,7 +59,7 @@ namespace WindowsFormsApp1.forms.Childs {
             return path;
         }
         private List<string> getTableRelations(string tableName) {                        
-            DataSet dataset = xml.getDataSet();
+            DataSet dataset = Xml.GetDataSet();
             List<string> tables = new List<string>();
             foreach (var table in dataset.Tables[tableName].ChildRelations) {
                 tables.Add(((System.Data.DataRelation)table).ChildTable.ToString());
@@ -69,7 +69,7 @@ namespace WindowsFormsApp1.forms.Childs {
         }
 
         private void addRowsToDgvTableRows(string tableName) {
-           DataSet dataset = xml.getDataSet();
+           DataSet dataset = Xml.GetDataSet();
            var table = dataset.Tables[tableName];
                       
            populateDataGridView(table);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -17,45 +18,33 @@ namespace WindowsFormsApp1
         {
             XmlPath = xmlPath;
             XsdPath = xsdPath;
-            convertXmlToDataset();
+            ConvertXmlToDataset();
         }
 
         public Xml()
         {
-            XmlPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
-            XsdPath = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
-            convertXmlToDataset();
+            
+
+            //XmlPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
+            //XsdPath = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
+
+            XmlPath = ConfigurationManager.AppSettings["XmlPath"];
+            XsdPath = ConfigurationManager.AppSettings["XsdPath"];
+
+            ConvertXmlToDataset();
         }
 
-        private void convertXmlToDataset()
+        private void ConvertXmlToDataset()
         {
             DataSet = new DataSet();
             DataSet.ReadXmlSchema(XsdPath);
             DataSet.ReadXml(XmlPath);
         }
-        public DataSet getDataSet()
+        public DataSet GetDataSet()
         {
             return DataSet;
         }
 
-        public DataTable convertListToDataTable<T>(List<T> list)
-        {
-            if (list is null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-
-            DataTable dt = new DataTable();
-
-            //foreach(var title in list.)
-            //dt.Columns.Add(list.)
-
-            foreach (var item in list)
-            {
-
-            }
-
-            return dt;
-        }
+  
     }
 }
