@@ -86,19 +86,8 @@ namespace WindowsFormsApp1
             {
                 iq = Query1.Select(selectStatement);
             }
-
-            //return LINQToDataTable(iq.AsEnumerable());
-
-            //return iq.AsEnumerable().ToDynamicArray().CopyToDataTable2();
-
-            DataTable dt = new DataTable();
-            //dt.BeginLoadData();
-            //foreach (DataRow dr in iq.AsEnumerable().CopyToDataTable().Rows)
-            //{
-            //    dt.LoadDataRow(dr.ItemArray,true);
-            //}
-            //dt.EndLoadData();
-            return iq.AsEnumerable().ToDynamicArray().CopyToDataTable();
+            
+            return LINQToDataTable(iq.AsEnumerable());
 
         }
         public DataTable InnerJoinTwoTables()
@@ -121,7 +110,7 @@ namespace WindowsFormsApp1
                 where2 = Table2.Select("");
 
             var Query1 = from table1 in where1.AsEnumerable().AsQueryable()
-                         join table2 in where2.AsEnumerable() on table1.Field<Guid>("ID") equals table2.Field<Guid>("PageADetailID")
+                         join table2 in where2.AsEnumerable() on table1.Field<Guid>(Join[0][0].ToString()) equals table2.Field<Guid>(Join[0][1].ToString())
                          select new { table1, table2 };
            
             string selectStatement = "new ("+ getSelects(Select, From) + ")";
@@ -129,27 +118,40 @@ namespace WindowsFormsApp1
 
 
             return LINQToDataTable(iq.AsEnumerable());
-        }
-
-       
-       
+        }                    
         public DataTable InnerJoinThreeTables()
         {
-            DataTable Table1 = Xml.DataSet.Tables["PageBLevels"];
-            DataTable Table2 = Xml.DataSet.Tables["HorizontalLevels"];
-            DataTable Table3 = Xml.DataSet.Tables["HorizontalLevelElements"];
+            DataTable Table1 = Xml.DataSet.Tables[Join[0][0].ToString().Split('.')[0]];
+            DataTable Table2 = Xml.DataSet.Tables[Join[0][1].ToString().Split('.')[0]];
+            DataTable Table3 = Xml.DataSet.Tables[Join[1][0].ToString().Split('.')[0]];
+            DataTable Table4 = Xml.DataSet.Tables[Join[1][1].ToString().Split('.')[0]];
 
-            var where1 = Table1.Select("RecNumber = '01'");
-            var where2 = Table2.Select("");
-            var where3 = Table3.Select("GroupIndex = '2'");
+            DataRow[] where1 = null;
+            DataRow[] where2 = null;
+            DataRow[] where3 = null;
 
-            var query =  from table1 in where1.AsEnumerable().AsQueryable()
-                         join table2 in where2.AsEnumerable() on table1.Field<Guid>("ID") equals table2.Field<Guid>("PageBLevelID")
-                         join table3 in where3.AsEnumerable() on table2.Field<Guid>("ID") equals table3.Field<Guid>("HorizontalLevelID")
-                         select new { table1, table2, table3 };
+            if (Filter.Count() > 0)
+                where1 = Table1.Select(Filter[0].ToString().Replace(From[0].ToString() + ".", ""));
+            else
+                where1 = Table1.Select("");
 
-            string selectStatement = "new (table1.Name, table1.RecNumber, table1.CategoryName, table2.Name as table2Name, table2.LevelName, table3.IsLeftSideElementEmpty, table3.GroupIndex)";
-            IQueryable iq = query.Select(selectStatement);
+            if (Filter.Count() > 1)
+                where2 = Table2.Select(Filter[1].ToString().Replace(From[1].ToString() + ".", ""));
+            else
+                where2 = Table2.Select("");
+
+            if (Filter.Count() > 2)
+                where3 = Table3.Select(Filter[2].ToString().Replace(From[2].ToString() + ".", ""));
+            else
+                where3 = Table3.Select("");
+
+            var Query1 = from table1 in where1.AsEnumerable().AsQueryable()
+                         join table2 in where2.AsEnumerable() on table1.Field<Guid>(Join[0][0].ToString()) equals table2.Field<Guid>(Join[0][1].ToString())
+                         join table3 in where3.AsEnumerable() on table2.Field<Guid>(Join[1][0].ToString()) equals table3.Field<Guid>(Join[1][1].ToString())
+                         select new { table1, table2 };
+
+            string selectStatement = "new (" + getSelects(Select, From) + ")";
+            IQueryable iq = Query1.Select(selectStatement);
 
 
             return LINQToDataTable(iq.AsEnumerable());

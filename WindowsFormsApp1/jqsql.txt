@@ -1,0 +1,121 @@
+{
+  "query": {
+    "select": [
+      "PageAOpeningsPerLevel.ID",
+      "PageAOpeningsPerLevel.OpeningLevelName",
+      "PageAOpenings.ID",
+      "PageAOpenings.Name",
+    ],
+    "from": [
+      "PageAOpeningsPerLevel",
+      "PageAOpenings",
+      "PageAOpeningElements",
+    ],
+    "join": [
+      [
+        "PageA.ID",
+        "PageADetails.PageADetailID"
+      ]
+    ],
+    "filter": [
+      "PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'"
+    ]
+  }
+}
+-------------------------------------------------
+{
+  "query": {
+   
+"select": [
+      "*" 
+    ],
+    
+"from": ["PageA" ],
+  }
+}
+-------------------------------------------------
+{
+  "query": {
+   
+"select": [
+      "PageA.ID",
+      "PageA.Name",
+      "PageA.RecNumber",
+    ],
+    
+"from": ["PageA" ],
+  }
+}
+-------------------------------------------------
+{
+  "query": {
+   
+"select": [
+      "PageA.ID",
+      "PageA.Name",
+      "PageA.RecNumber",
+    ],
+    
+"from": ["PageA"],
+
+ "filter": [
+      "PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'"
+    ]
+  }
+}
+
+
+------------------------------------------------
+    {"query":{
+    "select":["PageA.ID", "PageA.Name", "PageA.RecNumber", "PageADetails.Density", "PageADetails.Index"],
+    "from":["PageA", "PageADetails"],
+    "join":[["PageA.ID", "PageADetails.PageADetailID"]],
+    "filter":["PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'"]
+}}
+-----------------------------------
+
+{
+  "query": {
+    "select": [
+      "PageA.ID",
+      "PageA.Name",
+      "PageA.RecNumber",
+      "PageADetails.Density",
+      "PageADetails.Index"
+    ],
+    "from": [
+      "PageA",
+      "PageADetails"
+    ],
+    "join": [
+      [
+        "PageA.ID",
+        "PageADetails.PageADetailID"
+      ]
+    ],
+    "filter": [
+      "PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'"
+    ]
+  }
+}
+-----------------------------------
+
+
+{
+  "query": {
+    "select": [
+      "PageA.ID",
+      "PageA.Name",
+      "PageA.RecNumber",
+    ],
+    "from": [
+      "PageA",
+    ],
+    "join": [
+    ],
+    "filter": [
+      "PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'"
+    ]
+  }
+}
+

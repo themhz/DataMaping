@@ -16,11 +16,8 @@ namespace System.Linq.Dynamic
     public static class DynamicQueryableExtender
     {
 
-        //public static class DynamicExpressionExtender
-        //{
-
-
-        public static IQueryable<DataRow> WhereByMapping(this IQueryable<DataRow> source, DataRow parentSource, Dictionary<string, string> dictcolumnMapping)
+        
+        public static IQueryable<DataRow> WhereByMapping2(this IQueryable<DataRow> source, DataRow parentSource, Dictionary<string, string> dictcolumnMapping)
         {
             foreach (var map in dictcolumnMapping)
             {

@@ -8,11 +8,31 @@ using System.Data.Entity;
 using System.Linq.Dynamic.Core;
 using System.Linq.Dynamic;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 
 namespace WindowsFormsApp1
 {
     class Tests
     {
+
+        public DataTable Test2(Xml xml)
+        {
+            DataTable Table1 = xml.DataSet.Tables["PageA"];
+            DataTable Table2 = xml.DataSet.Tables["PageADetails"];
+
+            Dictionary<string, string> dictcolumnMapping = new Dictionary<string, string>();
+            dictcolumnMapping.Add("ID", "PageADetailID");
+
+
+            var joins = from filerow in Table1.AsEnumerable()
+                        from dbrow in Table2.AsEnumerable().AsQueryable().WhereByMapping2(filerow, dictcolumnMapping)
+                        select new { dbrow };
+
+
+            //var result = joins.Select("new (dbrow.ID,dbrow.PageADetailsID)").AsEnumerable().CopyToDataTable();
+            return new DataTable();
+        }
+
 
         public DataTable Test(Xml xml)
         {

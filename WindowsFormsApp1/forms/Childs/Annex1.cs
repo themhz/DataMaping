@@ -21,7 +21,8 @@ namespace WindowsFormsApp1.forms.Childs {
             Queries q = new Queries();
             var result = q.Start(xml, txtJsonQuery.Text);
 
-
+            //Tests t = new Tests();
+            //var result = t.Test2(xml);
 
             dgvResult.DataSource = result;
 
