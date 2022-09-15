@@ -113,7 +113,11 @@ namespace WindowsFormsApp1 {
 
             foreach (PropertyInfo p in pi)
             {             
-                values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+                if(p.Name.ToLower() != "item")
+                {
+                    values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+                }
+                
             }
 
             // Return the property and field values of the instance.

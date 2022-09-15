@@ -25,6 +25,7 @@ namespace WindowsFormsApp1
     public partial class DataMaper : Form
     {
 
+
         Xml Xml;
         string dataSetPath= "";
         string dataSetPathSchema ="";
@@ -47,7 +48,7 @@ namespace WindowsFormsApp1
            
             DataTable dataTable = Xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
             fieldList.Items.Clear();
-            dataGridView.Columns.Clear();
+            dataGridView.Columns.Clear();            
             foreach (DataColumn dataColumn in dataTable.Columns)
             {
                 fieldList.Items.Add(dataColumn.ColumnName + " ("+ dataColumn.DataType + ")");
@@ -64,7 +65,7 @@ namespace WindowsFormsApp1
            
             var table = listbox.SelectedItem.ToString().Split('_');
 
-            DataTable dataTable = Xml.GetDataSet().Tables[table[1]];
+            DataTable dataTable = Xml.GetDataSet().Tables[table[1]];            
             dataGridViewRelations.Columns.Clear();
             if (dataTable != null)
             {                
@@ -80,21 +81,21 @@ namespace WindowsFormsApp1
 
         private void populateFieldRelationList(DataTable dataTable)
         {
-            fieldRelationList.Items.Clear();
-
-            for(int i=0;i< dataTable.ParentRelations.Count; i++)
+            fieldRelationList.Items.Clear();            
+            for (int i=0;i< dataTable.ParentRelations.Count; i++)
             {
                 foreach(var column in dataTable.ParentRelations[i].ChildColumns)
                 {
                     for(int j=0;j< dataTable.ParentRelations[i].ParentColumns.Count();j++)
                     {
-                            fieldRelationList.Items.Add(dataTable.ParentRelations[i].ParentTable.TableName + "->"+ dataTable.ParentRelations[i].ParentColumns[j].ToString() + " - " + column.ColumnName);
+                       fieldRelationList.Items.Add(dataTable.ParentRelations[i].ParentTable.TableName + "->"+ dataTable.ParentRelations[i].ParentColumns[j].ToString() + " - " + column.ColumnName);
                     }                                        
                 }            
             }
         }
         private void populateRelationsList(DataTable dataTable)
         {
+            
             relationsList.Items.Clear();
             foreach(var relations in dataTable.ChildRelations)
             {
@@ -104,7 +105,7 @@ namespace WindowsFormsApp1
 
         private void populateDataGridView(DataTable dataTable)
         {
-            dataGridView.Rows.Clear();
+            dataGridView.Rows.Clear();            
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 dataGridView.Rows.Add(dataRow.ItemArray);
@@ -152,9 +153,23 @@ namespace WindowsFormsApp1
             } else {
                 Xml = new Xml(dataSetPath, dataSetPathSchema);
                 tableList.Items.Clear();
+
+                List<string> tables = new List<string>();
+                
+
                 foreach (var table in Xml.GetDataSet().Tables) {
-                    tableList.Items.Add(table.ToString());
+                    tables.Add(table.ToString());
+                    //tableList.Items.Add(table.ToString());
                 }
+                tables.Sort();
+
+
+                foreach (string table in tables)
+                {                   
+                    tableList.Items.Add(table);
+                }
+
+
                 numOfTables.Text = Xml.GetDataSet().Tables.Count.ToString();
             }
         }
@@ -337,7 +352,7 @@ namespace WindowsFormsApp1
             //                  }).ToList();
 
 
-            return JoinResult.CopyToDataTable();
+            return JoinResult.CopyToDataTable2();
         }
 
         

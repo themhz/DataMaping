@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\CustomLINQtoDataSetMethods.cs" />
+    <Compile Include="classes\QueryEngine.cs" />
     <Compile Include="data\dsBuildingHeatInsulation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

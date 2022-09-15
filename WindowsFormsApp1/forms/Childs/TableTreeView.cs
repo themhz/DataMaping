@@ -23,7 +23,14 @@ namespace WindowsFormsApp1.forms.Childs {
         public void loadTreeView() {
             
             DataSet dataset = Xml.GetDataSet();
-            foreach(var table in dataset.Tables) {
+            List<string> tables = new List<string>();
+            foreach (var table in dataset.Tables)
+            {
+                tables.Add(table.ToString());
+            }
+            tables.Sort();
+
+            foreach (var table in tables) {
                 TreeNode node = new TreeNode();
                 node.Text = table.ToString();
                 DatabaseTreeView.Nodes.Add(node);
@@ -35,7 +42,15 @@ namespace WindowsFormsApp1.forms.Childs {
             addRowsToDgvTableRows(DatabaseTreeView.SelectedNode.Text);
             List<string> tableRelations = getTableRelations(DatabaseTreeView.SelectedNode.Text);
             lblPath.Text = getParentPath(DatabaseTreeView.SelectedNode);
-            foreach (var table in tableRelations) {
+
+            List<string> tables = new List<string>();
+            foreach (var table in tableRelations)
+            {
+                tables.Add(table.ToString());
+            }
+            tables.Sort();
+
+            foreach (var table in tables) {
                 DatabaseTreeView.SelectedNode.Nodes.Add(new TreeNode().Text=table);
             }
         }

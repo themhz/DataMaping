@@ -39,6 +39,7 @@ namespace WindowsFormsApp1
             DataSet = new DataSet();
             DataSet.ReadXmlSchema(XsdPath);
             DataSet.ReadXml(XmlPath);
+            
         }
         public DataSet GetDataSet()
         {
