@@ -30,15 +30,16 @@ namespace WindowsFormsApp1.forms.Childs {
             DataTable Table4 = xml.DataSet.Tables["PageAOpeningElements"];
 
             var result = qe.Select(Table1, Table2, "ID=PageBLevelID", "");
-
             xml.DataSet.Tables.Add(result);
+
             var result2 = qe.Select(result, Table3, "PageAOpeningsPerLevel_PageAOpeningID=ID", "");
+            xml.DataSet.Tables.Add(result2);
 
-            var result3 = qe.Select(result2, Table4, "PageAOpeningsPerLevel_PageAOpeningID=ID", "");
-
+            var result3 = qe.Select(result2, Table4, "PageAOpenings_ID=PageAOpeningID", "");
+            //xml.DataSet.Tables.Add(result3);
             //result = t.Select(xml, "PageBLevels", "PageAOpeningsPerLevel", "ID=PageBLevelID", "");
 
-            dgvResult.DataSource = result2;
+            dgvResult.DataSource = result3;
 
             //This is added because I cant remove the last column from the Datasource in the result set.
             if(dgvResult.Columns.Count - 1>=0)
