@@ -36,12 +36,8 @@ namespace WindowsFormsApp1.forms.Childs {
             DataTable Table3 = xml.DataSet.Tables[tables[2]];
             DataTable Table4 = xml.DataSet.Tables[tables[3]];
 
-            var result = qe.Select(Table1, Table2, "ID=PageBLevelID", "");
-            
-
-            result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");
-            
-
+            var result = qe.Select(Table1, Table2, "ID=PageBLevelID", "");            
+            result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");            
             result = qe.Select(result, Table4, "PageAOpenings.ID=PageAOpeningID", "");
             
 
