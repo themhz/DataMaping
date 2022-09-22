@@ -15,7 +15,7 @@ namespace WindowsFormsApp1.forms.Childs
     {
         public DataTable Select(DataTable Table1, DataTable Table2, string joinFields, string filter)
         {
-
+            joinFields = joinFields.Replace(".", "_");
             string[] joins = joinFields.Split('=');
             //var result = Table1.Select("Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)'");
             //var result = Table1;

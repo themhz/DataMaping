@@ -39,10 +39,10 @@ namespace WindowsFormsApp1.forms.Childs {
             var result = qe.Select(Table1, Table2, "ID=PageBLevelID", "");
             
 
-            result = qe.Select(result, Table3, "PageAOpeningsPerLevel_PageAOpeningID=ID", "");
+            result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");
             
 
-            result = qe.Select(result, Table4, "PageAOpenings_ID=PageAOpeningID", "");
+            result = qe.Select(result, Table4, "PageAOpenings.ID=PageAOpeningID", "");
             
 
             for(int i=0; i < result.Columns.Count; i++)
