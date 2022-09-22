@@ -24,8 +24,7 @@ namespace WindowsFormsApp1.forms.Childs
                          select new { table1, table2 };
 
             string columns = SelectColumns(Table1, Table2);
-
-            string selectStatement = "new (" + columns + ")";            
+            string selectStatement = "new (" + columns + ")";
 
             IQueryable iq = Query1.AsQueryable().Select(selectStatement);
 
