@@ -25,13 +25,11 @@ namespace WindowsFormsApp1.forms.Childs
 
             string columns = SelectColumns(Table1, Table2);
 
-            string selectStatement = "new (" + columns + ")";
-            //string selectStatement = "new (table1.ID, table1.BuildingID, table1.TypeID, table1.RecNumber, table2.ID as table2_ID )";
+            string selectStatement = "new (" + columns + ")";            
 
             IQueryable iq = Query1.AsQueryable().Select(selectStatement);
 
-            DataTable dt = LINQToDataTable(iq.AsEnumerable());
-            //dt.TableName = Table1.TableName + "_" + Table2.TableName;
+            DataTable dt = LINQToDataTable(iq.AsEnumerable());            
             dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
             return dt;
         }
@@ -59,7 +57,6 @@ namespace WindowsFormsApp1.forms.Childs
 
             return columns;
         }
-
         public DataTable LINQToDataTable<T>(IEnumerable<T> varlist)
         {
             DataTable dtReturn = new DataTable();
