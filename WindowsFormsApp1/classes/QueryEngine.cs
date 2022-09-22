@@ -31,8 +31,8 @@ namespace WindowsFormsApp1.forms.Childs
             IQueryable iq = Query1.AsQueryable().Select(selectStatement);
 
             DataTable dt = LINQToDataTable(iq.AsEnumerable());
-            dt.TableName = Table1.TableName + "_" + Table2.TableName;
-
+            //dt.TableName = Table1.TableName + "_" + Table2.TableName;
+            dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
             return dt;
         }
 
@@ -47,7 +47,7 @@ namespace WindowsFormsApp1.forms.Childs
                     if (i == 0)
                         columns = "table1." + colName.ToString() + " as " + Table1.TableName + "_" + colName.ColumnName;
                     else
-                        columns += ",table1." + colName.ToString() + " as " + Table1.TableName + "_" + colName.ColumnName;                    
+                        columns += ",table1." + colName.ToString() + " as " + Table1.TableName + "_" + colName.ColumnName;
                 }
                 i++;
             }
