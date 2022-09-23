@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,33 +13,64 @@ namespace WindowsFormsApp1.forms.Childs {
     public partial class Annex1 : Form {
         public Annex1() {
             InitializeComponent();            
-            txtJsonQuery.Text = "{\"query\":{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"],\"from\":[\"PageA\", \"PageADetails\"],\"join\":[[\"ID\", \"PageADetailID\"]],\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}}";
+            txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
+                "\"from\":[\"PageA\", \"PageADetails\"]," +
+                "\"join\":[" +
+                "[\"PageA.ID\", \"PageADetails.PageADetailID\"]," +
+                "]," +
+                "\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}";
             Run();
         }   
 
         private void Run() {
             Xml xml = new Xml();
+            string query = "{\"query\":" + txtJsonQuery.Text + "}";
+            JObject json = JObject.Parse(query);
+            JToken from = json["query"]["from"];
 
-            //Queries q = new Queries();
-            //var result = q.Start(xml, txtJsonQuery.Text);
-
-            //Tests t = new Tests();
             List<String> tables = new List<string>();
-            tables.Add("PageBLevels");
-            tables.Add("PageAOpeningsPerLevel");
-            tables.Add("PageAOpenings");
-            tables.Add("PageAOpeningElements");
+            foreach(string table in from)
+            {
+                tables.Add(table);
+            }
+            //tables.Add("PageBLevels");
+            //tables.Add("PageAOpeningsPerLevel");
+            //tables.Add("PageAOpenings");
+            //tables.Add("PageAOpeningElements");
 
             
             QueryEngine qe = new QueryEngine();
-            DataTable Table1 = xml.DataSet.Tables[tables[0]];
-            DataTable Table2 = xml.DataSet.Tables[tables[1]];
-            DataTable Table3 = xml.DataSet.Tables[tables[2]];
-            DataTable Table4 = xml.DataSet.Tables[tables[3]];
+            List<DataTable> dataTables = new List<DataTable>();
+            JToken joins = json["query"]["join"];
+            DataTable result = null;
+                        
+            for(int i=0; i<joins.Count();i++)
+            {
+                if (i == 0)
+                {
+                    
+                    //joinpart[0].Split('.')[1]
+                    DataTable Table1 = xml.DataSet.Tables[tables[0]];
+                    DataTable Table2 = xml.DataSet.Tables[tables[1]];
+                    result = qe.Select(Table1, Table2, joins[i][0].ToString().Split('.')[1] + "=" + joins[i][1].ToString().Split('.')[1], "");
+                }
+                else
+                {
+                    DataTable table = xml.DataSet.Tables[tables[i]];
 
-            var result = qe.Select(Table1, Table2, "ID=PageBLevelID", "");            
-            result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=PageAOpenings.ID", "");            
-            result = qe.Select(result, Table4, "PageAOpenings.ID=PageAOpeningID", "");
+                    result = qe.Select(result, table, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");
+                }
+                
+                
+            }
+            //DataTable Table1 = xml.DataSet.Tables[tables[0]];
+            //DataTable Table2 = xml.DataSet.Tables[tables[1]];
+            //DataTable Table3 = xml.DataSet.Tables[tables[2]];
+            //DataTable Table4 = xml.DataSet.Tables[tables[3]];
+
+            
+                //result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");            
+                //result = qe.Select(result, Table4, "PageAOpenings.ID=PageAOpeningID", "");
             
 
             for(int i=0; i < result.Columns.Count; i++)

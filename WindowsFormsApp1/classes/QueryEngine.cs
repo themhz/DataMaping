@@ -17,8 +17,7 @@ namespace WindowsFormsApp1.forms.Childs
         {
             joinFields = joinFields.Replace(".", "_");
             string[] joins = joinFields.Split('=');
-            //var result = Table1.Select("Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)'");
-            //var result = Table1;
+
             var Query1 = from table1 in Table1.AsEnumerable()
                          join table2 in Table2.AsEnumerable() on table1.Field<Guid>(joins[0]) equals table2.Field<Guid>(joins[1])
                          select new { table1, table2 };
@@ -27,9 +26,9 @@ namespace WindowsFormsApp1.forms.Childs
             string selectStatement = "new (" + columns + ")";
 
             IQueryable iq = Query1.AsQueryable().Select(selectStatement);
-
             DataTable dt = LINQToDataTable(iq.AsEnumerable());            
             dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
+
             return dt;
         }
 
