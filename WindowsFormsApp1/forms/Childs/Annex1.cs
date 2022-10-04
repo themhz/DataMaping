@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,15 +13,28 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1.forms.Childs {
     public partial class Annex1 : Form {
         public Annex1() {
-            InitializeComponent();            
-            txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
-                "\"from\":\"PageA\"," +
-                "\"join\":[" +
-                "[\"PageA.ID\", \"PageADetails.PageADetailID\"]," +
-                "]," +
-                "\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}";
+            InitializeComponent();
+            //txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
+            //    "\"from\":\"PageA\"," +
+            //    "\"join\":[" +
+            //    "[\"PageA.ID\", \"PageADetails.PageADetailID\"]," +
+            //    "]," +
+            //    "\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}";
+
+            string text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
+                                "\"from\":\"ThermalBridgeCategories\"," +
+                                "\"join\":[" +
+                                "[\"ThermalBridgeLevels.ThermalBridgeCategoryID\", \"ThermalBridgeCategories.ID\"]," +
+                                "[\"ThermalBridgeElements.ThermalBridgeLevelID\", \"ThermalBridgeLevels.ID\"]," +
+                                "]}";
+
+            //string json = JsonConvert.SerializeObject(text, Formatting.Indented);
+            JToken json = JToken.Parse(text);
+
+            txtJsonQuery.Text = json.ToString(Formatting.Indented);
+            ;
             //Select();
-        }   
+        }
 
         private void Run() {
             Xml xml = new Xml();
