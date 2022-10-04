@@ -13,7 +13,16 @@ namespace WindowsFormsApp1.forms.Childs
 {
     public class QueryEngine
     {
-        public DataTable Select(DataTable Table1, DataTable Table2, string joinFields, string filter)
+        public DataTable Select(DataTable table, string filter)
+        {
+            var Query1 = from table1 in table.AsEnumerable()                         
+                         select new { table1 };
+            
+            DataTable dt = table.Select(filter).CopyToDataTable();
+            dt.TableName = dt.TableName;
+            return dt;
+        }
+        public DataTable Join(DataTable Table1, DataTable Table2, string joinFields, string filter)
         {
             joinFields = joinFields.Replace(".", "_");
             string[] joins = joinFields.Split('=');

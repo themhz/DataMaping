@@ -100,3 +100,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.dll
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.AssemblyReference.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.SuggestedBindingRedirects.cache
