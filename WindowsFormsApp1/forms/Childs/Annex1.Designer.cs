@@ -37,16 +37,19 @@ namespace WindowsFormsApp1.forms.Childs {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResult.Location = new System.Drawing.Point(12, 209);
+            this.dgvResult.Location = new System.Drawing.Point(16, 257);
+            this.dgvResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvResult.Name = "dgvResult";
-            this.dgvResult.Size = new System.Drawing.Size(960, 354);
+            this.dgvResult.RowHeadersWidth = 51;
+            this.dgvResult.Size = new System.Drawing.Size(1556, 436);
             this.dgvResult.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(898, 2);
+            this.button1.Location = new System.Drawing.Point(1197, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 1;
             this.button1.Text = "execute";
             this.button1.UseVisualStyleBackColor = true;
@@ -57,11 +60,12 @@ namespace WindowsFormsApp1.forms.Childs {
             this.txtJsonQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtJsonQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.txtJsonQuery.Location = new System.Drawing.Point(12, 29);
+            this.txtJsonQuery.Location = new System.Drawing.Point(16, 36);
+            this.txtJsonQuery.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtJsonQuery.Multiline = true;
             this.txtJsonQuery.Name = "txtJsonQuery";
             this.txtJsonQuery.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtJsonQuery.Size = new System.Drawing.Size(960, 149);
+            this.txtJsonQuery.Size = new System.Drawing.Size(1555, 182);
             this.txtJsonQuery.TabIndex = 2;
             // 
             // lblMessage
@@ -70,21 +74,23 @@ namespace WindowsFormsApp1.forms.Childs {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(16, 181);
+            this.lblMessage.Location = new System.Drawing.Point(21, 223);
+            this.lblMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(19, 13);
+            this.lblMessage.Size = new System.Drawing.Size(21, 16);
             this.lblMessage.TabIndex = 3;
             this.lblMessage.Text = "__";
             // 
             // Annex1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 575);
+            this.ClientSize = new System.Drawing.Size(1588, 708);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.txtJsonQuery);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dgvResult);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Annex1";
             this.Text = "LinQReports";
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
