@@ -71,14 +71,17 @@ namespace WindowsFormsApp1.forms.Childs
                 string selectStatement = "new (";
                 for (int i = 0; i < columns.Length; i++)
                 {
-                    if (i == 0)
+                    if (columns[i].ToString() != "Item")
                     {
-                        selectStatement += "table." + columns[i].Replace("\r\n","").Replace("\"","").Trim();
+                        if (i == 0)
+                        {
+                            selectStatement += "table." + columns[i].Replace("\r\n", "").Replace("\"", "").Trim();
 
-                    }
-                    else
-                    {
-                        selectStatement += "," + "table." + columns[i].Replace("\r\n", "").Replace("\"", "").Trim();
+                        }
+                        else
+                        {
+                            selectStatement += "," + "table." + columns[i].Replace("\r\n", "").Replace("\"", "").Trim();
+                        }
                     }
 
                 }
@@ -116,8 +119,10 @@ namespace WindowsFormsApp1.forms.Childs
                         {
                             colType = colType.GetGenericArguments()[0];
                         }
-
-                        dtReturn.Columns.Add(new DataColumn(pi.Name, colType));
+                        if (pi.Name.ToString() != "Item")
+                        {
+                            dtReturn.Columns.Add(new DataColumn(pi.Name, colType));
+                        }
                     }
                 }
 

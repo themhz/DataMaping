@@ -1,0 +1,78 @@
+//Select in the same tree level joins and where claws
+{
+  "select": [
+    "*"
+  ],
+  "from": "PageBLevels",
+  "join": [
+    [
+      "HorizontalLevels.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+    [
+      "OpaqueVerticalElementTotals.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+  ],
+"where":"PageBLevels_Name = 'ισόγειο' and OpaqueVerticalElementTotals_Area>10"
+}
+
+//Select with same tree level joins
+{
+  "select": [
+    "*"
+  ],
+  "from": "PageBLevels",
+  "join": [
+    [
+      "HorizontalLevels.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+    [
+      "OpaqueVerticalElementTotals.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+  ]
+}
+
+
+//Select with join and where implementation
+{
+  "select": [
+    "ThermalBridgeCategories_ID",
+    "ThermalBridgeCategories_Name",
+    "ThermalBridgeCategories_IsEmtyRow",
+  ],
+  "from": "ThermalBridgeCategories",
+  "join": [
+    [
+      "ThermalBridgeLevels.ThermalBridgeCategoryID",
+      "ThermalBridgeCategories.ID"
+    ],
+    [
+      "ThermalBridgeElements.ThermalBridgeLevelID",
+      "ThermalBridgeLevels.ID"
+    ]
+  ],
+"where":"ThermalBridgeCategories_ID = 'ffabbceb-2c2e-4248-82cc-cc222f5c582f'"
+}
+
+//Select with join implementation
+{
+  "select": [
+    "ThermalBridgeCategories_ID",
+    "ThermalBridgeCategories_Name",
+    "ThermalBridgeCategories_IsEmtyRow",
+  ],
+  "from": "ThermalBridgeCategories",
+  "join": [
+    [
+      "ThermalBridgeLevels.ThermalBridgeCategoryID",
+      "ThermalBridgeCategories.ID"
+    ],
+    [
+      "ThermalBridgeElements.ThermalBridgeLevelID",
+      "ThermalBridgeLevels.ID"
+    ]
+  ]
+}
