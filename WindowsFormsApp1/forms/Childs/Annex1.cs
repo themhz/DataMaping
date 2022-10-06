@@ -193,8 +193,10 @@ namespace WindowsFormsApp1.forms.Childs {
             string where = "";
             if (json["where"] != null)
                 where = json["where"].ToString();
+            DataTable dt = result.Select(where).CopyToDataTable();
 
-            dgvResult.DataSource = result.Select(where).CopyToDataTable();
+            
+            dgvResult.DataSource = qe.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim()); 
 
             #region Comments
 
@@ -225,5 +227,7 @@ namespace WindowsFormsApp1.forms.Childs {
             //    dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
             #endregion Comments
         }
+
+        
     }
 }

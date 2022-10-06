@@ -15,7 +15,7 @@ namespace WindowsFormsApp1.forms.Childs
     {
         public DataTable Select(DataTable table)
         {
-            
+
             return table;
         }
         public DataTable Join(DataTable Table1, DataTable Table2, string joinFields, string filter)
@@ -31,7 +31,7 @@ namespace WindowsFormsApp1.forms.Childs
             string selectStatement = "new (" + columns + ")";
 
             IQueryable iq = Query1.AsQueryable().Select(selectStatement);
-            DataTable dt = LINQToDataTable(iq.AsEnumerable());            
+            DataTable dt = LINQToDataTable(iq.AsEnumerable());
             dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
 
             return dt;
@@ -60,6 +60,38 @@ namespace WindowsFormsApp1.forms.Childs
 
             return columns;
         }
+        public DataTable FilterColumns(DataTable Table, String select="")
+        {
+            var query = from table in Table.AsEnumerable().AsQueryable()
+                        select new { table };
+
+            if (select.Trim() != "*" && select.Trim() != "")
+            {                
+                string[] columns = select.Split(',');
+                string selectStatement = "new (";
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        selectStatement += "table." + columns[i].Replace("\r\n","").Replace("\"","").Trim();
+
+                    }
+                    else
+                    {
+                        selectStatement += "," + "table." + columns[i].Replace("\r\n", "").Replace("\"", "").Trim();
+                    }
+
+                }
+                selectStatement += ")";
+                return LINQToDataTable(query.Select(selectStatement).AsEnumerable());
+            }
+            
+
+
+            return Table;
+        }
+
+
         public DataTable LINQToDataTable<T>(IEnumerable<T> varlist)
         {
             DataTable dtReturn = new DataTable();
