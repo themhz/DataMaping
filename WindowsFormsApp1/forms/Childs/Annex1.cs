@@ -21,6 +21,22 @@ namespace WindowsFormsApp1.forms.Childs {
             //    "]," +
             //    "\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}";
 
+            //{
+            //    "select": [
+            //      "PageA.ID",
+            //        "PageA.Name",
+            //        "PageA.RecNumber",
+            //        "PageADetails.Density",
+            //        "PageADetails.Index"
+            //      ],
+            //      "from": "PageBLevels",
+            //      "join": [
+            //        ["PageAOpeningsPerLevel.PageBLevelID","PageBLevels.ID"],
+            //        ["PageAOpenings.ID","PageAOpeningsPerLevel.PageAOpeningID"],
+            //        ["PageAOpeningElements.PageAOpeningID","PageAOpenings.ID"]
+            //      ]
+            //    }
+
             string text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
                                 "\"from\":\"ThermalBridgeCategories\"," +
                                 "\"join\":[" +
@@ -30,9 +46,8 @@ namespace WindowsFormsApp1.forms.Childs {
 
             //string json = JsonConvert.SerializeObject(text, Formatting.Indented);
             JToken json = JToken.Parse(text);
-
             txtJsonQuery.Text = json.ToString(Formatting.Indented);
-            ;
+            
             //Select();
         }
 
@@ -92,7 +107,7 @@ namespace WindowsFormsApp1.forms.Childs {
                 result.Columns[i].ColumnName = result.Columns[i].ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
             }
 
-            dgvResult.DataSource = result;
+            dgvResult.DataSource = result.Select();
 
             //This is added because I cant remove the last column from the Datasource in the result set.
             if(dgvResult.Columns.Count - 1>=0)
@@ -118,63 +133,70 @@ namespace WindowsFormsApp1.forms.Childs {
         private void Select()
         {
 
-//            {
-//                "select":["PageA.ID", "PageA.Name", "PageA.RecNumber", "PageADetails.Density", "PageADetails.Index"],
-//"from":"ThermalBridgeCategories",
-//"join":[
-//["ThermalBridgeLevels.ThermalBridgeCategoryID", "ThermalBridgeCategories.ID"],
-//["ThermalBridgeElements.ThermalBridgeLevelID", "ThermalBridgeLevels.ID"],
-//]
-//}
+            //{
+            //"select":["PageA.ID", "PageA.Name", "PageA.RecNumber", "PageADetails.Density", "PageADetails.Index"],
+            //"from":"ThermalBridgeCategories",
+            //"join":[
+            //["ThermalBridgeLevels.ThermalBridgeCategoryID", "ThermalBridgeCategories.ID"],
+            //["ThermalBridgeElements.ThermalBridgeLevelID", "ThermalBridgeLevels.ID"],
+            //]
+            //}
             Xml xml = new Xml();
             JObject json = JObject.Parse(txtJsonQuery.Text);
 
             QueryEngine qe = new QueryEngine();
             string from = json["from"].ToString();
             DataTable selector = xml.DataSet.Tables[from];
-            DataTable result = qe.Select(selector, "");
+            DataTable result = qe.Select(selector);
 
             
             
             JToken joins = json["join"];
-            
 
-            for (int i = 0; i < joins.Count(); i++)
+            if (joins != null)
             {
-                if (i == 0)
+                for (int i = 0; i < joins.Count(); i++)
                 {
-                    if(joins[i][0].ToString().Split('.')[0].ToString() == from)
+                    if (i == 0)
                     {
-                        DataTable Table1 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
-                        DataTable Table2 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
-                        result = qe.Join(Table1, Table2, joins[i][0].ToString().Split('.')[1] + "=" + joins[i][1].ToString().Split('.')[1], "");
-                    }
-                    else if(joins[i][1].ToString().Split('.')[0].ToString() == from)
-                    {
-                        DataTable Table1 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
-                        DataTable Table2 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
-                        result = qe.Join(Table1, Table2, joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
+                        if (joins[i][0].ToString().Split('.')[0].ToString() == from)
+                        {
+                            DataTable Table1 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
+                            DataTable Table2 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
+                            result = qe.Join(Table1, Table2, joins[i][0].ToString().Split('.')[1] + "=" + joins[i][1].ToString().Split('.')[1], "");
+                        }
+                        else if (joins[i][1].ToString().Split('.')[0].ToString() == from)
+                        {
+                            DataTable Table1 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
+                            DataTable Table2 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
+                            result = qe.Join(Table1, Table2, joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
+                        }
+                        else
+                        {
+                            //there was an error in your select
+                        }
+
                     }
                     else
                     {
-                        //there was an error in your select
+
+                        DataTable table = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
+                        result = qe.Join(result, table, joins[i][1].ToString().Split('.')[0].ToString() + "_" + joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
                     }
-                    
                 }
-                else
+                foreach (DataColumn col in result.Columns)
                 {
-                    
-                    DataTable table = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];                                            
-                    result = qe.Join(result, table, joins[i][1].ToString().Split('.')[0].ToString() + "_" + joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
+                    col.ColumnName = col.ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
                 }
-
             }
 
-            foreach(DataColumn col in result.Columns)
-            {
-                col.ColumnName = col.ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
-            }
-            dgvResult.DataSource = result;
+            string where = "";
+            if (json["where"] != null)
+                where = json["where"].ToString();
+
+            dgvResult.DataSource = result.Select(where).CopyToDataTable();
+
+            #region Comments
 
             ////Queries q = new Queries();
             ////var result = q.Start(xml, txtJsonQuery.Text);
@@ -201,6 +223,7 @@ namespace WindowsFormsApp1.forms.Childs {
             ////This is added because I cant remove the last column from the Datasource in the result set.
             //if (dgvResult.Columns.Count - 1 >= 0)
             //    dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
+            #endregion Comments
         }
     }
 }
