@@ -88,3 +88,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataM
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.AssemblyReference.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.SuggestedBindingRedirects.cache

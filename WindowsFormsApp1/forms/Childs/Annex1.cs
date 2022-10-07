@@ -9,9 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace WindowsFormsApp1.forms.Childs {
     public partial class Annex1 : Form {
+       
         public Annex1() {
             InitializeComponent();
             //txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
@@ -37,7 +39,7 @@ namespace WindowsFormsApp1.forms.Childs {
             //      ]
             //    }
 
-            string text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
+            string text = "{\"select\":[\"*\"]," +
                                 "\"from\":\"ThermalBridgeCategories\"," +
                                 "\"join\":[" +
                                 "[\"ThermalBridgeLevels.ThermalBridgeCategoryID\", \"ThermalBridgeCategories.ID\"]," +
@@ -48,7 +50,7 @@ namespace WindowsFormsApp1.forms.Childs {
             JToken json = JToken.Parse(text);
             txtJsonQuery.Text = json.ToString(Formatting.Indented);
             
-            //Select();
+            Select();
         }
 
         private void Run() {
@@ -113,21 +115,31 @@ namespace WindowsFormsApp1.forms.Childs {
             if(dgvResult.Columns.Count - 1>=0)
                 dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
         }
+   
 
-       
+
         private void button1_Click(object sender, EventArgs e)
         {
+            
+            //Form activParent = this.MdiParent;
+            
             try
             {
-                Select();
-                lblMessage.Text = "query executed successfully";
-                lblMessage.ForeColor = Color.Green;
+                Select();                
+                lblStatus.Text = "query executed successfully";
+                lblStatus.ForeColor = Color.Green;
+                //MDIParent1.Self.toolStripStatusLabel.Text = "query executed successfully";                
+                //MDIParent1.Self.toolStripStatusLabel.ForeColor = Color.Green;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                lblMessage.Text = ex.Message;
-                lblMessage.ForeColor = Color.Red;
-            }            
+                lblStatus.Text = ex.Message;
+                lblStatus.ForeColor = Color.Red;
+                //MDIParent1.Self.toolStripStatusLabel.Text = ex.Message;                
+                //MDIParent1.Self.toolStripStatusLabel.ForeColor = Color.Red;
+
+
+            }
         }
 
         private void Select()
@@ -179,9 +191,34 @@ namespace WindowsFormsApp1.forms.Childs {
                     }
                     else
                     {
+                        string table1 = joins[i][0].ToString().Split('.')[0].ToString();
+                        string table1Key = joins[i][0].ToString().Split('.')[1].ToString();
+                        string table2 = joins[i][1].ToString().Split('.')[0].ToString();
+                        string table2Key = joins[i][1].ToString().Split('.')[1].ToString();
 
-                        DataTable table = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
-                        result = qe.Join(result, table, joins[i][1].ToString().Split('.')[0].ToString() + "_" + joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
+                        //"ThermalBridgeElements.ThermalBridgeLevelID",
+                        //"ThermalBridgeLevels.ID"
+
+                        
+                        
+
+
+                        DataTable table = xml.DataSet.Tables[table1];
+                        //result = qe.Join(result, table, table1 + "_" + table1Key + "=" + table2Key, "");
+
+                        if (joins[i - 1][0].ToString().Split('.')[0].ToString() == table2)
+                        {
+                            //DataTable table = xml.DataSet.Tables[table1];
+                            result = qe.Join(result, table, table2 + "_" + table2Key + "=" + table1Key, "");
+                        }
+                        else
+                        {
+                            table = xml.DataSet.Tables[table2];
+                            result = qe.Join(result, table, table1 + "_" + table1Key + "=" + table2Key, "");
+
+                        }
+
+
                     }
                 }
                 foreach (DataColumn col in result.Columns)
@@ -194,9 +231,16 @@ namespace WindowsFormsApp1.forms.Childs {
             if (json["where"] != null)
                 where = json["where"].ToString();
             DataTable dt = result.Select(where).CopyToDataTable();
+            dt = qe.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim());
+            if (json["sort"] != null)
+            {
+                string sort = json["sort"].ToString();
+                dt.DefaultView.Sort = sort;
+            }
 
-            
-            dgvResult.DataSource = qe.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim()); 
+
+            dgvResult.Columns.Clear();            
+            dgvResult.DataSource = dt; 
 
             #region Comments
 
@@ -227,7 +271,5 @@ namespace WindowsFormsApp1.forms.Childs {
             //    dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
             #endregion Comments
         }
-
-        
     }
 }

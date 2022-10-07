@@ -12,9 +12,10 @@ using WindowsFormsApp1.forms.Childs;
 namespace WindowsFormsApp1 {
     public partial class MDIParent1 : Form {
         private int childFormNumber = 0;
-
+        public static MDIParent1 Self;
         public MDIParent1() {
             InitializeComponent();
+            Self = this;
         }
 
 
@@ -48,14 +49,7 @@ namespace WindowsFormsApp1 {
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e) {
         }
-
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e) {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e) {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
-        }
+        
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e) {
             LayoutMdi(MdiLayout.Cascade);

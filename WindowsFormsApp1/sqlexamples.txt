@@ -1,3 +1,43 @@
+{
+  "select": [
+    "OpaqueVerticalElementTotals_Area",
+    "OpaqueVeritcalElementsTotals_ElementKind"
+  ],
+  "from": "PageBLevels",
+  "join": [
+    [
+      "HorizontalLevels.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+    [
+      "OpaqueVerticalElementTotals.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+  ],
+"where":"PageBLevels_Name = 'ισόγειο' and OpaqueVerticalElementTotals_Area>10",
+"sort" : "OpaqueVerticalElementTotals_Area asc"
+}
+
+//Select in the same tree level joins and where claws with sort
+{
+  "select": [
+    "*"
+  ],
+  "from": "PageBLevels",
+  "join": [
+    [
+      "HorizontalLevels.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+    [
+      "OpaqueVerticalElementTotals.PageBLevelID",
+      "PageBLevels.ID"
+    ],
+  ],
+"where":"PageBLevels_Name = 'ισόγειο' and OpaqueVerticalElementTotals_Area>10",
+"sort" : "OpaqueVerticalElementTotals_Area asc"
+}
+
 //Select in the same tree level joins and where claws
 {
   "select": [
