@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class Xml
+    public class Xml
     {
         public string XmlPath;
         public string XsdPath;

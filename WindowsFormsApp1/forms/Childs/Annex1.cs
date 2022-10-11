@@ -144,7 +144,7 @@ namespace WindowsFormsApp1.forms.Childs {
 
         private void Select()
         {
-
+           
             //{
             //"select":["PageA.ID", "PageA.Name", "PageA.RecNumber", "PageADetails.Density", "PageADetails.Index"],
             //"from":"ThermalBridgeCategories",
@@ -154,93 +154,11 @@ namespace WindowsFormsApp1.forms.Childs {
             //]
             //}
             Xml xml = new Xml();
-            JObject json = JObject.Parse(txtJsonQuery.Text);
-
             QueryEngine qe = new QueryEngine();
-            string from = json["from"].ToString();
-            DataTable selector = xml.DataSet.Tables[from];
-            DataTable result = qe.Select(selector);
+            DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);
 
-            
-            
-            JToken joins = json["join"];
-
-            if (joins != null)
-            {
-                for (int i = 0; i < joins.Count(); i++)
-                {
-                    if (i == 0)
-                    {
-                        if (joins[i][0].ToString().Split('.')[0].ToString() == from)
-                        {
-                            DataTable Table1 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
-                            DataTable Table2 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
-                            result = qe.Join(Table1, Table2, joins[i][0].ToString().Split('.')[1] + "=" + joins[i][1].ToString().Split('.')[1], "");
-                        }
-                        else if (joins[i][1].ToString().Split('.')[0].ToString() == from)
-                        {
-                            DataTable Table1 = xml.DataSet.Tables[joins[i][1].ToString().Split('.')[0].ToString()];
-                            DataTable Table2 = xml.DataSet.Tables[joins[i][0].ToString().Split('.')[0].ToString()];
-                            result = qe.Join(Table1, Table2, joins[i][1].ToString().Split('.')[1] + "=" + joins[i][0].ToString().Split('.')[1], "");
-                        }
-                        else
-                        {
-                            //there was an error in your select
-                        }
-
-                    }
-                    else
-                    {
-                        string table1 = joins[i][0].ToString().Split('.')[0].ToString();
-                        string table1Key = joins[i][0].ToString().Split('.')[1].ToString();
-                        string table2 = joins[i][1].ToString().Split('.')[0].ToString();
-                        string table2Key = joins[i][1].ToString().Split('.')[1].ToString();
-
-                        //"ThermalBridgeElements.ThermalBridgeLevelID",
-                        //"ThermalBridgeLevels.ID"
-
-                        
-                        
-
-
-                        DataTable table = xml.DataSet.Tables[table1];
-                        //result = qe.Join(result, table, table1 + "_" + table1Key + "=" + table2Key, "");
-
-                        if (joins[i - 1][0].ToString().Split('.')[0].ToString() == table2)
-                        {
-                            //DataTable table = xml.DataSet.Tables[table1];
-                            result = qe.Join(result, table, table2 + "_" + table2Key + "=" + table1Key, "");
-                        }
-                        else
-                        {
-                            table = xml.DataSet.Tables[table2];
-                            result = qe.Join(result, table, table1 + "_" + table1Key + "=" + table2Key, "");
-
-                        }
-
-
-                    }
-                }
-                foreach (DataColumn col in result.Columns)
-                {
-                    col.ColumnName = col.ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
-                }
-            }
-
-            string where = "";
-            if (json["where"] != null)
-                where = json["where"].ToString();
-            DataTable dt = result.Select(where).CopyToDataTable();
-            dt = qe.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim());
-            if (json["sort"] != null)
-            {
-                string sort = json["sort"].ToString();
-                dt.DefaultView.Sort = sort;
-            }
-
-
-            dgvResult.Columns.Clear();            
-            dgvResult.DataSource = dt; 
+            dgvResult.Columns.Clear();
+            dgvResult.DataSource = dt;
 
             #region Comments
 
