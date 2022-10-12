@@ -13,31 +13,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace WindowsFormsApp1.forms.Childs {
     public partial class QueryEditor : Form {
-       
+        public Xml xml;
         public QueryEditor() {
             InitializeComponent();
-            //txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
-            //    "\"from\":\"PageA\"," +
-            //    "\"join\":[" +
-            //    "[\"PageA.ID\", \"PageADetails.PageADetailID\"]," +
-            //    "]," +
-            //    "\"filter\":[\"PageA.Name = 'Δοκός σε ενδιάμεσο όροφο  (6cm - Β ζώνη) (Νέο κτήριο)' and PageA.RecNumber > '0004'\"]}";
-
-            //{
-            //    "select": [
-            //      "PageA.ID",
-            //        "PageA.Name",
-            //        "PageA.RecNumber",
-            //        "PageADetails.Density",
-            //        "PageADetails.Index"
-            //      ],
-            //      "from": "PageBLevels",
-            //      "join": [
-            //        ["PageAOpeningsPerLevel.PageBLevelID","PageBLevels.ID"],
-            //        ["PageAOpenings.ID","PageAOpeningsPerLevel.PageAOpeningID"],
-            //        ["PageAOpeningElements.PageAOpeningID","PageAOpenings.ID"]
-            //      ]
-            //    }
+            xml = new Xml();  
 
             string text = "{\"select\":[\"*\"]," +
                                 "\"from\":\"ThermalBridgeCategories\"," +
@@ -54,7 +33,7 @@ namespace WindowsFormsApp1.forms.Childs {
         }
 
         private void Run() {
-            Xml xml = new Xml();
+            
             string query = "{\"query\":" + txtJsonQuery.Text + "}";
             JObject json = JObject.Parse(query);
             JToken from = json["query"]["from"];
@@ -63,12 +42,7 @@ namespace WindowsFormsApp1.forms.Childs {
             foreach(string table in from)
             {
                 tables.Add(table);
-            }
-            //tables.Add("PageBLevels");
-            //tables.Add("PageAOpeningsPerLevel");
-            //tables.Add("PageAOpenings");
-            //tables.Add("PageAOpeningElements");
-
+            }         
             
             QueryEngine qe = new QueryEngine();
             List<DataTable> dataTables = new List<DataTable>();
@@ -78,8 +52,7 @@ namespace WindowsFormsApp1.forms.Childs {
             for(int i=0; i<joins.Count();i++)
             {
                 if (i == 0)
-                {
-                    
+                {                    
                     //joinpart[0].Split('.')[1]
                     DataTable Table1 = xml.DataSet.Tables[tables[0]];
                     DataTable Table2 = xml.DataSet.Tables[tables[1]];
@@ -91,18 +64,8 @@ namespace WindowsFormsApp1.forms.Childs {
 
                     result = qe.Join(result, table, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");
                 }
-                
-                
-            }
-            //DataTable Table1 = xml.DataSet.Tables[tables[0]];
-            //DataTable Table2 = xml.DataSet.Tables[tables[1]];
-            //DataTable Table3 = xml.DataSet.Tables[tables[2]];
-            //DataTable Table4 = xml.DataSet.Tables[tables[3]];
-
-            
-                //result = qe.Select(result, Table3, "PageAOpeningsPerLevel.PageAOpeningID=ID", "");            
-                //result = qe.Select(result, Table4, "PageAOpenings.ID=PageAOpeningID", "");
-            
+                                
+            }                                   
 
             for(int i=0; i < result.Columns.Count; i++)
             {
@@ -143,23 +106,12 @@ namespace WindowsFormsApp1.forms.Childs {
         }
 
         private void Select()
-        {
-           
-            //{
-            //"select":["PageA.ID", "PageA.Name", "PageA.RecNumber", "PageADetails.Density", "PageADetails.Index"],
-            //"from":"ThermalBridgeCategories",
-            //"join":[
-            //["ThermalBridgeLevels.ThermalBridgeCategoryID", "ThermalBridgeCategories.ID"],
-            //["ThermalBridgeElements.ThermalBridgeLevelID", "ThermalBridgeLevels.ID"],
-            //]
-            //}
-            Xml xml = new Xml();
+        {                     
             QueryEngine qe = new QueryEngine();
-            DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);
-
-            
+            DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);            
             dgvResult.DataSource = dt;            
             MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
+            MDIParent1.Self.txtFileLoadedLocation.Text = $"Data loaded from {xml.XmlPath}";
             #region Comments
 
             ////Queries q = new Queries();

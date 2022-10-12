@@ -34,6 +34,21 @@ namespace WindowsFormsApp1
             ConvertXmlToDataset();
         }
 
+        public void setXml(string xmlPath)
+        {
+            XmlPath = xmlPath;            
+        }
+
+        public void setXsd(string xsdPath)
+        {
+            XsdPath = xsdPath;            
+        }
+
+        public void reload()
+        {
+            ConvertXmlToDataset();
+        }
+
         private void ConvertXmlToDataset()
         {
             DataSet = new DataSet();

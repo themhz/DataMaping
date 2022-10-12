@@ -58,6 +58,8 @@ namespace WindowsFormsApp1 {
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.txtFileLoadedLocation = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -73,7 +75,7 @@ namespace WindowsFormsApp1 {
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(843, 30);
+            this.menuStrip.Size = new System.Drawing.Size(843, 28);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -238,10 +240,11 @@ namespace WindowsFormsApp1 {
             this.printToolStripButton,
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
-            this.helpToolStripButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 30);
+            this.helpToolStripButton,
+            this.toolStripButton1});
+            this.toolStrip.Location = new System.Drawing.Point(0, 28);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(843, 31);
+            this.toolStrip.Size = new System.Drawing.Size(843, 27);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -315,7 +318,8 @@ namespace WindowsFormsApp1 {
             // 
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
+            this.toolStripStatusLabel,
+            this.txtFileLoadedLocation});
             this.statusStrip.Location = new System.Drawing.Point(0, 532);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -328,6 +332,21 @@ namespace WindowsFormsApp1 {
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(29, 28);
+            this.toolStripButton1.Text = "loadXml";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // txtFileLoadedLocation
+            // 
+            this.txtFileLoadedLocation.Name = "txtFileLoadedLocation";
+            this.txtFileLoadedLocation.Size = new System.Drawing.Size(0, 20);
             // 
             // MDIParent1
             // 
@@ -387,6 +406,8 @@ namespace WindowsFormsApp1 {
         private System.Windows.Forms.ToolStripMenuItem QueryEditor;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         public System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        public System.Windows.Forms.ToolStripStatusLabel txtFileLoadedLocation;
     }
 }
 

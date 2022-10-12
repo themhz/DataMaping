@@ -95,6 +95,24 @@ namespace WindowsFormsApp1 {
             form.Show();
         }
 
-       
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            openFileDialog.Filter = "Xml Files (*.Xml)|";
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string FileName = openFileDialog.FileName;
+                Form activeChild = this.ActiveMdiChild;
+                if (activeChild != null)
+                {
+                    ((QueryEditor)activeChild).xml.setXml(FileName);
+                    ((QueryEditor)activeChild).xml.reload();
+                }
+
+                toolStripStatusLabel.Text = $"File loaded {FileName}, please execute the query again";
+                txtFileLoadedLocation.Text = "";
+            }
+        }
     }
 }
