@@ -157,9 +157,9 @@ namespace WindowsFormsApp1.forms.Childs {
             QueryEngine qe = new QueryEngine();
             DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);
 
-            dgvResult.Columns.Clear();
-            dgvResult.DataSource = dt;
-
+            
+            dgvResult.DataSource = dt;            
+            MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
             #region Comments
 
             ////Queries q = new Queries();

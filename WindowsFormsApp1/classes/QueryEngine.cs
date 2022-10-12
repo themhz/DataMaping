@@ -26,13 +26,26 @@ namespace WindowsFormsApp1.forms.Childs
             string where = "";
             if (json["where"] != null)
                 where = json["where"].ToString();
-            DataTable dt = result.Select(where).CopyToDataTable();
+            DataTable dt = result;
+            
+            //Adding index to the table
+            dt.Columns.Add("Rows", System.Type.GetType("System.Int32"));
+            dt.Columns["Rows"].SetOrdinal(0);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i]["Rows"] = i + 1;
+            }
+
+            dt = dt.Select(where).CopyToDataTable();
+
             dt = this.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim());
             if (json["sort"] != null)
             {
                 string sort = json["sort"].ToString();
                 dt.DefaultView.Sort = sort;
             }
+
+            
 
             return dt;
         }
