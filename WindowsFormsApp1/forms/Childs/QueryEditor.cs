@@ -12,9 +12,9 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace WindowsFormsApp1.forms.Childs {
-    public partial class Annex1 : Form {
+    public partial class QueryEditor : Form {
        
-        public Annex1() {
+        public QueryEditor() {
             InitializeComponent();
             //txtJsonQuery.Text = "{\"select\":[\"PageA.ID\", \"PageA.Name\", \"PageA.RecNumber\", \"PageADetails.Density\", \"PageADetails.Index\"]," +
             //    "\"from\":\"PageA\"," +

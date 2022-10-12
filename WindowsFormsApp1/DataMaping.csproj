@@ -142,11 +142,11 @@
     <Compile Include="forms\Childs\DataMaper.Designer.cs">
       <DependentUpon>DataMaper.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\Childs\Annex1.cs">
+    <Compile Include="forms\Childs\QueryEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\Childs\Annex1.Designer.cs">
-      <DependentUpon>Annex1.cs</DependentUpon>
+    <Compile Include="forms\Childs\QueryEditor.Designer.cs">
+      <DependentUpon>QueryEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="forms\Childs\TableTreeView.cs">
       <SubType>Form</SubType>
@@ -177,8 +177,8 @@
     <EmbeddedResource Include="forms\Childs\DataMaper.resx">
       <DependentUpon>DataMaper.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\Childs\Annex1.resx">
-      <DependentUpon>Annex1.cs</DependentUpon>
+    <EmbeddedResource Include="forms\Childs\QueryEditor.resx">
+      <DependentUpon>QueryEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Childs\TableTreeView.resx">
       <DependentUpon>TableTreeView.cs</DependentUpon>

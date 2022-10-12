@@ -88,15 +88,13 @@ namespace WindowsFormsApp1 {
             form.Show();
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e) {
-
-        }
-
-        private void toolStripMenuItem3_Click(object sender, EventArgs e) {
-            Form form = new Annex1();
+        private void QueryEditor_Click(object sender, EventArgs e) {
+            Form form = new QueryEditor();
             form.MdiParent = this;
             form.Text = "Annex1 " + childFormNumber++;
             form.Show();
         }
+
+       
     }
 }

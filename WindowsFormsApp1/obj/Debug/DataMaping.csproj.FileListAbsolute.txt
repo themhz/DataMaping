@@ -11,7 +11,6 @@ C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\DataMaping.cs
 C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\themhz\Source\Repos\DataMaping\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.DataMaper.resources
-C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.Annex1.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.TableTreeView.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.TestImage.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.MDIParent1.resources
@@ -101,3 +100,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtons
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.AssemblyReference.cache
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\DataMaping.csproj.SuggestedBindingRedirects.cache
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.forms.Childs.QueryEditor.resources

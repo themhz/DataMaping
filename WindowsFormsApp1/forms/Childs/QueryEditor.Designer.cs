@@ -1,6 +1,6 @@
 ﻿
 namespace WindowsFormsApp1.forms.Childs {
-    partial class Annex1 {
+    partial class QueryEditor {
         /// <summary>
         /// Required designer variable.
         /// </summary>
