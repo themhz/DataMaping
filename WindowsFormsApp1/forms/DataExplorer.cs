@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.forms.Childs;
+using WindowsFormsApp1.interfaces;
 
 namespace WindowsFormsApp1 {
     public partial class MDIParent1 : Form {
@@ -104,10 +105,17 @@ namespace WindowsFormsApp1 {
             {
                 string FileName = openFileDialog.FileName;
                 Form activeChild = this.ActiveMdiChild;
+                //List<String> forms = new List<string>();
+                //forms.Add("QueryEditor");
+                //forms.Add("TableTreeView");
+
                 if (activeChild != null)
                 {
-                    ((QueryEditor)activeChild).xml.setXml(FileName);
-                    ((QueryEditor)activeChild).xml.reload();
+                    //if (forms.Contains(activeChild.Name))
+                    //{
+                        ((IForm)activeChild).xml.setXml(FileName);
+                        ((IForm)activeChild).xml.reload();
+                    //}                                        
                 }
 
                 toolStripStatusLabel.Text = $"File loaded {FileName}, please execute the query again";

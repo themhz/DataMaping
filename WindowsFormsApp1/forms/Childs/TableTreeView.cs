@@ -7,22 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.interfaces;
 
 namespace WindowsFormsApp1.forms.Childs {
-    public partial class TableTreeView : Form {
-        Xml Xml;
+
+    public partial class TableTreeView : Form, IForm {
+        public Xml xml { get; set; }
+
         String dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
         String dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
 
         public TableTreeView() {
             InitializeComponent();
-            Xml = new Xml(dataSetPath, dataSetPathSchema);
+            xml = new Xml(dataSetPath, dataSetPathSchema);
             loadTreeView();            
         }
 
         public void loadTreeView() {
             
-            DataSet dataset = Xml.GetDataSet();
+            DataSet dataset = xml.GetDataSet();
             List<string> tables = new List<string>();
             foreach (var table in dataset.Tables)
             {
@@ -74,7 +77,7 @@ namespace WindowsFormsApp1.forms.Childs {
             return path;
         }
         private List<string> getTableRelations(string tableName) {                        
-            DataSet dataset = Xml.GetDataSet();
+            DataSet dataset = xml.GetDataSet();
             List<string> tables = new List<string>();
             foreach (var table in dataset.Tables[tableName].ChildRelations) {
                 tables.Add(((System.Data.DataRelation)table).ChildTable.ToString());
@@ -84,7 +87,7 @@ namespace WindowsFormsApp1.forms.Childs {
         }
 
         private void addRowsToDgvTableRows(string tableName) {
-           DataSet dataset = Xml.GetDataSet();
+           DataSet dataset = xml.GetDataSet();
            var table = dataset.Tables[tableName];
                       
            populateDataGridView(table);

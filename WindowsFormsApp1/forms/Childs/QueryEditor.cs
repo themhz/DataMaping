@@ -9,14 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.interfaces;
+using WindowsFormsApp1.forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
+
 namespace WindowsFormsApp1.forms.Childs {
-    public partial class QueryEditor : Form {
-        public Xml xml;
+    public partial class QueryEditor : Form, IForm
+    {
+        public Xml xml { get; set; }
         public QueryEditor() {
             InitializeComponent();
-            xml = new Xml();  
+            xml = new Xml();
 
             string text = "{\"select\":[\"*\"]," +
                                 "\"from\":\"ThermalBridgeCategories\"," +

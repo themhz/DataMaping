@@ -17,16 +17,15 @@ using System.Data.Entity;
 using System.Collections;
 
 using System.Linq.Dynamic;
-
-
+using WindowsFormsApp1.interfaces;
 
 namespace WindowsFormsApp1
 {
-    public partial class DataMaper : Form
+    public partial class DataMaper : Form, IForm
     {
 
-
-        Xml Xml;
+        public Xml xml { get; set; }
+        
         string dataSetPath= "";
         string dataSetPathSchema ="";
         public DataMaper()
@@ -46,7 +45,7 @@ namespace WindowsFormsApp1
         {
             ListBox listbox = (ListBox)sender;
            
-            DataTable dataTable = Xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
+            DataTable dataTable = xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
             fieldList.Items.Clear();
             dataGridView.Columns.Clear();            
             foreach (DataColumn dataColumn in dataTable.Columns)
@@ -65,7 +64,7 @@ namespace WindowsFormsApp1
            
             var table = listbox.SelectedItem.ToString().Split('_');
 
-            DataTable dataTable = Xml.GetDataSet().Tables[table[1]];            
+            DataTable dataTable = xml.GetDataSet().Tables[table[1]];            
             dataGridViewRelations.Columns.Clear();
             if (dataTable != null)
             {                
@@ -151,13 +150,13 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Please select an xml and an xsd file");
                 numOfTables.Text = "0";
             } else {
-                Xml = new Xml(dataSetPath, dataSetPathSchema);
+                xml = new Xml(dataSetPath, dataSetPathSchema);
                 tableList.Items.Clear();
 
                 List<string> tables = new List<string>();
                 
 
-                foreach (var table in Xml.GetDataSet().Tables) {
+                foreach (var table in xml.GetDataSet().Tables) {
                     tables.Add(table.ToString());
                     //tableList.Items.Add(table.ToString());
                 }
@@ -170,7 +169,7 @@ namespace WindowsFormsApp1
                 }
 
 
-                numOfTables.Text = Xml.GetDataSet().Tables.Count.ToString();
+                numOfTables.Text = xml.GetDataSet().Tables.Count.ToString();
             }
         }
 
@@ -231,8 +230,8 @@ namespace WindowsFormsApp1
             //string[] query = "Projects.PageCBuildings.ThermalBridgeCategories".Split('.');
             //DataTable table = xml.DataSet.Tables[query[0]];
 
-            DataTable table = Xml.DataSet.Tables[query[0]].Clone();
-                                Xml.DataSet.Tables[query[0]].AsEnumerable()
+            DataTable table = xml.DataSet.Tables[query[0]].Clone();
+                                xml.DataSet.Tables[query[0]].AsEnumerable()
                                .Where(s => s.Field<Guid>("ID") == Guid.Parse("5458936f-902e-47b5-8c63-7e4e1b3bdbf5"))
                                .CopyToDataTable(table, LoadOption.Upsert);
             
@@ -259,13 +258,13 @@ namespace WindowsFormsApp1
         }
 
         public void select_V4() {
-            DataTable PageA = Xml.DataSet.Tables["PageA"];
+            DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
             dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
         }
         public void select_V3() {
-            DataTable PageA = Xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = Xml.DataSet.Tables["PageADetails"];
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
             DataTable test = new DataTable();
 
@@ -299,13 +298,13 @@ namespace WindowsFormsApp1
 
         }
         public void select_V2() {
-            DataTable PageA = Xml.DataSet.Tables["PageA"];
+            DataTable PageA = xml.DataSet.Tables["PageA"];
 
             DataRow[] dr = PageA.Select("Thickness =0.35 and RefID1 = '1c79b36c-bc75-4f9f-a02f-d0917c9dfa20'");
         }
         public void select_V1() {
-            DataTable PageA = Xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = Xml.DataSet.Tables["PageADetails"];
+            DataTable PageA = xml.DataSet.Tables["PageA"];
+            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
             var result = from pageA in PageA.AsEnumerable()
                          join pageADetails in PageADetails.AsEnumerable()
