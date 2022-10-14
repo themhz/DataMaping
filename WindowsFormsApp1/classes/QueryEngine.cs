@@ -27,9 +27,14 @@ namespace WindowsFormsApp1.forms.Childs
             if (json["where"] != null)
                 where = json["where"].ToString();
             DataTable dt = result;
-            
+
             //Adding index to the table
-            dt.Columns.Add("Rows", System.Type.GetType("System.Int32"));
+            if (!dt.Columns.Contains("Rows"))
+            {
+                dt.Columns.Add("Rows", System.Type.GetType("System.Int32"));
+                
+            }
+
             dt.Columns["Rows"].SetOrdinal(0);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
