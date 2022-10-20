@@ -18,6 +18,7 @@ using System.Collections;
 
 using System.Linq.Dynamic;
 using WindowsFormsApp1.interfaces;
+using System.Configuration;
 
 namespace WindowsFormsApp1
 {
@@ -34,8 +35,13 @@ namespace WindowsFormsApp1
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
 
-            txtXml.Text = dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
-            txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
+            //txtXml.Text = dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
+            //txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
+
+            txtXml.Text = ConfigurationManager.AppSettings["XmlPath"];
+            txtXsd.Text = ConfigurationManager.AppSettings["XsdPath"];
+            dataSetPath = txtXml.Text;
+            dataSetPathSchema = txtXsd.Text;
             readXml();
         
 
