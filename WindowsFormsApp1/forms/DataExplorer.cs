@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.classes;
 using WindowsFormsApp1.forms.Childs;
 using WindowsFormsApp1.interfaces;
 
@@ -21,21 +22,11 @@ namespace WindowsFormsApp1 {
 
 
         private void OpenFile(object sender, EventArgs e) {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
-                string FileName = openFileDialog.FileName;
-            }
+            FileExplorer.OpenFile(this);
         }
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog(this) == DialogResult.OK) {
-                string FileName = saveFileDialog.FileName;
-            }
+            FileExplorer.SaveFile(this);
         }
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e) {
@@ -104,18 +95,31 @@ namespace WindowsFormsApp1 {
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 string FileName = openFileDialog.FileName;
+                Form activeChild = this.ActiveMdiChild;             
+
+                if (activeChild != null)
+                {                    
+                    ((IForm)activeChild).xml.setXml(FileName);
+                    ((IForm)activeChild).xml.reload();                 
+                }
+
+                toolStripStatusLabel.Text = $"File loaded {FileName}, please execute the query again";
+                txtFileLoadedLocation.Text = "";
+            }
+
+            MessageBox.Show("Also select an XSD ");
+
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            openFileDialog.Filter = "Xml Files (*.Xsd)|";
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string FileName = openFileDialog.FileName;
                 Form activeChild = this.ActiveMdiChild;
-                //List<String> forms = new List<string>();
-                //forms.Add("QueryEditor");
-                //forms.Add("TableTreeView");
 
                 if (activeChild != null)
                 {
-                    //if (forms.Contains(activeChild.Name))
-                    //{
-                        ((IForm)activeChild).xml.setXml(FileName);
-                        ((IForm)activeChild).xml.reload();
-                    //}                                        
+                    ((IForm)activeChild).xml.setXsd(FileName);
+                    ((IForm)activeChild).xml.reload();
                 }
 
                 toolStripStatusLabel.Text = $"File loaded {FileName}, please execute the query again";

@@ -13,18 +13,29 @@ namespace WindowsFormsApp1.forms.Childs {
 
     public partial class TableTreeView : Form, IForm {
         public Xml xml { get; set; }
-
-        String dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
-        String dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
+        public static TableTreeView Self;
+        //String dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
+        //String dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
 
         public TableTreeView() {
             InitializeComponent();
-            xml = new Xml(dataSetPath, dataSetPathSchema);
-            loadTreeView();            
+            xml = new Xml();
+            Self = this;
+            loadTreeView();
+        }
+
+        public void Test(string txtXml, string txtXsd)
+        {
+            //MessageBox.Show(txtXml , txtXsd);
+            xml.setXml(txtXml);
+            xml.setXsd(txtXsd);
+            xml.reload();
+            loadTreeView();
         }
 
         public void loadTreeView() {
-            
+
+            DatabaseTreeView.Nodes.Clear();
             DataSet dataset = xml.GetDataSet();
             List<string> tables = new List<string>();
             foreach (var table in dataset.Tables)
@@ -136,6 +147,14 @@ namespace WindowsFormsApp1.forms.Childs {
                 }
             }
             return result;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form form = new SelectXmlXsdPopup();
+            form.MdiParent = MDIParent1.Self;
+            form.Text = "XML-XSL";
+            form.Show();
         }
     }
 }

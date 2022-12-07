@@ -28,27 +28,31 @@ namespace WindowsFormsApp1.forms.Childs
                 where = json["where"].ToString();
             DataTable dt = result;
 
-            //Adding index to the table
-            if (!dt.Columns.Contains("Rows"))
+            if (dt != null)
             {
-                dt.Columns.Add("Rows", System.Type.GetType("System.Int32"));
-                
-            }
+                //Adding index to the table
+                if (!dt.Columns.Contains("Rows"))
+                {
+                    dt.Columns.Add("Rows", System.Type.GetType("System.Int32"));
 
-            dt.Columns["Rows"].SetOrdinal(0);
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                dt.Rows[i]["Rows"] = i + 1;
-            }
+                }
 
-            dt = dt.Select(where).CopyToDataTable();
+                dt.Columns["Rows"].SetOrdinal(0);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["Rows"] = i + 1;
+                }
 
-            dt = this.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim());
-            if (json["sort"] != null)
-            {
-                string sort = json["sort"].ToString();
-                dt.DefaultView.Sort = sort;
+                dt = dt.Select(where).CopyToDataTable();
+
+                dt = this.FilterColumns(dt, json["select"].ToString().Trim().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", "").Trim());
+                if (json["sort"] != null)
+                {
+                    string sort = json["sort"].ToString();
+                    dt.DefaultView.Sort = sort;
+                }
             }
+            
 
             
 
@@ -104,10 +108,14 @@ namespace WindowsFormsApp1.forms.Childs
                         }
                     }
                 }
-                foreach (DataColumn col in result.Columns)
+                if(result != null)
                 {
-                    col.ColumnName = col.ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
+                    foreach (DataColumn col in result.Columns)
+                    {
+                        col.ColumnName = col.ColumnName.Replace("EYABYMSJMZUWPRZZVRSBZZZZ_", "");
+                    }
                 }
+                
             }
 
             return result;
@@ -122,18 +130,23 @@ namespace WindowsFormsApp1.forms.Childs
             joinFields = joinFields.Replace(".", "_");
             string[] joins = joinFields.Split('=');
 
-            var Query1 = from table1 in Table1.AsEnumerable()
-                         join table2 in Table2.AsEnumerable() on table1.Field<Guid>(joins[0]) equals table2.Field<Guid>(joins[1])
-                         select new { table1, table2 };
+            if(Table1!= null && Table2 != null)
+            {
+                var Query1 = from table1 in Table1.AsEnumerable()
+                             join table2 in Table2.AsEnumerable() on table1.Field<Guid>(joins[0]) equals table2.Field<Guid>(joins[1])
+                             select new { table1, table2 };
 
-            string columns = SelectColumns(Table1, Table2);
-            string selectStatement = "new (" + columns + ")";
+                string columns = SelectColumns(Table1, Table2);
+                string selectStatement = "new (" + columns + ")";
 
-            IQueryable iq = Query1.AsQueryable().Select(selectStatement);
-            DataTable dt = LINQToDataTable(iq.AsEnumerable());
-            dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
+                IQueryable iq = Query1.AsQueryable().Select(selectStatement);
+                DataTable dt = LINQToDataTable(iq.AsEnumerable());
+                dt.TableName = "EYABYMSJMZUWPRZZVRSBZZZZ";
+                return dt;
+            }
 
-            return dt;
+            return null;
+            
         }
         private static string SelectColumns(DataTable Table1, DataTable Table2)
         {

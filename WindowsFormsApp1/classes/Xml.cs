@@ -23,11 +23,7 @@ namespace WindowsFormsApp1
 
         public Xml()
         {
-            
-
-            //XmlPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
-            //XsdPath = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
-
+                        
             XmlPath = ConfigurationManager.AppSettings["XmlPath"];
             XsdPath = ConfigurationManager.AppSettings["XsdPath"];
 
@@ -51,9 +47,17 @@ namespace WindowsFormsApp1
 
         private void ConvertXmlToDataset()
         {
-            DataSet = new DataSet();
-            DataSet.ReadXmlSchema(XsdPath);
-            DataSet.ReadXml(XmlPath);
+            try
+            {
+                DataSet = new DataSet();
+                DataSet.ReadXmlSchema(XsdPath);
+                DataSet.ReadXml(XmlPath);
+            }
+            catch (Exception)
+            {
+
+            }
+            
             
         }
         public DataSet GetDataSet()

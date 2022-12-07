@@ -94,18 +94,12 @@ namespace WindowsFormsApp1.forms.Childs {
             {
                 Select();                
                 lblStatus.Text = "query executed successfully";
-                lblStatus.ForeColor = Color.Green;
-                //MDIParent1.Self.toolStripStatusLabel.Text = "query executed successfully";                
-                //MDIParent1.Self.toolStripStatusLabel.ForeColor = Color.Green;
+                lblStatus.ForeColor = Color.Green;              
             }
             catch (Exception ex)
             {
                 lblStatus.Text = ex.Message;
-                lblStatus.ForeColor = Color.Red;
-                //MDIParent1.Self.toolStripStatusLabel.Text = ex.Message;                
-                //MDIParent1.Self.toolStripStatusLabel.ForeColor = Color.Red;
-
-
+                lblStatus.ForeColor = Color.Red;                
             }
         }
 
@@ -113,9 +107,13 @@ namespace WindowsFormsApp1.forms.Childs {
         {                     
             QueryEngine qe = new QueryEngine();
             DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);            
-            dgvResult.DataSource = dt;            
-            MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
-            MDIParent1.Self.txtFileLoadedLocation.Text = $"Data loaded from {xml.XmlPath}";
+            if(dt != null)
+            {
+                dgvResult.DataSource = dt;
+                MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
+                MDIParent1.Self.txtFileLoadedLocation.Text = $"Data loaded from {xml.XmlPath}";
+            }
+            
             #region Comments
 
             ////Queries q = new Queries();
@@ -144,6 +142,14 @@ namespace WindowsFormsApp1.forms.Childs {
             //if (dgvResult.Columns.Count - 1 >= 0)
             //    dgvResult.Columns[dgvResult.Columns.Count - 1].Visible = false;
             #endregion Comments
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form form = new SelectXmlXsdPopup();
+            form.MdiParent = this;
+            form.Text = "XML-XSL";
+            form.Show();
         }
     }
 }
