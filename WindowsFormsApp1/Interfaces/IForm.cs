@@ -9,5 +9,6 @@ namespace WindowsFormsApp1.interfaces
     internal interface IForm
     {
         Xml xml {get; set;}
+        //void Test(string txtXml, string txtXsd);
     }
 }

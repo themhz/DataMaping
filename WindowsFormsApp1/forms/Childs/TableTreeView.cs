@@ -151,7 +151,7 @@ namespace WindowsFormsApp1.forms.Childs {
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form form = new SelectXmlXsdPopup();
+            Form form = new SelectXmlXsdPopup(this);
             form.MdiParent = MDIParent1.Self;
             form.Text = "XML-XSL";
             form.Show();

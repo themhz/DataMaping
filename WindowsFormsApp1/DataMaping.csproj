@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="classes\CustomLINQtoDataSetMethods.cs" />
     <Compile Include="classes\FileExplorer.cs" />
+    <Compile Include="classes\TableInfo.cs" />
     <Compile Include="forms\Childs\SelectXmlXsdPopup.cs">
       <SubType>Form</SubType>
     </Compile>

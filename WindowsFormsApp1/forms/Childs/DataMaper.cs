@@ -12,13 +12,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Linq.Expressions;
-//using System.Linq.Dynamic;
 using System.Data.Entity;
 using System.Collections;
 
 using System.Linq.Dynamic;
 using WindowsFormsApp1.interfaces;
 using System.Configuration;
+using System.Xml.Schema;
+using System.Xml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using WindowsFormsApp1.classes;
 
 namespace WindowsFormsApp1
 {
@@ -26,9 +30,9 @@ namespace WindowsFormsApp1
     {
 
         public Xml xml { get; set; }
-        
-        string dataSetPath= "";
-        string dataSetPathSchema ="";
+
+        string dataSetPath = "";
+        string dataSetPathSchema = "";
         public DataMaper()
         {
             InitializeComponent();
@@ -43,20 +47,20 @@ namespace WindowsFormsApp1
             dataSetPath = txtXml.Text;
             dataSetPathSchema = txtXsd.Text;
             readXml();
-        
+
 
         }
 
         public void tableList_SelectedValueChanged(object sender, EventArgs e)
         {
             ListBox listbox = (ListBox)sender;
-           
+
             DataTable dataTable = xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
             fieldList.Items.Clear();
-            dataGridView.Columns.Clear();            
+            dataGridView.Columns.Clear();
             foreach (DataColumn dataColumn in dataTable.Columns)
             {
-                fieldList.Items.Add(dataColumn.ColumnName + " ("+ dataColumn.DataType + ")");
+                fieldList.Items.Add(dataColumn.ColumnName + " (" + dataColumn.DataType + ")");
                 dataGridView.Columns.Add(dataColumn.ColumnName, dataColumn.ColumnName);
             }
 
@@ -67,13 +71,13 @@ namespace WindowsFormsApp1
         public void relationsList_SelectedValueChanged(object sender, EventArgs e)
         {
             ListBox listbox = (ListBox)sender;
-           
+
             var table = listbox.SelectedItem.ToString().Split('_');
 
-            DataTable dataTable = xml.GetDataSet().Tables[table[1]];            
+            DataTable dataTable = xml.GetDataSet().Tables[table[1]];
             dataGridViewRelations.Columns.Clear();
             if (dataTable != null)
-            {                
+            {
 
                 foreach (DataColumn dataColumn in dataTable.Columns)
                 {
@@ -81,40 +85,40 @@ namespace WindowsFormsApp1
                 }
                 populateRelationDataGridView(dataTable);
                 populateFieldRelationList(dataTable);
-            }                                                                 
+            }
         }
 
         private void populateFieldRelationList(DataTable dataTable)
         {
-            fieldRelationList.Items.Clear();            
-            for (int i=0;i< dataTable.ParentRelations.Count; i++)
+            fieldRelationList.Items.Clear();
+            for (int i = 0; i < dataTable.ParentRelations.Count; i++)
             {
-                foreach(var column in dataTable.ParentRelations[i].ChildColumns)
+                foreach (var column in dataTable.ParentRelations[i].ChildColumns)
                 {
-                    for(int j=0;j< dataTable.ParentRelations[i].ParentColumns.Count();j++)
+                    for (int j = 0; j < dataTable.ParentRelations[i].ParentColumns.Count(); j++)
                     {
-                       fieldRelationList.Items.Add(dataTable.ParentRelations[i].ParentTable.TableName + "->"+ dataTable.ParentRelations[i].ParentColumns[j].ToString() + " - " + column.ColumnName);
-                    }                                        
-                }            
+                        fieldRelationList.Items.Add(dataTable.ParentRelations[i].ParentTable.TableName + "->" + dataTable.ParentRelations[i].ParentColumns[j].ToString() + " - " + column.ColumnName);
+                    }
+                }
             }
         }
         private void populateRelationsList(DataTable dataTable)
         {
-            
+
             relationsList.Items.Clear();
-            foreach(var relations in dataTable.ChildRelations)
+            foreach (var relations in dataTable.ChildRelations)
             {
                 relationsList.Items.Add(relations.ToString());
             }
-        }    
+        }
 
         private void populateDataGridView(DataTable dataTable)
         {
-            dataGridView.Rows.Clear();            
+            dataGridView.Rows.Clear();
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 dataGridView.Rows.Add(dataRow.ItemArray);
-            }                    
+            }
         }
 
         private void populateRelationDataGridView(DataTable dataTable)
@@ -125,9 +129,9 @@ namespace WindowsFormsApp1
                 dataGridViewRelations.Rows.Add(dataRow.ItemArray);
             }
         }
-        
-        
-        
+
+
+
         public void connectToSqlServerTest()
         {
             string connetionString;
@@ -143,26 +147,31 @@ namespace WindowsFormsApp1
             con.Close();
         }
 
-     
-       
+
+
         private void btnReadxml_Click(object sender, EventArgs e)
         {
             readXml();
-            
+
         }
 
-        public void readXml() {
-            if (dataSetPath == "" || dataSetPathSchema == "") {
+        public void readXml()
+        {
+            if (dataSetPath == "" || dataSetPathSchema == "")
+            {
                 MessageBox.Show("Please select an xml and an xsd file");
                 numOfTables.Text = "0";
-            } else {
+            }
+            else
+            {
                 xml = new Xml(dataSetPath, dataSetPathSchema);
                 tableList.Items.Clear();
 
                 List<string> tables = new List<string>();
-                
 
-                foreach (var table in xml.GetDataSet().Tables) {
+
+                foreach (var table in xml.GetDataSet().Tables)
+                {
                     tables.Add(table.ToString());
                     //tableList.Items.Add(table.ToString());
                 }
@@ -170,30 +179,63 @@ namespace WindowsFormsApp1
 
 
                 foreach (string table in tables)
-                {                   
+                {
                     tableList.Items.Add(table);
                 }
 
 
                 numOfTables.Text = xml.GetDataSet().Tables.Count.ToString();
             }
+            this.Text = txtXsd.Text.Split('\\').Last();
         }
 
         private void btnSelectXml_Click(object sender, EventArgs e)
         {
             dataSetPath = openSelectFileBox("xml");
-            txtXml.Text = dataSetPath;
+            if(dataSetPath!=null || dataSetPath != "")
+            {
+                txtXml.Text = dataSetPath;
+                dataSetPathSchema = Path.GetDirectoryName(dataSetPath) + "\\" + GetXsdString(dataSetPath);
+                txtXsd.Text = dataSetPathSchema;
+
+                this.Text = dataSetPathSchema.Split('\\').Last();
+            }
+            
         }
+
+        public string GetXsdString(string filePath)
+        {
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.Schema;
+
+            // Create an XmlReader for the XML file
+            using (XmlReader reader = XmlReader.Create(filePath, settings))
+            {
+                // Read the XML document and its schema(s)
+                string xsdName = "";
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.NamespaceURI != "")
+                    {
+                        xsdName = reader.NamespaceURI.Split('/').Last();
+                        break;
+                    }
+                }
+                return xsdName;
+            }
+        }
+
 
         private void btnSelectXsd_Click(object sender, EventArgs e)
         {
             dataSetPathSchema = openSelectFileBox("xsd");
             txtXsd.Text = dataSetPathSchema;
+            this.Text = dataSetPathSchema.Split('\\').Last();
         }
 
         private string openSelectFileBox(string ext = "")
         {
-            
+
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -227,33 +269,36 @@ namespace WindowsFormsApp1
             //Queries queries = new Queries();
             //var result = queries.Anex1(xml);
             //dataGridViewRelations.DataSource = result;           
-            
+
 
         }
 
-        public void select_V5() {
+        public void select_V5()
+        {
             string[] query = "PageA.PageADetails".Split('.');
             //string[] query = "Projects.PageCBuildings.ThermalBridgeCategories".Split('.');
             //DataTable table = xml.DataSet.Tables[query[0]];
 
             DataTable table = xml.DataSet.Tables[query[0]].Clone();
-                                xml.DataSet.Tables[query[0]].AsEnumerable()
-                               .Where(s => s.Field<Guid>("ID") == Guid.Parse("5458936f-902e-47b5-8c63-7e4e1b3bdbf5"))
-                               .CopyToDataTable(table, LoadOption.Upsert);
-            
+            xml.DataSet.Tables[query[0]].AsEnumerable()
+           .Where(s => s.Field<Guid>("ID") == Guid.Parse("5458936f-902e-47b5-8c63-7e4e1b3bdbf5"))
+           .CopyToDataTable(table, LoadOption.Upsert);
+
             //DataRelation dr = xml.DataSet.Relations.Add(table.TableName+"_copy", xml.DataSet.Relations, table.ChildRelations, false);
 
             //table.ChildRelations.Add(dr);
-            
+
             string name = "";
-            for (int i=1;i<query.Length;i++) {
-                name = query[i-1] + "_" + query[i];
+            for (int i = 1; i < query.Length; i++)
+            {
+                name = query[i - 1] + "_" + query[i];
                 table = table.ChildRelations[name].ChildTable;
             }
             dataGridViewRelations.DataSource = table;
         }
 
-        public DataTable select(DataTable dt) {
+        public DataTable select(DataTable dt)
+        {
 
             //DataTable PageA = xml.DataSet.Tables[query];
             //return PageA;
@@ -263,52 +308,38 @@ namespace WindowsFormsApp1
             return dt;
         }
 
-        public void select_V4() {
+        public void select_V4()
+        {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
             dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
         }
-        public void select_V3() {
+        public void select_V3()
+        {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
             DataTable test = new DataTable();
 
             var joins = from pageA in PageA.AsEnumerable()
-                                        join pageADetails in PageADetails.AsEnumerable()
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-                         select new { pageA, pageADetails };
+                        join pageADetails in PageADetails.AsEnumerable()
+         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
+                        select new { pageA, pageADetails };
 
-            foreach(var row in joins) {
+            foreach (var row in joins)
+            {
                 var t1 = row.pageA;
                 var t2 = row.pageADetails;
             }
-            //var result = from pageA in PageA.AsEnumerable()
-            //             join pageADetails in PageADetails.AsEnumerable()
-            //             on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-            //             select new { pageA, pageADetails };
-
-
-
-            //foreach(DataTable dt in result) {
-            //    DataRow[] dr = dt.Select("Thickness = 0.35 and RefID1 = '6416d311-feb1-4f93-b8d8-06faf36a98c7'");
-            //}
-
-            //IEnumerable<DataRow> dtTest = from a in result.AsEnumerable()
-            //           select a;
-
-            //ListtoDataTableConverter ldtc = new ListtoDataTableConverter();
-            //DataTable dt = ldtc.ToDataTable(result);
-            //DataTable test = 
-            //DataRow[] dr = dt.Select("Thickness = 0.35 and RefID1 = '6416d311-feb1-4f93-b8d8-06faf36a98c7'");
-
         }
-        public void select_V2() {
+        public void select_V2()
+        {
             DataTable PageA = xml.DataSet.Tables["PageA"];
 
             DataRow[] dr = PageA.Select("Thickness =0.35 and RefID1 = '1c79b36c-bc75-4f9f-a02f-d0917c9dfa20'");
         }
-        public void select_V1() {
+        public void select_V1()
+        {
             DataTable PageA = xml.DataSet.Tables["PageA"];
             DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
 
@@ -337,31 +368,155 @@ namespace WindowsFormsApp1
                                   pageADetailsName = pageADetails.Field<object>("Name")
                               }).ToList();
 
-            
-            
 
-
-            //var JoinResults = from results in JoinResult.AsEnumerable()
-            //                  where results.Field<object>("d") == "0.02"
-            //                  ;
-
-            //var JoinResult = (from pageA in PageA.AsEnumerable()
-            //                  join pageADetails in PageADetails.AsEnumerable()
-            //                  on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-            //                  select new
-            //                  {
-            //                      id = pageA.Field<object>("ID"),
-            //                      pageAName = pageA.Field<object>("Name"),
-            //                      pageATypeName = pageA.Field<object>("TypeName"),
-            //                      pageADetailsName = pageADetails.Field<object>("Name")
-            //                  }).ToList();
 
 
             return JoinResult.CopyToDataTable2();
         }
 
-        
+        private void btnSynncFields_Click(object sender, EventArgs e)
+        {
+            string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
+            string outputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_old.txt";
+            string newinputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_new.txt";
+
+            //Backup the json file
+            JObject jsonObject = ReadJsonFile(inputJsonFilePath);
+            CopyJsonFile(inputJsonFilePath, outputJsonFilePath);
 
 
+
+            string directoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\accessible\\";
+            List<string> xsdFiles = ListXSDFilesInDirectory(directoryPath);
+
+            foreach (var xsdFile in xsdFiles)
+            {                
+                List<TableInfo> xsdTables = GetTablesFromXSD(xsdFile);
+                foreach (var table in xsdTables)
+                {               
+                    foreach (var field in table.FieldNames)
+                    {
+                        //Get the field
+                        JObject newField = new JObject
+                        {
+                            { "name", field },
+                            { "alias", "" },
+                            { "format", "" },
+                            { "formatNull", "" }
+                        };
+
+                        //Add the field
+                        JObject newJsonObject = AddFieldToTable(jsonObject, "BAccessible", newField);
+                        //Savwe the json
+                        File.WriteAllText(newinputJsonFilePath, newJsonObject.ToString());
+                    }
+                }
+            }
+
+
+        }
+
+        public JObject ReadJsonFile(string jsonFilePath)
+        {
+            // Read the content of the JSON file
+            string jsonFileContent = File.ReadAllText(jsonFilePath);
+
+            // Parse the JSON content into a JObject
+            JObject jsonObject = JObject.Parse(jsonFileContent);
+
+            return jsonObject;
+        }
+
+        public void CopyJsonFile(string inputFilePath, string outputFilePath)
+        {
+            // Read the content of the input JSON file
+            string inputFileContent = File.ReadAllText(inputFilePath);
+
+            // Write the content to the output file
+            File.WriteAllText(outputFilePath, inputFileContent);
+        }
+
+        public JObject AddFieldToTable(JObject jsonObject, string tableName, JObject newField)
+        {                  
+
+            // Iterate through the Datasets and Tables
+            foreach (JObject dataset in jsonObject["Datasets"])
+            {
+                foreach (JObject table in dataset["Tables"])
+                {
+                    // Check if the table name matches the one you want to modify
+                    if (table["table"].ToString() == tableName)
+                    {
+                        // Add the new field to the table
+                        JArray fields = (JArray)table["Fields"];
+                        fields.Add(newField);
+                        break;
+                    }
+                }
+            }
+
+
+            return jsonObject;
+        }
+
+
+        public static List<TableInfo> GetTablesFromXSD(string xsdFilePath)
+        {
+            var tables = new List<TableInfo>();
+
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xsdFilePath);
+
+                XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                nsmgr.AddNamespace("xs", "http://www.w3.org/2001/XMLSchema");
+
+                XmlNodeList tableNodes = xmlDoc.SelectNodes("//xs:element[@name='dsBAccessible']/xs:complexType/xs:choice/xs:element", nsmgr);
+
+                foreach (XmlNode tableNode in tableNodes)
+                {
+                    var tableInfo = new TableInfo
+                    {
+                        TableName = tableNode.Attributes["name"].Value,
+                        FieldNames = new List<string>()
+                    };
+
+                    XmlNodeList fieldNodes = tableNode.SelectNodes("xs:complexType/xs:sequence/xs:element", nsmgr);
+
+                    foreach (XmlNode fieldNode in fieldNodes)
+                    {
+                        string fieldName = fieldNode.Attributes["name"].Value;
+                        tableInfo.FieldNames.Add(fieldName);
+                    }
+
+                    tables.Add(tableInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return tables;
+        }
+
+
+        public static List<string> ListXSDFilesInDirectory(string directoryPath)
+        {
+            List<string> xsdFiles = new List<string>();
+
+            try
+            {
+                string[] files = Directory.GetFiles(directoryPath, "*.xsd");
+                xsdFiles.AddRange(files);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return xsdFiles;
+        }
     }
 }

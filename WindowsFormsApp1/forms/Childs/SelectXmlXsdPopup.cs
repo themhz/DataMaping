@@ -16,10 +16,16 @@ namespace WindowsFormsApp1.forms.Childs
         
         string dataSetPath = "";
         string dataSetPathSchema = "";
+        Form Form;
+        public SelectXmlXsdPopup(Form form)
+        {
+            InitializeComponent();
+            Form = form;
+        }
 
         public SelectXmlXsdPopup()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void btnReadxml_Click(object sender, EventArgs e)

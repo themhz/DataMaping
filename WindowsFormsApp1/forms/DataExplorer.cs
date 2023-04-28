@@ -75,8 +75,7 @@ namespace WindowsFormsApp1 {
 
         private void ShowNewForm(object sender, EventArgs e) {
             Form form = new DataMaper();
-            form.MdiParent = this;
-            form.Text = "DataMaper " + childFormNumber++;
+            form.MdiParent = this;            
             form.Show();
         }
 
