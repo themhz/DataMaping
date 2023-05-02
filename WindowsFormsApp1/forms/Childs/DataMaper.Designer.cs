@@ -57,6 +57,7 @@ namespace WindowsFormsApp1
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
             this.txtTest = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -110,6 +111,7 @@ namespace WindowsFormsApp1
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txtTest);
             this.panel1.Controls.Add(this.btnSynncFields);
             this.panel1.Controls.Add(this.splitContainer4);
@@ -406,6 +408,16 @@ namespace WindowsFormsApp1
             this.txtTest.Size = new System.Drawing.Size(216, 111);
             this.txtTest.TabIndex = 28;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 155);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 24);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Format";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // DataMaper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -476,6 +488,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.ListBox fieldList;
         private System.Windows.Forms.Button btnSynncFields;
         private System.Windows.Forms.TextBox txtTest;
+        private System.Windows.Forms.Button button1;
     }
 }
 
