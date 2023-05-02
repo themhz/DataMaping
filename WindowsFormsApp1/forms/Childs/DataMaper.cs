@@ -417,7 +417,7 @@ namespace WindowsFormsApp1
                             foreach (var xsdField in xsdTable.FieldNames)
                             {
                                 //CheckBox if the xsd FIELD NOT exists in the fields.txt json file
-                                if (!JsonHandler.CheckIfFieldExistsInFile(jsonObject, xsdField))
+                                if (!JsonHandler.CheckIfFieldExistsInFile(jsonObject, xsdField, xsdTable.TableName))
                                 {
                                     //If it doesn't then add it
                                     JObject newField = new JObject

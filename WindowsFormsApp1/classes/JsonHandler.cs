@@ -112,19 +112,22 @@ namespace WindowsFormsApp1.classes
 
             return false;
         }
-        public static Boolean CheckIfFieldExistsInFile(JObject jsonObject, string fielName)
+        public static Boolean CheckIfFieldExistsInFile(JObject jsonObject, string fielName, string tableName)
         {
 
             foreach (JObject dataset in jsonObject["Datasets"])
             {
                 foreach (JObject table in dataset["Tables"])
                 {
-                    foreach(JObject field in table["Fields"])
+                    if (table["table"].ToString() == tableName)
                     {
-                        // Check if the field name matches 
-                        if (field["name"].ToString() == fielName)
+                        foreach (JObject field in table["Fields"])
                         {
-                            return true;
+                            // Check if the field name matches 
+                            if (field["name"].ToString() == fielName)
+                            {
+                                return true;
+                            }
                         }
                     }                    
                 }
@@ -159,8 +162,8 @@ namespace WindowsFormsApp1.classes
                 if (obj.ContainsKey("Fields")&& obj["Fields"] != null && obj["Fields"].HasValues)
                 {
                     JArray fieldsArray = (JArray)obj["Fields"];
-                    string inlineFields = string.Join(",\n            ", fieldsArray.Select(x => x.ToString(Formatting.None)));
-                    obj["Fields"] = new JRaw($"[\n            {inlineFields}\n          ]");
+                    string inlineFields = string.Join(",\n\t\t\t\t\t\t", fieldsArray.Select(x => x.ToString(Formatting.None)));
+                    obj["Fields"] = new JRaw($"[\n\t\t\t\t\t\t{inlineFields}\n\t\t\t\t]");
                 }
                 else
                 {
