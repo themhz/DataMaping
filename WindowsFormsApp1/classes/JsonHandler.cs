@@ -61,10 +61,10 @@ namespace WindowsFormsApp1.classes
             {                                
                 if (dataset["Name"].ToString() == xsdName)
                 {
-                    // Add the new table in xsd
+                   
                     JArray tables = (JArray)dataset["Tables"];
                     tables.Add(newTable);
-                    break;
+                    
                 }                
             }
 
@@ -136,10 +136,9 @@ namespace WindowsFormsApp1.classes
             return false;
         }
 
-
         public static void WriteFile(string newinputJsonFilePath, JObject newJsonObject)
         {
-            File.WriteAllText(newinputJsonFilePath, FormatFieldsInline(newJsonObject.ToString()));
+            File.WriteAllText(newinputJsonFilePath, FormatFieldsInline(newJsonObject.ToString()), Encoding.UTF8);
         }
         public static string FormatFieldsInline(string jsonInput)
         {
@@ -178,6 +177,30 @@ namespace WindowsFormsApp1.classes
                 foreach (var item in array)
                 {
                     FormatFields(item);
+                }
+            }
+        }
+
+        public static void formatJsonToReadAbleFormat(string directory)
+        {            
+            string input = $"{directory}fields_new.txt";
+            string output = $"{directory}formated.txt";
+            JObject jsonObject = JsonHandler.ReadJsonFile(input);
+            JsonHandler.WriteFile(output, jsonObject);
+        }
+
+        public static void CreateFieldsFileIfNotExists(string filePath)
+        {
+            //string filePath = Path.Combine(directoryPath, "fields.txt");
+
+            if (!File.Exists(filePath))
+            {
+                // Create the file and add the text
+                using (StreamWriter writer = File.CreateText(filePath))
+                {
+                    writer.Write(@"{""Datasets"":
+    []
+}");
                 }
             }
         }

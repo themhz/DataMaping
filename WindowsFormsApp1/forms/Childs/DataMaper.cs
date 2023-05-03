@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WindowsFormsApp1.classes;
 using Formatting = Newtonsoft.Json.Formatting;
+using System.Runtime.Remoting.Contexts;
 
 namespace WindowsFormsApp1
 {
@@ -373,28 +374,105 @@ namespace WindowsFormsApp1
 
 
             return JoinResult.CopyToDataTable2();
+
         }
 
-        private void btnSynncFields_Click(object sender, EventArgs e)
+        string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
+        string outputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_old.txt";
+        string newinputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_new.txt";
+        string xsdDirectoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\accessible\\";
+        private async void btnSynncFields_Click(object sender, EventArgs e)
         {
-            SyncFields();
+            lblStatus.Text = "Running";
+            lblStatus.ForeColor = Color.Green;
+            await Task.Run(() => Sync());
+
+            lblStatus.Text = "Done!";
+            lblStatus.ForeColor = Color.Blue;
         }
 
-
-        
-    
-
-    public void SyncFields()
+        public async void Sync()
         {
+            //SyncFields();
 
-            string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
-            string outputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_old.txt";
-            string newinputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_new.txt";
-            string xsdDirectoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\accessible\\";            
+            //Check if the fields.txt exist
+            JsonHandler.CreateFieldsFileIfNotExists(inputJsonFilePath);
 
             //Backup the json file
             JObject jsonObject = JsonHandler.ReadJsonFile(inputJsonFilePath);
             JsonHandler.CopyJsonFile(inputJsonFilePath, outputJsonFilePath);
+
+            SyncSchemas(jsonObject);
+            SyncTables(jsonObject);
+            SyncFields(jsonObject);
+        }
+        public void SyncSchemas(JObject jsonObject)
+        {
+            
+            List<string> xsdFiles = XsdHandler.ListXSDFilesInDirectory(xsdDirectoryPath);
+
+            //Loop through the xsdFiles
+            foreach (var xsdFile in xsdFiles)
+            {                
+                //Check if the xsd SCHEMA exist in the fields.txt json file
+                string xsdSchemaName = xsdFile.ToString().Split('\\').Last().Split('.')[0];
+                this.Invoke((MethodInvoker)delegate
+                {
+                    lblStatus.Text = "Syncing schemas";
+                    lblStatusText.Text = $"Working on {xsdSchemaName}";
+                });
+                if (!JsonHandler.CheckIfSchemaExistInFile(jsonObject, xsdSchemaName))
+                {
+                    //Add the schema                   
+                    JObject newSchema = new JObject
+                                {
+                                    { "Name", xsdSchemaName },
+                                    { "Tables", new JArray() },
+                                };
+
+                    //Add schema in the fields.txt json file and save it
+                    JObject newJsonObject = JsonHandler.AddSchemaInFile(jsonObject, newSchema);
+                    JsonHandler.WriteFile(newinputJsonFilePath, newJsonObject);
+                }
+            }
+        }
+        public void SyncTables(JObject jsonObject)
+        {
+
+            List<string> xsdFiles = XsdHandler.ListXSDFilesInDirectory(xsdDirectoryPath);
+
+            //Loop through the xsdFiles
+            foreach (var xsdFile in xsdFiles)
+            {                
+                string xsdSchemaName = xsdFile.ToString().Split('\\').Last().Split('.')[0];
+                List<TableInfo> xsdTables = XsdHandler.GetTablesFromXSD(xsdFile, xsdSchemaName);                
+                //Loop through the xsdTables of the xsdFile
+                foreach (var xsdTable in xsdTables)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatus.Text = "Syncing Tables";
+                        lblStatusText.Text = $"Working on {xsdSchemaName} {xsdTable.TableName}";
+                    });
+                    //Check if the xsd TABLE exists in the fields.txt json file                    
+                    if (!JsonHandler.CheckIfTableExistsInFile(jsonObject, xsdTable.TableName))
+                    {
+                        //Add the table
+                        JObject newTable = new JObject
+                                        {
+                                            { "table", xsdTable.TableName },
+                                            { "alias", xsdTable.TableName },
+                                            { "Fields", new JArray() }
+                                        };
+                        //Add the table in the fields.txt json file and save it
+                        JObject newJsonObject = JsonHandler.AddTableToSchemaInFile(jsonObject, xsdSchemaName, newTable);
+                        JsonHandler.WriteFile(newinputJsonFilePath, newJsonObject);
+                    }
+                }
+            }
+        }       
+        public void SyncFields(JObject jsonObject)
+        {                        
 
             //Get the xsd files
             List<string> xsdFiles = XsdHandler.ListXSDFilesInDirectory(xsdDirectoryPath);
@@ -406,7 +484,7 @@ namespace WindowsFormsApp1
                 string xsdSchemaName = xsdFile.ToString().Split('\\').Last().Split('.')[0];
                 if (JsonHandler.CheckIfSchemaExistInFile(jsonObject, xsdSchemaName))
                 {
-                    List<TableInfo> xsdTables = XsdHandler.GetTablesFromXSD(xsdFile);
+                    List<TableInfo> xsdTables = XsdHandler.GetTablesFromXSD(xsdFile, xsdSchemaName);
                     //Loop through the xsdTables of the xsdFile
                     foreach (var xsdTable in xsdTables)
                     {
@@ -416,6 +494,11 @@ namespace WindowsFormsApp1
                             //Loop through the fields of the xsdTable
                             foreach (var xsdField in xsdTable.FieldNames)
                             {
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    lblStatus.Text = "Syncing Fields";
+                                    lblStatusText.Text = $"Working on {xsdSchemaName} {xsdTable.TableName} {xsdField}";
+                                });
                                 //CheckBox if the xsd FIELD NOT exists in the fields.txt json file
                                 if (!JsonHandler.CheckIfFieldExistsInFile(jsonObject, xsdField, xsdTable.TableName))
                                 {
@@ -433,47 +516,21 @@ namespace WindowsFormsApp1
                                     JsonHandler.WriteFile(newinputJsonFilePath, newJsonObject);
                                 }
                             }
-                        }
-                        else
-                        {
-                            //Add the table
-                            JObject newTable = new JObject
-                                        {
-                                            { "table", xsdTable.TableName },
-                                            { "alias", xsdTable.TableName },
-                                            { "Fields", "" }
-                                        };
-                            //Add the table in the fields.txt json file and save it
-                            JObject newJsonObject = JsonHandler.AddTableToSchemaInFile(jsonObject, xsdSchemaName, newTable);
-                            JsonHandler.WriteFile(newinputJsonFilePath, newJsonObject);
-                        }
+                        }                        
                     }
-                }
-                else
-                {
-                    //Add the schema                   
-                    JObject newSchema = new JObject
-                                {
-                                    { "Name", xsdSchemaName },
-                                    { "Tables", "" },
-                                };
-
-                    //Add schema in the fields.txt json file and save it
-                    JObject newJsonObject = JsonHandler.AddSchemaInFile(jsonObject, newSchema);
-                    JsonHandler.WriteFile(newinputJsonFilePath, newJsonObject);
-
-                }
+                }                
             }            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             string directory = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\";
-            string input = $"{directory}fields_new.txt";
-            string output = $"{directory}formated.txt";
-            JObject jsonObject = JsonHandler.ReadJsonFile(input);
-            JsonHandler.WriteFile(output, jsonObject);
+            JsonHandler.formatJsonToReadAbleFormat(directory);
 
         }
+
+        
+
+       
     }
 }

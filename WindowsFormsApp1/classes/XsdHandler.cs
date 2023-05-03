@@ -11,7 +11,7 @@ namespace WindowsFormsApp1.classes
     public static class XsdHandler
     {
 
-        public static List<TableInfo> GetTablesFromXSD(string xsdFilePath)
+        public static List<TableInfo> GetTablesFromXSD(string xsdFilePath, string schemaName)
         {
             var tables = new List<TableInfo>();
 
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1.classes
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
                 nsmgr.AddNamespace("xs", "http://www.w3.org/2001/XMLSchema");
 
-                XmlNodeList tableNodes = xmlDoc.SelectNodes("//xs:element[@name='dsBAccessible']/xs:complexType/xs:choice/xs:element", nsmgr);
+                XmlNodeList tableNodes = xmlDoc.SelectNodes("//xs:element[@name='"+ schemaName + "']/xs:complexType/xs:choice/xs:element", nsmgr);
 
                 foreach (XmlNode tableNode in tableNodes)
                 {

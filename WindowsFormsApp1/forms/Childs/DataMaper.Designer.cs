@@ -33,6 +33,7 @@ namespace WindowsFormsApp1
             this.openXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnSynncFields = new System.Windows.Forms.Button();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -56,8 +57,8 @@ namespace WindowsFormsApp1
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
-            this.txtTest = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblStatusText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -111,8 +112,9 @@ namespace WindowsFormsApp1
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblStatusText);
+            this.panel1.Controls.Add(this.lblStatus);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.txtTest);
             this.panel1.Controls.Add(this.btnSynncFields);
             this.panel1.Controls.Add(this.splitContainer4);
             this.panel1.Controls.Add(this.btnClearDataGridViewRelations);
@@ -129,6 +131,16 @@ namespace WindowsFormsApp1
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(681, 1022);
             this.panel1.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 155);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 24);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Format";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnSynncFields
             // 
@@ -399,24 +411,21 @@ namespace WindowsFormsApp1
             this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 529);
             this.dataGridViewRelations.TabIndex = 21;
             // 
-            // txtTest
+            // lblStatus
             // 
-            this.txtTest.Location = new System.Drawing.Point(398, 140);
-            this.txtTest.Multiline = true;
-            this.txtTest.Name = "txtTest";
-            this.txtTest.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTest.Size = new System.Drawing.Size(216, 111);
-            this.txtTest.TabIndex = 28;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(122, 133);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 16);
+            this.lblStatus.TabIndex = 30;
             // 
-            // button1
+            // lblStatusText
             // 
-            this.button1.Location = new System.Drawing.Point(13, 155);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 24);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "Format";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.lblStatusText.AutoSize = true;
+            this.lblStatusText.Location = new System.Drawing.Point(122, 159);
+            this.lblStatusText.Name = "lblStatusText";
+            this.lblStatusText.Size = new System.Drawing.Size(0, 16);
+            this.lblStatusText.TabIndex = 31;
             // 
             // DataMaper
             // 
@@ -487,8 +496,9 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ListBox fieldList;
         private System.Windows.Forms.Button btnSynncFields;
-        private System.Windows.Forms.TextBox txtTest;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblStatusText;
     }
 }
 
