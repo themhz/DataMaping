@@ -33,6 +33,10 @@ namespace WindowsFormsApp1
             this.openXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnScann = new System.Windows.Forms.Button();
+            this.lstXmls = new System.Windows.Forms.ListBox();
+            this.lblStatusText = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnSynncFields = new System.Windows.Forms.Button();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -57,8 +61,6 @@ namespace WindowsFormsApp1
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.lblStatusText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -105,13 +107,15 @@ namespace WindowsFormsApp1
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(2046, 1022);
+            this.splitContainer1.Size = new System.Drawing.Size(2046, 1123);
             this.splitContainer1.SplitterDistance = 681;
             this.splitContainer1.TabIndex = 12;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnScann);
+            this.panel1.Controls.Add(this.lstXmls);
             this.panel1.Controls.Add(this.lblStatusText);
             this.panel1.Controls.Add(this.lblStatus);
             this.panel1.Controls.Add(this.button1);
@@ -129,8 +133,45 @@ namespace WindowsFormsApp1
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(681, 1022);
+            this.panel1.Size = new System.Drawing.Size(681, 1123);
             this.panel1.TabIndex = 12;
+            // 
+            // btnScann
+            // 
+            this.btnScann.Location = new System.Drawing.Point(13, 185);
+            this.btnScann.Name = "btnScann";
+            this.btnScann.Size = new System.Drawing.Size(100, 23);
+            this.btnScann.TabIndex = 33;
+            this.btnScann.Text = "Full Scan";
+            this.btnScann.UseVisualStyleBackColor = true;
+            this.btnScann.Click += new System.EventHandler(this.btnScann_Click);
+            // 
+            // lstXmls
+            // 
+            this.lstXmls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstXmls.FormattingEnabled = true;
+            this.lstXmls.ItemHeight = 16;
+            this.lstXmls.Location = new System.Drawing.Point(14, 217);
+            this.lstXmls.Name = "lstXmls";
+            this.lstXmls.Size = new System.Drawing.Size(614, 116);
+            this.lstXmls.TabIndex = 32;
+            // 
+            // lblStatusText
+            // 
+            this.lblStatusText.AutoSize = true;
+            this.lblStatusText.Location = new System.Drawing.Point(122, 159);
+            this.lblStatusText.Name = "lblStatusText";
+            this.lblStatusText.Size = new System.Drawing.Size(0, 16);
+            this.lblStatusText.TabIndex = 31;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(122, 133);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 16);
+            this.lblStatus.TabIndex = 30;
             // 
             // button1
             // 
@@ -156,7 +197,7 @@ namespace WindowsFormsApp1
             // 
             this.splitContainer4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer4.Location = new System.Drawing.Point(14, 257);
+            this.splitContainer4.Location = new System.Drawing.Point(14, 347);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -167,8 +208,8 @@ namespace WindowsFormsApp1
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer4.Size = new System.Drawing.Size(614, 725);
-            this.splitContainer4.SplitterDistance = 230;
+            this.splitContainer4.Size = new System.Drawing.Size(614, 736);
+            this.splitContainer4.SplitterDistance = 233;
             this.splitContainer4.TabIndex = 26;
             // 
             // splitContainer3
@@ -184,7 +225,7 @@ namespace WindowsFormsApp1
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.panel3);
-            this.splitContainer3.Size = new System.Drawing.Size(614, 230);
+            this.splitContainer3.Size = new System.Drawing.Size(614, 233);
             this.splitContainer3.SplitterDistance = 306;
             this.splitContainer3.TabIndex = 26;
             // 
@@ -195,7 +236,7 @@ namespace WindowsFormsApp1
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(306, 230);
+            this.panel2.Size = new System.Drawing.Size(306, 233);
             this.panel2.TabIndex = 0;
             // 
             // label1
@@ -213,7 +254,7 @@ namespace WindowsFormsApp1
             this.tableList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableList.FormattingEnabled = true;
             this.tableList.ItemHeight = 16;
-            this.tableList.Location = new System.Drawing.Point(0, 34);
+            this.tableList.Location = new System.Drawing.Point(0, 37);
             this.tableList.Margin = new System.Windows.Forms.Padding(4);
             this.tableList.Name = "tableList";
             this.tableList.Size = new System.Drawing.Size(306, 196);
@@ -226,7 +267,7 @@ namespace WindowsFormsApp1
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(304, 230);
+            this.panel3.Size = new System.Drawing.Size(304, 233);
             this.panel3.TabIndex = 22;
             // 
             // fieldList
@@ -234,7 +275,7 @@ namespace WindowsFormsApp1
             this.fieldList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.fieldList.FormattingEnabled = true;
             this.fieldList.ItemHeight = 16;
-            this.fieldList.Location = new System.Drawing.Point(0, 34);
+            this.fieldList.Location = new System.Drawing.Point(0, 37);
             this.fieldList.Margin = new System.Windows.Forms.Padding(4);
             this.fieldList.Name = "fieldList";
             this.fieldList.Size = new System.Drawing.Size(304, 196);
@@ -264,8 +305,8 @@ namespace WindowsFormsApp1
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.fieldRelationList);
-            this.splitContainer5.Size = new System.Drawing.Size(614, 491);
-            this.splitContainer5.SplitterDistance = 257;
+            this.splitContainer5.Size = new System.Drawing.Size(614, 499);
+            this.splitContainer5.SplitterDistance = 261;
             this.splitContainer5.TabIndex = 27;
             // 
             // relationsList
@@ -276,7 +317,7 @@ namespace WindowsFormsApp1
             this.relationsList.Location = new System.Drawing.Point(0, 0);
             this.relationsList.Margin = new System.Windows.Forms.Padding(4);
             this.relationsList.Name = "relationsList";
-            this.relationsList.Size = new System.Drawing.Size(614, 257);
+            this.relationsList.Size = new System.Drawing.Size(614, 261);
             this.relationsList.TabIndex = 15;
             // 
             // fieldRelationList
@@ -287,14 +328,14 @@ namespace WindowsFormsApp1
             this.fieldRelationList.Location = new System.Drawing.Point(0, 0);
             this.fieldRelationList.Margin = new System.Windows.Forms.Padding(4);
             this.fieldRelationList.Name = "fieldRelationList";
-            this.fieldRelationList.Size = new System.Drawing.Size(614, 230);
+            this.fieldRelationList.Size = new System.Drawing.Size(614, 234);
             this.fieldRelationList.TabIndex = 19;
             // 
             // btnClearDataGridViewRelations
             // 
             this.btnClearDataGridViewRelations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClearDataGridViewRelations.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnClearDataGridViewRelations.Location = new System.Drawing.Point(14, 989);
+            this.btnClearDataGridViewRelations.Location = new System.Drawing.Point(14, 1090);
             this.btnClearDataGridViewRelations.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearDataGridViewRelations.Name = "btnClearDataGridViewRelations";
             this.btnClearDataGridViewRelations.Size = new System.Drawing.Size(100, 28);
@@ -385,8 +426,8 @@ namespace WindowsFormsApp1
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridViewRelations);
-            this.splitContainer2.Size = new System.Drawing.Size(1361, 1022);
-            this.splitContainer2.SplitterDistance = 489;
+            this.splitContainer2.Size = new System.Drawing.Size(1361, 1123);
+            this.splitContainer2.SplitterDistance = 537;
             this.splitContainer2.TabIndex = 0;
             // 
             // dataGridView
@@ -397,7 +438,7 @@ namespace WindowsFormsApp1
             this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 51;
-            this.dataGridView.Size = new System.Drawing.Size(1361, 489);
+            this.dataGridView.Size = new System.Drawing.Size(1361, 537);
             this.dataGridView.TabIndex = 21;
             // 
             // dataGridViewRelations
@@ -408,30 +449,14 @@ namespace WindowsFormsApp1
             this.dataGridViewRelations.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewRelations.Name = "dataGridViewRelations";
             this.dataGridViewRelations.RowHeadersWidth = 51;
-            this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 529);
+            this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 582);
             this.dataGridViewRelations.TabIndex = 21;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(122, 133);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 16);
-            this.lblStatus.TabIndex = 30;
-            // 
-            // lblStatusText
-            // 
-            this.lblStatusText.AutoSize = true;
-            this.lblStatusText.Location = new System.Drawing.Point(122, 159);
-            this.lblStatusText.Name = "lblStatusText";
-            this.lblStatusText.Size = new System.Drawing.Size(0, 16);
-            this.lblStatusText.TabIndex = 31;
             // 
             // DataMaper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2059, 1025);
+            this.ClientSize = new System.Drawing.Size(2059, 1126);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -499,6 +524,8 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblStatusText;
+        private System.Windows.Forms.ListBox lstXmls;
+        private System.Windows.Forms.Button btnScann;
     }
 }
 

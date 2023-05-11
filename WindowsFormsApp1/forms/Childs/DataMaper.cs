@@ -25,6 +25,7 @@ using Newtonsoft.Json.Linq;
 using WindowsFormsApp1.classes;
 using Formatting = Newtonsoft.Json.Formatting;
 using System.Runtime.Remoting.Contexts;
+using DevExpress.XtraEditors.Controls;
 
 namespace WindowsFormsApp1
 {
@@ -131,25 +132,7 @@ namespace WindowsFormsApp1
                 dataGridViewRelations.Rows.Add(dataRow.ItemArray);
             }
         }
-
-
-
-        public void connectToSqlServerTest()
-        {
-            string connetionString;
-            SqlConnection con;
-            connetionString = @"Data Source=DEV-02;Initial Catalog=CivilDb;User ID=sa;Password=ethe526996!@#$";
-            con = new SqlConnection(connetionString);
-            con.Open();
-
-            using (SqlCommand command = new SqlCommand("CREATE TABLE Customer(First_Name char(50),Last_Name char(50),Address char(50),City char(50),Country char(25),Birth_Date datetime);", con))
-                command.ExecuteNonQuery();
-
-            MessageBox.Show("Connection Open  !");
-            con.Close();
-        }
-
-
+        
 
         private void btnReadxml_Click(object sender, EventArgs e)
         {
@@ -234,7 +217,6 @@ namespace WindowsFormsApp1
             txtXsd.Text = dataSetPathSchema;
             this.Text = dataSetPathSchema.Split('\\').Last();
         }
-
         private string openSelectFileBox(string ext = "")
         {
 
@@ -258,124 +240,7 @@ namespace WindowsFormsApp1
             }
 
             return filePath;
-        }
-
-        private void btnClearDataGridViewRelations_Click(object sender, EventArgs e)
-        {
-            dataGridViewRelations.Rows.Clear();
-        }
-
-        private void btnExecuteQuery_Click(object sender, EventArgs e)
-        {
-
-            //Queries queries = new Queries();
-            //var result = queries.Anex1(xml);
-            //dataGridViewRelations.DataSource = result;           
-
-
-        }
-
-        public void select_V5()
-        {
-            string[] query = "PageA.PageADetails".Split('.');
-            //string[] query = "Projects.PageCBuildings.ThermalBridgeCategories".Split('.');
-            //DataTable table = xml.DataSet.Tables[query[0]];
-
-            DataTable table = xml.DataSet.Tables[query[0]].Clone();
-            xml.DataSet.Tables[query[0]].AsEnumerable()
-           .Where(s => s.Field<Guid>("ID") == Guid.Parse("5458936f-902e-47b5-8c63-7e4e1b3bdbf5"))
-           .CopyToDataTable(table, LoadOption.Upsert);
-
-            //DataRelation dr = xml.DataSet.Relations.Add(table.TableName+"_copy", xml.DataSet.Relations, table.ChildRelations, false);
-
-            //table.ChildRelations.Add(dr);
-
-            string name = "";
-            for (int i = 1; i < query.Length; i++)
-            {
-                name = query[i - 1] + "_" + query[i];
-                table = table.ChildRelations[name].ChildTable;
-            }
-            dataGridViewRelations.DataSource = table;
-        }
-
-        public DataTable select(DataTable dt)
-        {
-
-            //DataTable PageA = xml.DataSet.Tables[query];
-            //return PageA;
-            //DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
-            //dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
-
-            return dt;
-        }
-
-        public void select_V4()
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable result = PageA.ChildRelations["PageA_PageADetails"].ChildTable;
-            dataGridViewRelations.DataSource = result.Select("Density = 1800 and λ = 0.87").CopyToDataTable();
-        }
-        public void select_V3()
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-            DataTable test = new DataTable();
-
-            var joins = from pageA in PageA.AsEnumerable()
-                        join pageADetails in PageADetails.AsEnumerable()
-         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID")
-                        select new { pageA, pageADetails };
-
-            foreach (var row in joins)
-            {
-                var t1 = row.pageA;
-                var t2 = row.pageADetails;
-            }
-        }
-        public void select_V2()
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-
-            DataRow[] dr = PageA.Select("Thickness =0.35 and RefID1 = '1c79b36c-bc75-4f9f-a02f-d0917c9dfa20'");
-        }
-        public void select_V1()
-        {
-            DataTable PageA = xml.DataSet.Tables["PageA"];
-            DataTable PageADetails = xml.DataSet.Tables["PageADetails"];
-
-            var result = from pageA in PageA.AsEnumerable()
-                         join pageADetails in PageADetails.AsEnumerable()
-                         on pageA.Field<Guid>("ID") equals pageADetails.Field<Guid>("PageADetailID") into ALLCOLUMNS
-                         select ALLCOLUMNS.CopyToDataTable();
-        }
-
-        public DataTable GetValueByLinq(DataSet dataSet)
-        {
-            //https://www.c-sharpcorner.com/blogs/inner-join-and-outer-join-in-datatable-using-linq
-            //Inner join
-            DataTable PageA = dataSet.Tables["PageA"];
-            DataTable PageADetails = dataSet.Tables["PageADetails"];
-
-
-            var JoinResult = (from pageA in PageA.AsEnumerable()
-                              join pageADetails in PageADetails.AsEnumerable()
-                              on pageA.Field<object>("ID") equals pageADetails.Field<object>("PageADetailID")
-                              select new
-                              {
-                                  id = pageA.Field<object>("ID"),
-                                  pageAName = pageA.Field<object>("Name"),
-                                  pageATypeName = pageA.Field<object>("TypeName"),
-                                  pageADetailsName = pageADetails.Field<object>("Name")
-                              }).ToList();
-
-
-
-
-            return JoinResult.CopyToDataTable2();
-
-        }
+        }             
 
         string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
         string outputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_old.txt";
@@ -529,8 +394,28 @@ namespace WindowsFormsApp1
 
         }
 
-        
+        private void btnScann_Click(object sender, EventArgs e)
+        {
+            var scanner = new FileScanner();
+            scanner.ScanDirectory("d:\\ProjNet2022\\applications\\Building.EnergySavingFProject\\", out List<string> xmlFiles, out List<string> xsdFiles);
 
-       
+            lstXmls.Items.Clear();
+
+            foreach(string xmlFile in xmlFiles)
+            {
+                lstXmls.Items.Add(xmlFile);
+            }
+            
+            //lstXmls.Items.Add("test1");
+            //lstXmls.Items.Add("test2");
+            //lstXmls.Items.Add("test3");
+            //lstXmls.Items.Add("test1");
+            //lstXmls.Items.Add("test2");
+            //lstXmls.Items.Add("test3");
+            //lstXmls.Items.Add("test1");
+            //lstXmls.Items.Add("test2");
+            //lstXmls.Items.Add("test3");
+
+        }
     }
 }
