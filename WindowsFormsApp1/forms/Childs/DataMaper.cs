@@ -542,7 +542,7 @@ namespace WindowsFormsApp1
         private void SelectItemInListBox(string itemText, ListBox listbox)
         {
             // Find the item in the list box
-            int index = listbox.FindStringExact(itemText);
+            int index = listbox.FindString(itemText);
 
             // If the item was found
             if (index != ListBox.NoMatches)
