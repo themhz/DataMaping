@@ -61,6 +61,8 @@ namespace WindowsFormsApp1
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
+            this.txttable = new System.Windows.Forms.TextBox();
+            this.txtfield = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -231,6 +233,7 @@ namespace WindowsFormsApp1
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txttable);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.tableList);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -242,7 +245,7 @@ namespace WindowsFormsApp1
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 6);
+            this.label1.Location = new System.Drawing.Point(4, 4);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 16);
@@ -254,14 +257,16 @@ namespace WindowsFormsApp1
             this.tableList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableList.FormattingEnabled = true;
             this.tableList.ItemHeight = 16;
-            this.tableList.Location = new System.Drawing.Point(0, 37);
+            this.tableList.Location = new System.Drawing.Point(0, 53);
             this.tableList.Margin = new System.Windows.Forms.Padding(4);
             this.tableList.Name = "tableList";
-            this.tableList.Size = new System.Drawing.Size(306, 196);
+            this.tableList.Size = new System.Drawing.Size(306, 180);
             this.tableList.TabIndex = 22;
+            this.tableList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tableList_KeyDown);
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.txtfield);
             this.panel3.Controls.Add(this.fieldList);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -275,16 +280,18 @@ namespace WindowsFormsApp1
             this.fieldList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.fieldList.FormattingEnabled = true;
             this.fieldList.ItemHeight = 16;
-            this.fieldList.Location = new System.Drawing.Point(0, 37);
+            this.fieldList.Location = new System.Drawing.Point(0, 53);
             this.fieldList.Margin = new System.Windows.Forms.Padding(4);
             this.fieldList.Name = "fieldList";
-            this.fieldList.Size = new System.Drawing.Size(304, 196);
+            this.fieldList.Size = new System.Drawing.Size(304, 180);
             this.fieldList.TabIndex = 19;
+            this.fieldList.SelectedIndexChanged += new System.EventHandler(this.fieldList_SelectedIndexChanged);
+            this.fieldList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldList_KeyDown);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 12);
+            this.label2.Location = new System.Drawing.Point(4, 4);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 16);
@@ -319,6 +326,7 @@ namespace WindowsFormsApp1
             this.relationsList.Name = "relationsList";
             this.relationsList.Size = new System.Drawing.Size(614, 261);
             this.relationsList.TabIndex = 15;
+            this.relationsList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.relationsList_KeyDown);
             // 
             // fieldRelationList
             // 
@@ -330,6 +338,7 @@ namespace WindowsFormsApp1
             this.fieldRelationList.Name = "fieldRelationList";
             this.fieldRelationList.Size = new System.Drawing.Size(614, 234);
             this.fieldRelationList.TabIndex = 19;
+            this.fieldRelationList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldRelationList_KeyDown);
             // 
             // btnClearDataGridViewRelations
             // 
@@ -452,6 +461,22 @@ namespace WindowsFormsApp1
             this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 582);
             this.dataGridViewRelations.TabIndex = 21;
             // 
+            // txttable
+            // 
+            this.txttable.Location = new System.Drawing.Point(3, 25);
+            this.txttable.Name = "txttable";
+            this.txttable.Size = new System.Drawing.Size(300, 22);
+            this.txttable.TabIndex = 24;
+            this.txttable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txttable_KeyDown);
+            // 
+            // txtfield
+            // 
+            this.txtfield.Location = new System.Drawing.Point(2, 25);
+            this.txtfield.Name = "txtfield";
+            this.txtfield.Size = new System.Drawing.Size(299, 22);
+            this.txtfield.TabIndex = 25;
+            this.txtfield.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtfield_KeyDown);
+            // 
             // DataMaper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -461,6 +486,7 @@ namespace WindowsFormsApp1
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DataMaper";
+            this.ShowIcon = false;
             this.Text = "DataBase Viewer";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -526,6 +552,8 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label lblStatusText;
         private System.Windows.Forms.ListBox lstXmls;
         private System.Windows.Forms.Button btnScann;
+        private System.Windows.Forms.TextBox txttable;
+        private System.Windows.Forms.TextBox txtfield;
     }
 }
 

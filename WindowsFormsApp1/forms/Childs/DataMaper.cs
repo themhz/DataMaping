@@ -26,6 +26,11 @@ using WindowsFormsApp1.classes;
 using Formatting = Newtonsoft.Json.Formatting;
 using System.Runtime.Remoting.Contexts;
 using DevExpress.XtraEditors.Controls;
+using static DevExpress.Utils.Svg.CommonSvgImages;
+using static DevExpress.Xpo.DB.DataStoreLongrunnersWatch;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using DevExpress.XtraEditors.SyntaxEditor;
+using DevExpress.XtraEditors.TextEditController.Utils;
 
 namespace WindowsFormsApp1
 {
@@ -59,6 +64,7 @@ namespace WindowsFormsApp1
             ListBox listbox = (ListBox)sender;
 
             DataTable dataTable = xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
+            this.Text = this.Text.Substring(0, this.Text.IndexOf(".xsd")+4)+ "-" + listbox.SelectedItem.ToString();
             fieldList.Items.Clear();
             dataGridView.Columns.Clear();
             foreach (DataColumn dataColumn in dataTable.Columns)
@@ -69,6 +75,7 @@ namespace WindowsFormsApp1
 
             populateDataGridView(dataTable);
             populateRelationsList(dataTable);
+
         }
 
         public void relationsList_SelectedValueChanged(object sender, EventArgs e)
@@ -396,7 +403,17 @@ namespace WindowsFormsApp1
 
         private void btnScann_Click(object sender, EventArgs e)
         {
-            var scanner = new FileScanner();
+
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    //ScanDirectory(fbd.SelectedPath, out List<string> xmlFiles, out List<string> xsdFiles);
+
+                    // Now xmlFiles and xsdFiles contain the paths to the XML and XSD files, respectively.
+                    // Do whatever you need to do with these files.
+
+                    var scanner = new FileScanner();
             scanner.ScanDirectory("d:\\ProjNet2022\\applications\\Building.EnergySavingFProject\\", out List<string> xmlFiles, out List<string> xsdFiles);
 
             lstXmls.Items.Clear();
@@ -405,6 +422,9 @@ namespace WindowsFormsApp1
             {
                 lstXmls.Items.Add(xmlFile);
             }
+                }
+            }
+            
             
             //lstXmls.Items.Add("test1");
             //lstXmls.Items.Add("test2");
@@ -417,5 +437,125 @@ namespace WindowsFormsApp1
             //lstXmls.Items.Add("test3");
 
         }
+
+        private void fieldList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the selected item from the list box and convert it to string
+            string selectedItem = fieldList.SelectedItem.ToString();
+
+            // Parse the column name from the selected item
+            // assuming the format is "ColumnName(DataType)"
+            string columnName = selectedItem.Substring(0, selectedItem.IndexOf('(')).Trim();
+
+            // Loop through all columns of the data grid view
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
+            {
+                // If the name of the column matches the parsed column name
+                if (dataGridView.Columns[i].Name == columnName)
+                {
+                    // Clear the previous selection
+                    dataGridView.ClearSelection();
+                    // Color and select the matching column
+                    ColorColumnAndSelect(i);
+                    break;
+                }
+            }
+        }
+
+        int prevcolumnIndex = 0;
+        private void ColorColumnAndSelect(int columnIndex)
+        {            
+
+            Color selectedColor = Color.Yellow; // Change to your preferred color
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {                
+                if (!row.IsNewRow)
+                {
+                    row.Cells[prevcolumnIndex].Style.BackColor = Color.White;
+                    row.Cells[prevcolumnIndex].Selected = false;
+
+                    row.Cells[columnIndex].Style.BackColor = selectedColor;
+                    row.Cells[columnIndex].Selected = true;
+                    prevcolumnIndex = columnIndex;
+                }
+            }
+
+            // Scroll to the first cell of the selected column
+            dataGridView.FirstDisplayedScrollingColumnIndex = columnIndex;
+        }
+
+        private void tableList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyToClipboard(tableList);
+            }
+        }
+
+        private void fieldList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyToClipboard(fieldList);
+            }
+        }
+
+        private void relationsList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyToClipboard(relationsList);
+            }
+        }
+
+        private void fieldRelationList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyToClipboard(fieldRelationList);
+            }
+        }
+
+        private void CopyToClipboard(ListBox listBox)
+        {
+            if (listBox.SelectedItem != null)
+            {
+                Clipboard.SetText(listBox.SelectedItem.ToString());
+            }
+        }
+
+        private void txttable_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SelectItemInListBox(txttable.Text, tableList);
+            }
+        }
+
+        private void txtfield_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SelectItemInListBox(txttable.Text, fieldList);
+            }
+        }
+        private void SelectItemInListBox(string itemText, ListBox listbox)
+        {
+            // Find the item in the list box
+            int index = listbox.FindStringExact(itemText);
+
+            // If the item was found
+            if (index != ListBox.NoMatches)
+            {
+                // Select the item
+                listbox.SelectedIndex = index;
+            }
+            else
+            {
+                // Clear selection if no match was found
+                listbox.ClearSelected();
+            }
+        }
+
     }
 }
