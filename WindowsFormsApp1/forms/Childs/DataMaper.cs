@@ -184,7 +184,7 @@ namespace WindowsFormsApp1
         private void btnSelectXml_Click(object sender, EventArgs e)
         {
             dataSetPath = openSelectFileBox("xml");
-            if(dataSetPath!=null || dataSetPath != "")
+            if(dataSetPath!=null && dataSetPath != "")
             {
                 txtXml.Text = dataSetPath;
                 dataSetPathSchema = Path.GetDirectoryName(dataSetPath) + "\\" + GetXsdString(dataSetPath);
@@ -536,7 +536,7 @@ namespace WindowsFormsApp1
         {
             if (e.KeyCode == Keys.Enter)
             {
-                SelectItemInListBox(txttable.Text, fieldList);
+                SelectItemInListBox(txtfield.Text, fieldList);
             }
         }
         private void SelectItemInListBox(string itemText, ListBox listbox)
