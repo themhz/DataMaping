@@ -125,9 +125,66 @@ namespace WindowsFormsApp1
         private void populateDataGridView(DataTable dataTable)
         {
             dataGridView.Rows.Clear();
+            dataGridView.AutoGenerateColumns = false;
+            bool hasImage = false;
+
+            List<int> imageColumns = new List<int>();
+
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                if (dataTable.Columns[i].DataType == typeof(byte[]))
+                {
+                    hasImage = true;
+                    imageColumns.Add(i);
+
+                    // Create a new image column
+                    DataGridViewImageColumn imageCol = new DataGridViewImageColumn();
+                    imageCol.HeaderText = dataTable.Columns[i].ColumnName;
+                    imageCol.Name = dataTable.Columns[i].ColumnName;
+                    imageCol.ImageLayout = DataGridViewImageCellLayout.Zoom; // set as needed
+                    
+
+                    // Add the image column to the dataGridView
+                    dataGridView.Columns.Add(imageCol);
+                }
+                else
+                {
+                    DataGridViewTextBoxColumn textCol = new DataGridViewTextBoxColumn();
+                    textCol.HeaderText = dataTable.Columns[i].ColumnName;
+                    textCol.Name = dataTable.Columns[i].ColumnName;
+                    textCol.DataPropertyName = dataTable.Columns[i].ColumnName;
+
+                    // Add the text column to the dataGridView
+                    dataGridView.Columns.Add(textCol);
+                }
+            }
+
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                dataGridView.Rows.Add(dataRow.ItemArray);
+                DataGridViewRow row = new DataGridViewRow();
+
+                if (hasImage)
+                {
+                    row.Height = 150; // Set this value to what you need
+                }
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    if (imageColumns.Contains(i) && dataRow[i] != DBNull.Value)
+                    {
+                        byte[] imageByteArray = dataRow[i] as byte[];
+                        DataGridViewImageCell imageCell = new DataGridViewImageCell();
+                        imageCell.Value = ByteArrayToImage(imageByteArray);
+                        row.Cells.Add(imageCell);
+                    }
+                    else
+                    {
+                        DataGridViewTextBoxCell textCell = new DataGridViewTextBoxCell();
+                        textCell.Value = dataRow[i];
+                        row.Cells.Add(textCell);
+                    }
+                }
+
+                dataGridView.Rows.Add(row);
             }
         }
 
@@ -556,6 +613,16 @@ namespace WindowsFormsApp1
                 listbox.ClearSelected();
             }
         }
+
+        public Image ByteArrayToImage(byte[] byteArrayIn)
+        {
+            using (MemoryStream ms = new MemoryStream(byteArrayIn))
+            {
+                Image returnImage = Image.FromStream(ms);
+                return returnImage;
+            }
+        }
+
 
     }
 }
