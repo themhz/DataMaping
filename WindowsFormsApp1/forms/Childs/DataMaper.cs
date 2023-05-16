@@ -125,6 +125,7 @@ namespace WindowsFormsApp1
         private void populateDataGridView(DataTable dataTable)
         {
             dataGridView.Rows.Clear();
+            dataGridView.Columns.Clear(); // clear existing columns
             dataGridView.AutoGenerateColumns = false;
             bool hasImage = false;
 
