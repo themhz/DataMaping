@@ -65,18 +65,22 @@ namespace WindowsFormsApp1
         {
             ListBox listbox = (ListBox)sender;
 
-            DataTable dataTable = xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
-            this.Text = this.Text.Substring(0, this.Text.IndexOf(".xsd")+4)+ "-" + listbox.SelectedItem.ToString();
-            fieldList.Items.Clear();
-            dataGridView.Columns.Clear();
-            foreach (DataColumn dataColumn in dataTable.Columns)
+            if (listbox.SelectedItem != null)
             {
-                fieldList.Items.Add(dataColumn.ColumnName + " (" + dataColumn.DataType + ")");
-                dataGridView.Columns.Add(dataColumn.ColumnName, dataColumn.ColumnName);
-            }
+                DataTable dataTable = xml.GetDataSet().Tables[listbox.SelectedItem.ToString()];
+                this.Text = this.Text.Substring(0, this.Text.IndexOf(".xsd") + 4) + "-" + listbox.SelectedItem.ToString();
+                fieldList.Items.Clear();
+                dataGridView.Columns.Clear();
+                foreach (DataColumn dataColumn in dataTable.Columns)
+                {
+                    fieldList.Items.Add(dataColumn.ColumnName + " (" + dataColumn.DataType + ")");
+                    dataGridView.Columns.Add(dataColumn.ColumnName, dataColumn.ColumnName);
+                }
 
-            populateDataGridView(dataTable);
-            populateRelationsList(dataTable);
+                populateDataGridView(dataTable);
+                populateRelationsList(dataTable);
+            }
+            
 
         }
 
@@ -625,6 +629,7 @@ namespace WindowsFormsApp1
             else
             {
                 // Clear selection if no match was found
+                MessageBox.Show("No Matches were found");
                 listbox.ClearSelected();
             }
         }
