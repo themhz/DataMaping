@@ -42,9 +42,11 @@ namespace WindowsFormsApp1
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txttable = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableList = new System.Windows.Forms.ListBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.txtfield = new System.Windows.Forms.TextBox();
             this.fieldList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
@@ -61,8 +63,9 @@ namespace WindowsFormsApp1
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewRelations = new System.Windows.Forms.DataGridView();
-            this.txttable = new System.Windows.Forms.TextBox();
-            this.txtfield = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chkExact = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -99,7 +102,7 @@ namespace WindowsFormsApp1
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(1, 1);
+            this.splitContainer1.Location = new System.Drawing.Point(1, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -109,13 +112,16 @@ namespace WindowsFormsApp1
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(2046, 1123);
+            this.splitContainer1.Size = new System.Drawing.Size(2046, 1124);
             this.splitContainer1.SplitterDistance = 681;
             this.splitContainer1.TabIndex = 12;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkExact);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Controls.Add(this.btnScann);
             this.panel1.Controls.Add(this.lstXmls);
             this.panel1.Controls.Add(this.lblStatusText);
@@ -135,7 +141,7 @@ namespace WindowsFormsApp1
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(681, 1123);
+            this.panel1.Size = new System.Drawing.Size(681, 1124);
             this.panel1.TabIndex = 12;
             // 
             // btnScann
@@ -242,6 +248,14 @@ namespace WindowsFormsApp1
             this.panel2.Size = new System.Drawing.Size(306, 233);
             this.panel2.TabIndex = 0;
             // 
+            // txttable
+            // 
+            this.txttable.Location = new System.Drawing.Point(3, 25);
+            this.txttable.Name = "txttable";
+            this.txttable.Size = new System.Drawing.Size(300, 22);
+            this.txttable.TabIndex = 24;
+            this.txttable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txttable_KeyDown);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -274,6 +288,14 @@ namespace WindowsFormsApp1
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(304, 233);
             this.panel3.TabIndex = 22;
+            // 
+            // txtfield
+            // 
+            this.txtfield.Location = new System.Drawing.Point(2, 25);
+            this.txtfield.Name = "txtfield";
+            this.txtfield.Size = new System.Drawing.Size(299, 22);
+            this.txtfield.TabIndex = 25;
+            this.txtfield.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtfield_KeyDown);
             // 
             // fieldList
             // 
@@ -344,7 +366,7 @@ namespace WindowsFormsApp1
             // 
             this.btnClearDataGridViewRelations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClearDataGridViewRelations.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnClearDataGridViewRelations.Location = new System.Drawing.Point(14, 1090);
+            this.btnClearDataGridViewRelations.Location = new System.Drawing.Point(14, 1091);
             this.btnClearDataGridViewRelations.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearDataGridViewRelations.Name = "btnClearDataGridViewRelations";
             this.btnClearDataGridViewRelations.Size = new System.Drawing.Size(100, 28);
@@ -435,7 +457,7 @@ namespace WindowsFormsApp1
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridViewRelations);
-            this.splitContainer2.Size = new System.Drawing.Size(1361, 1123);
+            this.splitContainer2.Size = new System.Drawing.Size(1361, 1124);
             this.splitContainer2.SplitterDistance = 537;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -458,24 +480,41 @@ namespace WindowsFormsApp1
             this.dataGridViewRelations.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewRelations.Name = "dataGridViewRelations";
             this.dataGridViewRelations.RowHeadersWidth = 51;
-            this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 582);
+            this.dataGridViewRelations.Size = new System.Drawing.Size(1361, 583);
             this.dataGridViewRelations.TabIndex = 21;
             // 
-            // txttable
+            // txtSearch
             // 
-            this.txttable.Location = new System.Drawing.Point(3, 25);
-            this.txttable.Name = "txttable";
-            this.txttable.Size = new System.Drawing.Size(300, 22);
-            this.txttable.TabIndex = 24;
-            this.txttable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txttable_KeyDown);
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.Location = new System.Drawing.Point(331, 185);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(297, 22);
+            this.txtSearch.TabIndex = 34;
+            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
-            // txtfield
+            // label3
             // 
-            this.txtfield.Location = new System.Drawing.Point(2, 25);
-            this.txtfield.Name = "txtfield";
-            this.txtfield.Size = new System.Drawing.Size(299, 22);
-            this.txtfield.TabIndex = 25;
-            this.txtfield.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtfield_KeyDown);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(561, 159);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 16);
+            this.label3.TabIndex = 35;
+            this.label3.Text = "Search ->";
+            // 
+            // chkExact
+            // 
+            this.chkExact.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkExact.AutoSize = true;
+            this.chkExact.Location = new System.Drawing.Point(331, 159);
+            this.chkExact.Name = "chkExact";
+            this.chkExact.Size = new System.Drawing.Size(106, 20);
+            this.chkExact.TabIndex = 36;
+            this.chkExact.Text = "Exact search";
+            this.chkExact.UseVisualStyleBackColor = true;
             // 
             // DataMaper
             // 
@@ -554,6 +593,9 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button btnScann;
         private System.Windows.Forms.TextBox txttable;
         private System.Windows.Forms.TextBox txtfield;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.CheckBox chkExact;
     }
 }
 

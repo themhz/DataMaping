@@ -46,6 +46,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
             tableList.SelectedValueChanged += new EventHandler(tableList_SelectedValueChanged);
             relationsList.SelectedValueChanged += new EventHandler(relationsList_SelectedValueChanged);
+            dataGridView.DataError += dataGridView_DataError;
+
 
             //txtXml.Text = dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
             //txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
@@ -177,10 +179,22 @@ namespace WindowsFormsApp1
                         imageCell.Value = ByteArrayToImage(imageByteArray);
                         row.Cells.Add(imageCell);
                     }
+                    else if (imageColumns.Contains(i) && dataRow[i] == DBNull.Value)
+                    {
+                        //if null image
+                        DataGridViewTextBoxCell textCell = new DataGridViewTextBoxCell();
+                        byte[] defaultImageBytes = new byte[]
+                            {
+                                137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 11, 73, 68, 65, 84, 120, 156, 99, 248, 255, 255, 63, 0, 5, 0, 1, 2, 130, 147, 160, 189, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130
+                            };
+                      
+                        textCell.Value = ByteArrayToImage(defaultImageBytes);
+                        row.Cells.Add(textCell);
+                    }
                     else
                     {
-                        DataGridViewTextBoxCell textCell = new DataGridViewTextBoxCell();
-                        textCell.Value = dataRow[i];
+                        DataGridViewTextBoxCell textCell = new DataGridViewTextBoxCell();                        
+                        textCell.Value = dataRow[i];                        
                         row.Cells.Add(textCell);
                     }
                 }
@@ -624,6 +638,61 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void SearchAndSelect(string keyword)
+        {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (chkExact.Checked)
+                    {
+                        if (cell.FormattedValue.ToString().Equals(keyword))
+                        {
+                            // Select the cell
+                            cell.Selected = true;
+
+                            // Scroll to the selected cell
+                            dataGridView.FirstDisplayedScrollingRowIndex = cell.RowIndex;
+
+                            // Stop the loop
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (cell.FormattedValue.ToString().Contains(keyword))
+                        {
+                            // Select the cell
+                            cell.Selected = true;
+
+                            // Scroll to the selected cell
+                            dataGridView.FirstDisplayedScrollingRowIndex = cell.RowIndex;
+
+                            // Stop the loop
+                            return;
+                        }
+                    }
+                    
+                }
+            }
+
+            MessageBox.Show(keyword + " not found");
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchAndSelect(txtSearch.Text.Trim());
+            }
+        }
+
+        private void dataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // Suppress the error message and continue with the program
+            e.ThrowException = false;
+            e.Cancel = true;
+        }
 
     }
 }
