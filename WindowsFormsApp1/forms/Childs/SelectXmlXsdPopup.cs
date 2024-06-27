@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.classes;
 
 namespace WindowsFormsApp1.forms.Childs
 {
@@ -31,36 +32,43 @@ namespace WindowsFormsApp1.forms.Childs
         private void btnReadxml_Click(object sender, EventArgs e)
         {
 
-            TableTreeView.Self.Test(txtXml.Text, txtXsd.Text);
+            //TableTreeView.Self.Test(txtXml.Text, txtXsd.Text);            
+            
+           
+            GlobalVariables.XmlPath = txtXml.Text;
+            GlobalVariables.XsdPath = txtXsd.Text;
+
             //MessageBox.Show("test");
-            //readXml();
+            readXml();
 
         }
 
         private void btnSelectXml_Click(object sender, EventArgs e)
         {
-            dataSetPath = openSelectFileBox("xml");
-            txtXml.Text = dataSetPath;
+            //dataSetPath = openSelectFileBox("xml");
+            GlobalVariables.XmlPath = openSelectFileBox("xml");
+            txtXml.Text = GlobalVariables.XmlPath;
         }
 
         private void btnSelectXsd_Click(object sender, EventArgs e)
         {
-            dataSetPathSchema = openSelectFileBox("xsd");
-            txtXsd.Text = dataSetPathSchema;
+            //dataSetPathSchema = openSelectFileBox("xsd");
+            GlobalVariables.XsdPath = openSelectFileBox("xsd");
+            txtXsd.Text = GlobalVariables.XsdPath;
         }
 
         public void readXml()
         {
-            if (dataSetPath == "" || dataSetPathSchema == "")
+            if (GlobalVariables.XmlPath == "" || GlobalVariables.XsdPath == "")
             {
                 MessageBox.Show("Please select an xml and an xsd file");
                 numOfTables.Text = "0";
             }
             else
             {
-                xml = new Xml(dataSetPath, dataSetPathSchema);
+                xml = new Xml(GlobalVariables.XmlPath, GlobalVariables.XsdPath);
                 
-
+/*
                 List<string> tables = new List<string>();
 
 
@@ -69,9 +77,11 @@ namespace WindowsFormsApp1.forms.Childs
                     tables.Add(table.ToString());
                     //tableList.Items.Add(table.ToString());
                 }
-                tables.Sort();
+                tables.Sort();*/
 
                 numOfTables.Text = xml.GetDataSet().Tables.Count.ToString();
+                GlobalVariables.Xml = xml;
+                this.Hide();
             }
         }
 

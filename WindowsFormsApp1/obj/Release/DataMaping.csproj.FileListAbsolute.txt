@@ -83,11 +83,9 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Windo
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.GenerateResource.cache
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.CoreCompileInputs.cache
-C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.CopyComplete
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.AssemblyReference.cache
-C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.SuggestedBindingRedirects.cache
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.forms.Childs.QueryEditor.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.forms.Childs.SelectXmlXsdPopup.resources
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Release\DevExpress.Data.v21.2.dll
@@ -137,3 +135,4 @@ C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Release\es\De
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Release\ja\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Release\ru\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe.licenses
+C:\Users\themis\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Release\DataMaping.csproj.Up2Date

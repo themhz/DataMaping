@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using WindowsFormsApp1.interfaces;
 using WindowsFormsApp1.forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using WindowsFormsApp1.classes;
 
 
 namespace WindowsFormsApp1.forms.Childs {
@@ -104,15 +105,19 @@ namespace WindowsFormsApp1.forms.Childs {
         }
 
         private void Select()
-        {                     
-            QueryEngine qe = new QueryEngine();
-            DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, xml);            
-            if(dt != null)
+        {
+            if (GlobalVariables.Xml != null)
             {
-                dgvResult.DataSource = dt;
-                MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
-                MDIParent1.Self.txtFileLoadedLocation.Text = $"Data loaded from {xml.XmlPath}";
+                QueryEngine qe = new QueryEngine();
+                DataTable dt = qe.ExecuteQuery(txtJsonQuery.Text, GlobalVariables.Xml);
+                if (dt != null)
+                {
+                    dgvResult.DataSource = dt;
+                    MDIParent1.Self.toolStripStatusLabel.Text = "result " + dt.Rows.Count + " rows ";
+                    MDIParent1.Self.txtFileLoadedLocation.Text = $"Data loaded from {xml.XmlPath}";
+                }
             }
+            
             
             #region Comments
 

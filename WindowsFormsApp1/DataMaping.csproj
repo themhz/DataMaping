@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="classes\CustomLINQtoDataSetMethods.cs" />
     <Compile Include="classes\FileScanner.cs" />
+    <Compile Include="classes\GlobalVariables.cs" />
     <Compile Include="classes\JsonHandler.cs" />
     <Compile Include="classes\FileExplorer.cs" />
     <Compile Include="classes\TableInfo.cs" />

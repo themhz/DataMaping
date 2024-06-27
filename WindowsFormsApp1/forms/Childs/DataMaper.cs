@@ -31,6 +31,7 @@ using static DevExpress.Xpo.DB.DataStoreLongrunnersWatch;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using DevExpress.XtraEditors.SyntaxEditor;
 using DevExpress.XtraEditors.TextEditController.Utils;
+using WindowsFormsApp1.forms.Childs;
 
 namespace WindowsFormsApp1
 {
@@ -52,12 +53,18 @@ namespace WindowsFormsApp1
             //txtXml.Text = dataSetPath = @"C:\Users\themis\Desktop\test\dataHeatInsulation.xml";
             //txtXsd.Text = dataSetPathSchema = @"C:\Users\themis\Desktop\test\dsBuildingHeatInsulation.xsd";
 
-            txtXml.Text = ConfigurationManager.AppSettings["XmlPath"];
-            txtXsd.Text = ConfigurationManager.AppSettings["XsdPath"];
-            dataSetPath = txtXml.Text;
-            dataSetPathSchema = txtXsd.Text;
-            readXml();
+            /*txtXml.Text = ConfigurationManager.AppSettings["XmlPath"];
+            txtXsd.Text = ConfigurationManager.AppSettings["XsdPath"];*/
 
+            txtXml.Text = GlobalVariables.XmlPath;
+            txtXsd.Text = GlobalVariables.XsdPath;
+
+            
+            dataSetPath = GlobalVariables.XmlPath;
+            dataSetPathSchema = GlobalVariables.XsdPath;
+            
+            readXml();
+            
 
         }
 
@@ -90,7 +97,7 @@ namespace WindowsFormsApp1
 
             var table = listbox.SelectedItem.ToString().Split('_');
 
-            DataTable dataTable = xml.GetDataSet().Tables[table[1]];
+            DataTable dataTable = GlobalVariables.Xml.GetDataSet().Tables[table[1]];
             dataGridViewRelations.Columns.Clear();
             if (dataTable != null)
             {
@@ -228,11 +235,13 @@ namespace WindowsFormsApp1
             if (dataSetPath == "" || dataSetPathSchema == "")
             {
                 MessageBox.Show("Please select an xml and an xsd file");
+                //SelectXmlXsdPopup
                 numOfTables.Text = "0";
             }
             else
             {
                 xml = new Xml(dataSetPath, dataSetPathSchema);
+                GlobalVariables.Xml = xml;
                 tableList.Items.Clear();
 
                 List<string> tables = new List<string>();
@@ -260,11 +269,13 @@ namespace WindowsFormsApp1
         private void btnSelectXml_Click(object sender, EventArgs e)
         {
             dataSetPath = openSelectFileBox("xml");
+            GlobalVariables.XmlPath = dataSetPath;
             if(dataSetPath!=null && dataSetPath != "")
             {
                 txtXml.Text = dataSetPath;
                 dataSetPathSchema = Path.GetDirectoryName(dataSetPath) + "\\" + GetXsdString(dataSetPath);
                 txtXsd.Text = dataSetPathSchema;
+                GlobalVariables.XsdPath = dataSetPathSchema;
 
                 this.Text = dataSetPathSchema.Split('\\').Last();
             }
@@ -312,6 +323,7 @@ namespace WindowsFormsApp1
                 {
                     openFileDialog.Filter = ext + " files (*." + ext + ")|*." + ext + "|All files (*.*)|*.*";
                 }
+
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
@@ -323,12 +335,18 @@ namespace WindowsFormsApp1
             }
 
             return filePath;
-        }             
+        }
 
-        string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
+        /*string inputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields.txt";
         string outputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_old.txt";
         string newinputJsonFilePath = "d:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.Accessible\\AccessibleReport\\fields_new.txt";
-        string xsdDirectoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\accessible\\";
+        string xsdDirectoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\accessible\\";*/
+
+        string inputJsonFilePath = "D:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.FireW\\RatingReport\\fields.txt";
+        string outputJsonFilePath = "D:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.FireW\\RatingReport\\fields_old.txt";
+        string newinputJsonFilePath = "D:\\ProjNet2022\\applications\\Building.Project\\Building.UI\\data.el\\reports\\Building.FireW\\RatingReport\\fields_new.txt";
+        string xsdDirectoryPath = "c:\\Users\\themis\\Documents\\xmlOutput\\firew\\";
+
         private async void btnSynncFields_Click(object sender, EventArgs e)
         {
             lblStatus.Text = "Running";
@@ -490,14 +508,14 @@ namespace WindowsFormsApp1
                     // Do whatever you need to do with these files.
 
                     var scanner = new FileScanner();
-            scanner.ScanDirectory("d:\\ProjNet2022\\applications\\Building.EnergySavingFProject\\", out List<string> xmlFiles, out List<string> xsdFiles);
+                    scanner.ScanDirectory("d:\\ProjNet2022\\applications\\Building.EnergySavingFProject\\", out List<string> xmlFiles, out List<string> xsdFiles);
 
-            lstXmls.Items.Clear();
+                    lstXmls.Items.Clear();
 
-            foreach(string xmlFile in xmlFiles)
-            {
-                lstXmls.Items.Add(xmlFile);
-            }
+                    foreach(string xmlFile in xmlFiles)
+                    {
+                        lstXmls.Items.Add(xmlFile);
+                    }
                 }
             }
             

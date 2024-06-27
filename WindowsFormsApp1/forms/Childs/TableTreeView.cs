@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.classes;
 using WindowsFormsApp1.interfaces;
 
 namespace WindowsFormsApp1.forms.Childs {
@@ -24,17 +26,22 @@ namespace WindowsFormsApp1.forms.Childs {
             loadTreeView();
         }
 
-        public void Test(string txtXml, string txtXsd)
+     /*   public void Test(string txtXml, string txtXsd)
         {
             //MessageBox.Show(txtXml , txtXsd);
-            xml.setXml(txtXml);
-            xml.setXsd(txtXsd);
+            //xml.setXml(txtXml);
+            //xml.setXsd(txtXsd);
+            xml.setXml(GlobalVariables.Xml);
+            xml.setXsd(GlobalVariables.Xsd);
             xml.reload();
             loadTreeView();
-        }
+        }*/
 
         public void loadTreeView() {
-
+            xml.setXml(GlobalVariables.XmlPath);
+            xml.setXsd(GlobalVariables.XsdPath);
+            xml.reload();
+            
             DatabaseTreeView.Nodes.Clear();
             DataSet dataset = xml.GetDataSet();
             List<string> tables = new List<string>();
